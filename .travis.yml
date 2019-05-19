@@ -3,7 +3,9 @@ python:
 - 3.7
 - 3.6
 install: pip install -U tox-travis coveralls
-script: tox
+script: 
+  - tox
+  - coverage run --source=creopyson setup.py test
 after_success:
   - coveralls
 deploy:
