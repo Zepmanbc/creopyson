@@ -1,0 +1,60 @@
+{
+  "spec" : {
+    "function_description" : "List views that match criteria and are exploded",
+    "command" : "view",
+    "function" : "list_exploded",
+    "request" : [ {
+      "name" : "file",
+      "type" : "string",
+      "description" : "File name",
+      "default" : "The currently active model"
+    }, {
+      "name" : "name",
+      "type" : "string",
+      "description" : "View name",
+      "default" : "All views are listed",
+      "wildcards_allowed" : true
+    } ],
+    "response" : [ {
+      "name" : "viewlist",
+      "type" : "array:string",
+      "description" : "List of view names"
+    } ]
+  },
+  "examples" : [ {
+    "request" : {
+      "sessionId" : "~sessionId~",
+      "command" : "view",
+      "function" : "list_exploded",
+      "data" : {
+        "file" : "box.prt"
+      }
+    },
+    "response" : {
+      "status" : {
+        "error" : false
+      },
+      "data" : {
+        "viewlist" : [ "Exp001", "BACK_EXP" ]
+      }
+    }
+  }, {
+    "request" : {
+      "sessionId" : "~sessionId~",
+      "command" : "view",
+      "function" : "list_exploded",
+      "data" : {
+        "file" : "box.prt",
+        "name" : "*A*"
+      }
+    },
+    "response" : {
+      "status" : {
+        "error" : false
+      },
+      "data" : {
+        "viewlist" : [ "BACK_EXP" ]
+      }
+    }
+  } ]
+}
