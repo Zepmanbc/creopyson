@@ -1,3 +1,5 @@
+"""Name module."""
+
 # def bound_box():
 #     pass
 

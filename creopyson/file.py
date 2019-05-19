@@ -1,3 +1,5 @@
+"""Name module."""
+
 from .core import creoson_post
 
 
@@ -26,6 +28,16 @@ from .core import creoson_post
 
 
 def exists(client, current_file):
+    """Test if file exists in Workdirectory.
+
+    Args:
+        client (obj): creopyson Client
+        current_file (str): path to file
+
+    Returns:
+        Boolean: True if exists, False if not
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
@@ -85,37 +97,39 @@ def exists(client, current_file):
 
 def open_(client, query, dirname=None, generic=None, display=True,
           activate=True, new_window=False, regen_force=False):
-    """Openning files in Creo.
+    """Open files in Creo.
 
-        Opening a single file:
-            client.file_open("my_file.prt")
-        Opening all drawings
+    Opening a single file: client.file_open("my_file.prt")
+    Opening all drawings
 
-        Args:
-            client (obj): creopyson Client.
-            query (list|string): file name or search with *.
-                ex: "foo_*.prt" or "*.drw"
-            dirname (string): Directory name
-                (default: Creo's current working directory)
-            generic (string):
-                generic model name (if file name represents an instance).
-            display (boolean):
-                display the model after opening. (default True)
-            activate (boolean):
-                activate the model after opening (default True)
-            new_window (boolean):
-                open model in a new window (default False)
-            regen_force (boolean):
+    Args:
+        client (obj): creopyson Client.
+            query (list|string): file name or search with `*`.
+            ex: `foo_*.prt` or `*.drw`
+        dirname (string): Directory name
+            (default: Creo's current working directory)
+        generic (string):
+            generic model name (if file name represents an instance).
+        display (boolean):
+            display the model after opening. (default True)
+        activate (boolean):
+            activate the model after opening (default True)
+        new_window (boolean):
+            open model in a new window (default False)
+        regen_force (boolean):
             force regeneration after opening (default False)
-        Returns:
-            dict:
-                "dirname" (string): Directory name of opened file(s).
-                "files" (list|string): File names that were opened.
-                "revision" (integer): Revision of file that was opened;
-                    if more than one file was opened, this field is not
-                    returned.
-    """
 
+    Returns:
+        dict:
+            "dirname" (string):
+                Directory name of opened file(s).
+            "files" (list|string):
+                File names that were opened.
+            "revision" (integer):
+                Revision of file that was opened;
+                if more than one file was opened, this field is not returned.
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
@@ -157,6 +171,19 @@ def open_(client, query, dirname=None, generic=None, display=True,
 
 
 def regenerate(client, *args):
+    """Regenerate Creo model.
+
+    Args:
+        client (obj): creopyson Client
+
+    Raises:
+        Error: [description]
+        error: [description]
+
+    Returns:
+        Boolean: error status
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",

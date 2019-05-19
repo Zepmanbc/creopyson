@@ -1,3 +1,5 @@
+"""Name module."""
+
 import requests
 import json
 

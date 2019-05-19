@@ -1,3 +1,5 @@
+"""Name module."""
+
 from .core import creoson_post
 
 
@@ -14,6 +16,16 @@ from .core import creoson_post
 
 
 def export_pdf(client, current_file):
+    """Export pdf file.
+
+    Args:
+        client (obj): creopyson Client
+        current_file (str): file name
+
+    Returns:
+        dict: export path
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "interface",

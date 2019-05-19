@@ -1,3 +1,4 @@
+"""Connection module."""
 import requests
 import json
 import functools
@@ -6,6 +7,7 @@ from .core import creoson_post
 
 
 class Client(object):
+    """Creates Client object."""
 
     def __init__(self, ip_adress="localhost", port=9056):
         """Create Cleint objet. Define server and sessionID vars."""
@@ -15,8 +17,8 @@ class Client(object):
     def connect(self):
         """Connect to CREOSON.
 
-            Define 'sessionId'.
-            Exit if server not found.
+        Define 'sessionId'.
+        Exit if server not found.
         """
         request = {
             "command": "connection",
@@ -32,8 +34,8 @@ class Client(object):
     def disconnect(self):
         """Disconnect from CREOSON.
 
-            Empty sessionId.
-            Exit if server not found.
+        Empty sessionId.
+        Exit if server not found.
         """
         request = {
             "sessionId": self.sessionId,
@@ -68,8 +70,8 @@ class Client(object):
     def kill_creo(self):
         """Kill primary Creo processes.
 
-            This will kill the 'xtop.exe' and 'nmsd.exe' processes by name.
-            The sessionId is optional, and ignored.
+        This will kill the 'xtop.exe' and 'nmsd.exe' processes by name.
+        The sessionId is optional, and ignored.
         """
         request = {
             "command": "connection",
@@ -78,27 +80,33 @@ class Client(object):
         creoson_post(self, request)
 
     def start_creo(self, path, retries=0):
-        """Execute an external .bat file to start Creo, then attempts to
-            connect to Creo.
+        """Execute an external .bat file to start Creo.
 
-            The .bat file is restricted to a specific name to make the
-            function more secure. (nitro_proe_remote.bat)
-            Set retries to 0 to NOT attempt to connect to Creo.
-            The server will pause for 3 seconds before attempting a
-            connection, and will pause for 10 seconds between
-            connection retries", "If Creo pops up a message after startup,
-            this function may cause Creo to crash unless retries is set to 0.
+        Then attempts to connect to Creo.
 
-            Args:
-                path (string): path to the .bat file
-                    will be split in 'start_command' and 'start_dir'
-                retries (int): Number of retries to make when connecting
-                    (default 0)
+        The .bat file is restricted to a specific name to make the
+        function more secure. (nitro_proe_remote.bat)
+        Set retries to 0 to NOT attempt to connect to Creo.
+        The server will pause for 3 seconds before attempting a
+        connection, and will pause for 10 seconds between
+        connection retries", "If Creo pops up a message after startup,
+        this function may cause Creo to crash unless retries is set to 0.
 
-            Returns:
-                None: 'nitro_proe_remote.bat' was found and executed
-                string: "You may only specify 'nitro_proe_remote.bat'
-                    for the startCommand parameter"
+        Args:
+            path (string):
+                path to the .bat file
+                will be split in 'start_command' and 'start_dir'
+            retries (int):
+                Number of retries to make when connecting
+                (default 0)
+
+        Returns:
+            None:
+                'nitro_proe_remote.bat' was found and executed
+            string:
+                "You may only specify 'nitro_proe_remote.bat'
+                for the startCommand parameter"
+
         """
         start_command = path.split('/')[-1]
         start_dir = path.replace(start_command, '')[:-1]
@@ -118,9 +126,9 @@ class Client(object):
     def stop_creo(self):
         """Disconnect current session from Creo and cause Creo to exit.
 
-            NOTE that this will cause Creo to exit cleanly.
-            If there is no current connection to Creo, this function
-            will do nothing.
+        NOTE that this will cause Creo to exit cleanly.
+        If there is no current connection to Creo, this function
+        will do nothing.
         """
         request = {
             "sessionId": self.sessionId,
@@ -131,13 +139,14 @@ class Client(object):
 
 
 def make_api_method(func):
-    """
-    Provides a single entry point for modifying all API methods.
+    """Provide a single entry point for modifying all API methods.
+
     For now this is limited to allowing the client object to be modified
     with an `extra_params` keyword arg to each method, that is then used
     as the params for each web service requtes.
     Please note that this is an unsupported feature for advanced use only.
     It's also currently incompatibile with multiple threads, see GH #160.
+
     """
     @functools.wraps(func)
     def wrapper(*args, **kwargs):

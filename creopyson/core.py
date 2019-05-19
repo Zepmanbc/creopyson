@@ -1,3 +1,5 @@
+"""Core module."""
+
 import requests
 import json
 
@@ -15,6 +17,7 @@ def creoson_post(client, request):
             'False" if creoson is ok
         data (dict):
             creoson return (it depend the request)
+
     """
     r = requests.post(client.server, data=json.dumps(request))
     json_result = json.loads(r.content)
