@@ -5,3 +5,5 @@
 __author__ = """Benjamin C."""
 __email__ = 'zepman@gmail.com'
 __version__ = '0.1.0'
+
+from creopyson.connection import Client
