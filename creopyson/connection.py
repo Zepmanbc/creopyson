@@ -190,3 +190,31 @@ Client.file_regenerate = make_api_method(file_regenerate)
 # interface.py
 from creopyson.interface import export_pdf as interface_export_pdf
 Client.interface_export_pdf = make_api_method(interface_export_pdf)
+
+# Windchill
+from creopyson.windchill import authorize as windchill_authorize
+from creopyson.windchill import clear_workspace as windchill_clear_workspace
+from creopyson.windchill import create_workspace as windchill_create_workspace
+from creopyson.windchill import delete_workspace as windchill_delete_workspace
+from creopyson.windchill import file_checked_out as windchill_file_checked_out
+from creopyson.windchill import get_workspace as windchill_get_workspace
+from creopyson.windchill import list_workspace_files as \
+    windchill_list_workspace_files
+from creopyson.windchill import list_workspaces as windchill_list_workspaces
+from creopyson.windchill import server_exists as windchill_server_exists
+from creopyson.windchill import set_server as windchill_set_server
+from creopyson.windchill import set_workspace as windchill_set_workspace
+from creopyson.windchill import workspace_exists as windchill_workspace_exists
+Client.windchill_authorize = make_api_method(windchill_authorize)
+Client.windchill_clear_workspace = make_api_method(windchill_clear_workspace)
+Client.windchill_create_workspace = make_api_method(windchill_create_workspace)
+Client.windchill_delete_workspace = make_api_method(windchill_delete_workspace)
+Client.windchill_file_checked_out = make_api_method(windchill_file_checked_out)
+Client.windchill_get_workspace = make_api_method(windchill_get_workspace)
+Client.windchill_list_workspace_files = \
+    make_api_method(windchill_list_workspace_files)
+Client.windchill_list_workspaces = make_api_method(windchill_list_workspaces)
+Client.windchill_server_exists = make_api_method(windchill_server_exists)
+Client.windchill_set_server = make_api_method(windchill_set_server)
+Client.windchill_set_workspace = make_api_method(windchill_set_workspace)
+Client.windchill_workspace_exists = make_api_method(windchill_workspace_exists)
