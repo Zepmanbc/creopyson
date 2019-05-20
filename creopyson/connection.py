@@ -188,8 +188,22 @@ Client.file_open = make_api_method(file_open)
 Client.file_regenerate = make_api_method(file_regenerate)
 
 # interface.py
+from creopyson.interface import export_3dpdf as interface_export_3dpdf
+from creopyson.interface import export_file as interface_export_file
+from creopyson.interface import export_image as interface_export_image
 from creopyson.interface import export_pdf as interface_export_pdf
+from creopyson.interface import export_program as interface_export_program
+from creopyson.interface import import_program as interface_import_program
+from creopyson.interface import mapkey as interface_mapkey
+from creopyson.interface import plot as interface_plot
+Client.interface_export_3dpdf = make_api_method(interface_export_3dpdf)
+Client.interface_export_file = make_api_method(interface_export_file)
+Client.interface_export_image = make_api_method(interface_export_image)
 Client.interface_export_pdf = make_api_method(interface_export_pdf)
+Client.interface_export_program = make_api_method(interface_export_program)
+Client.interface_import_program = make_api_method(interface_import_program)
+Client.interface_mapkey = make_api_method(interface_mapkey)
+Client.interface_plot = make_api_method(interface_plot)
 
 # Windchill
 from creopyson.windchill import authorize as windchill_authorize
