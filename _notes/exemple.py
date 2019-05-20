@@ -1,7 +1,10 @@
-import sys, os
+"""exemple script."""
+import sys
+import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import creopyson
-import requests, json
+# import requests
+# import json
 import time
 
 IP_CREO = "192.168.56.101"
@@ -55,8 +58,6 @@ c.file_open(drawing_file, new_window=True)
 if c.file_exists(drawing_file):
     print(c.interface_export_pdf(drawing_file))
 
-
-
 # c.stop_creo()
 
 # c.disconnect()
@@ -81,7 +82,5 @@ if c.file_exists(drawing_file):
 
 
 # print(c.sessionId)
-
-
 
 print("Done")
