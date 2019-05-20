@@ -12,14 +12,6 @@ creopyson.bom module
     :undoc-members:
     :show-inheritance:
 
-creopyson.client module
------------------------
-
-.. automodule:: creopyson.client
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 creopyson.connection module
 ---------------------------
 
@@ -52,38 +44,6 @@ creopyson.dimension module
     :undoc-members:
     :show-inheritance:
 
-creopyson.drawing module
-------------------------
-
-.. automodule:: creopyson.drawing
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.exceptions module
----------------------------
-
-.. automodule:: creopyson.exceptions
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.familytable module
-----------------------------
-
-.. automodule:: creopyson.familytable
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.feature module
-------------------------
-
-.. automodule:: creopyson.feature
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 creopyson.file module
 ---------------------
 
@@ -92,66 +52,10 @@ creopyson.file module
     :undoc-members:
     :show-inheritance:
 
-creopyson.geometry module
--------------------------
-
-.. automodule:: creopyson.geometry
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 creopyson.interface module
 --------------------------
 
 .. automodule:: creopyson.interface
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.layer module
-----------------------
-
-.. automodule:: creopyson.layer
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.note module
----------------------
-
-.. automodule:: creopyson.note
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.object module
------------------------
-
-.. automodule:: creopyson.object
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.parameter module
---------------------------
-
-.. automodule:: creopyson.parameter
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.server module
------------------------
-
-.. automodule:: creopyson.server
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-creopyson.view module
----------------------
-
-.. automodule:: creopyson.view
     :members:
     :undoc-members:
     :show-inheritance:

@@ -160,7 +160,7 @@ def list_workspace_files(client, filename=None):
     Args:
         client (obj): creopyson Client
         filename (str, optional): File name or search. Defaults to None.
-            ex: `*.asm`, `screw_*.prt`
+        ex: `*.asm`, `screw_*.prt`
 
     Returns:
         list: List of files in the workspace correspnding to the request.
