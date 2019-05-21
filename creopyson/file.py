@@ -922,8 +922,34 @@ def relations_get(client, current_file=None):
         raise Warning(data)
 
 
-# def relations_set():
-#     pass
+def relations_set(client, current_file=None, relations=None):
+    """Set relations for a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+        relations (list:str, optional):
+            Relations text to import, one line per entry.
+            Clear the relations if missing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "relations_set",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if relations:
+        request["data"]["relations"] = relations
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def rename():
