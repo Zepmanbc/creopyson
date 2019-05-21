@@ -150,8 +150,36 @@ def backup(client, target_dir, current_file=None):
         raise Warning(data)
 
 
-# def close_window():
-#     pass
+def close_window(client, current_file=None):
+    """Close the window containing a model.
+
+    Args:
+        client (obj):
+            creopyson object.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "close_window",
+        "data": {
+            "file": current_file
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def display():
