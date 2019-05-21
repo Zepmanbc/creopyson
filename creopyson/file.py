@@ -1,4 +1,4 @@
-"""Name module."""
+"""File module."""
 
 from .core import creoson_post
 
@@ -67,7 +67,7 @@ def assemble(
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             dirname (str):
                 Directory name of component.
             files (list:str):
@@ -130,7 +130,8 @@ def backup(client, target_dir, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: None
+    Returns:
+        None
 
     """
     request = {
@@ -160,7 +161,8 @@ def close_window(client, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: None
+    Returns:
+        None
 
     """
     request = {
@@ -189,7 +191,8 @@ def display(client, current_file, activate=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: None
+    Returns:
+        None
 
     """
     request = {
@@ -225,7 +228,8 @@ def erase(client, current_file=None, files=None, erase_children=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: None
+    Returns:
+        None
 
     """
     request = {
@@ -253,7 +257,8 @@ def erase_not_displayed(client):
     Raises:
         Warning: error message from creoson.
 
-    Returns: None
+    Returns:
+        None
 
     """
     request = {
@@ -277,7 +282,7 @@ def exists(client, current_file):
         Warning: error message from creoson.
 
     Returns:
-        Boolean: Whether the file is open in Creo.
+        (Boolean): Whether the file is open in Creo.
 
     """
     request = {
@@ -305,7 +310,7 @@ def get_active(client):
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             dirname (str): Directory name of current model.
             file (str): File name of current model.
 
@@ -335,7 +340,7 @@ def get_fileinfo(client, current_file=None):
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             dirname (str): Directory name of the file.
             file (str): File name.
             revision (int): Revision number of file.
@@ -367,7 +372,8 @@ def get_length_units(client, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (str) Length units.
+    Returns:
+        (str): Length units.
 
     """
     request = {
@@ -396,7 +402,8 @@ def get_mass_units(client, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (str) mass units.
+    Returns:
+        (str): mass units.
 
     """
     request = {
@@ -432,7 +439,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         Warning: error message from creoson.
 
     Returns:
-        (obj:JLTransform) The 3D transform from the assembly to
+        (obj:JLTransform): The 3D transform from the assembly to
         the component's coordinate system.
 
     """
@@ -466,7 +473,8 @@ def has_instances(client, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (boolean) Whether the file has a family table.
+    Returns:
+        (boolean): Whether the file has a family table.
 
     """
     request = {
@@ -493,7 +501,8 @@ def is_active(client, current_file):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (boolean) Whether the file is the currently active model.
+    Returns:
+        (boolean): Whether the file is the currently active model.
 
     """
     request = {
@@ -525,7 +534,8 @@ def list_(client, current_file=None, files=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (list:str) List of files.
+    Returns:
+        (list:str) List of files.
 
     """
     request = {
@@ -557,7 +567,7 @@ def list_instances(client, current_file=None):
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             dirname (str): Directory name of the file.
             generic (str): Generic name.
             files (list:str): List of model names in the table.
@@ -593,7 +603,7 @@ def list_simp_reps(client, current_file=None, rep=None):
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             rep (str): Simplified rep name.
             reps (list:str): Simplified reps names.
 
@@ -628,7 +638,7 @@ def massprops(client, current_file=None):
         Warning: error message from creoson.
 
     Returns:
-        dict:
+        (dict):
             volume (float): Model volume.
             mass (float): Model mass.
             density (float): Model density.
@@ -649,37 +659,50 @@ def massprops(client, current_file=None):
         raise Warning(data)
 
 
-def open_(client, query, dirname=None, generic=None, display=True,
-          activate=True, new_window=False, regen_force=False):
-    """Open files in Creo.
-
-    Opening a single file: client.file_open("my_file.prt")
-    Opening all drawings
+def open_(
+    client,
+    current_file=None,
+    dirname=None,
+    files=None,
+    generic=None,
+    display=None,
+    activate=None,
+    new_window=None,
+    regen_force=None
+):
+    """Open one or more files in memory or from the drive.
 
     Args:
-        client (obj): creopyson Client.
-            query (list|string): file name or search with `*`.
-            ex: `foo_*.prt` or `*.drw`
-        dirname (string): Directory name
-            (default: Creo's current working directory)
-        generic (string):
-            generic model name (if file name represents an instance).
-        display (boolean):
-            display the model after opening. (default True)
-        activate (boolean):
-            activate the model after opening (default True)
-        new_window (boolean):
-            open model in a new window (default False)
-        regen_force (boolean):
-            force regeneration after opening (default False)
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name; only used if files is not given. Defaults to None.
+        dirname (str, optional):
+            Directory name. Defaults is Creo's current working directory.
+        files (list:str, optional):
+            List of file names. Defaults: the file parameter is used.
+        generic (str, optional):
+            Generic model name (if file name represents an instance).
+            Defaults to None.
+        display (boolean, optional):
+            Display the model after opening. Defaults is False.
+        activate (boolean, optional):
+            Activate the model after opening. Defaults is False.
+        new_window (boolean, optional):
+            Open model in a new window. Defaults is False.
+        regen_force (boolean, optional):
+            Force regeneration after opening. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
 
     Returns:
-        dict:
-            "dirname" (string):
+        (dict):
+            dirname (str):
                 Directory name of opened file(s).
-            "files" (list|string):
+            files (list:str):
                 File names that were opened.
-            "revision" (integer):
+            revision (int):
                 Revision of file that was opened;
                 if more than one file was opened, this field is not returned.
 
@@ -688,28 +711,58 @@ def open_(client, query, dirname=None, generic=None, display=True,
         "sessionId": client.sessionId,
         "command": "file",
         "function": "open",
-        "data": {
-            "display": display,
-            "activate": activate,
-            "new_window": new_window,
-            "regen_force": regen_force,
-        }
     }
-    if type(query) is list:
-        request["data"]["files"] = query
-    else:
-        request["data"]["file"] = query
+    if current_file:
+        request["data"]["file"] = current_file
     if dirname:
         request["data"]["dirname"] = dirname
+    if files:
+        request["data"]["files"] = files
     if generic:
         request["data"]["generic"] = generic
+    if display:
+        request["data"]["display"] = display
+    if activate:
+        request["data"]["activate"] = activate
+    if new_window:
+        request["data"]["new_window"] = new_window
+    if regen_force:
+        request["data"]["regen_force"] = regen_force
     status, data = creoson_post(client, request)
     if not status:
         return data
+    else:
+        raise Warning(data)
 
 
-# def open_errors():
-#     pass
+def open_errors(client, current_file=None):
+    """Check whether Creo errors have occurred opening a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (boolean): Whether errors exist in Creo.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "open_errors",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["errors"]
+    else:
+        raise Warning(data)
 
 
 # def postregen_relations_get():
