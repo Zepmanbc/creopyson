@@ -267,6 +267,19 @@ def erase_not_displayed(client):
 
 
 def exists(client, current_file):
+    """Check whether a model exists in memory.
+
+    Args:
+        client (obj): creopyson Client.
+        current_file (str): File name.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        Boolean: Whether the file is open in Creo.
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
@@ -278,6 +291,8 @@ def exists(client, current_file):
     status, data = creoson_post(client, request)
     if not status:
         return data["exists"]
+    else:
+        raise Warning(data)
 
 
 # def get_active():
