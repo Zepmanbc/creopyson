@@ -544,8 +544,37 @@ def list_(client, current_file=None, files=None):
         raise Warning(data)
 
 
-# def list_instances():
-#     pass
+def list_instances(client, current_file=None):
+    """List instances in a model's family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            dirname (str): Directory name of the file.
+            generic (str): Generic name.
+            files (list:str): List of model names in the table.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "list_instances",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def list_simp_reps():
