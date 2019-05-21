@@ -1022,8 +1022,37 @@ def repaint(client, current_file=None):
         raise Warning(data)
 
 
-# def save():
-#     pass
+def save(client, current_file=None, files=None):
+    """Save one or more models.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name; only used if files is not given.
+        files (list:str, optional):
+            List of file names. Defaults: the file parameter is used.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "save",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if files:
+        request["data"]["files"] = files
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
+    # TODO only one entry
 
 
 # def set_length_units():
