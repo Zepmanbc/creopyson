@@ -577,8 +577,42 @@ def list_instances(client, current_file=None):
         raise Warning(data)
 
 
-# def list_simp_reps():
-#     pass
+def list_simp_reps(client, current_file=None, rep=None):
+    """List simplified reps in a model.
+
+    Args:
+        client (obj):
+            creopyson Client
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+        rep (str, optional):
+            Simplified rep name pattern (wildcards_allowed: True).
+            Defaults is all simplified reps.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            rep (str): Simplified rep name.
+            reps (list:str): Simplified reps names.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "list_simp_reps",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if rep:
+        request["data"]["rep"] = rep
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+        # TODO return only list between `rep` and `reps`
+    else:
+        raise Warning(data)
 
 
 # def massprops():
