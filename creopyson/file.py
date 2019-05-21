@@ -1055,8 +1055,43 @@ def save(client, current_file=None, files=None):
     # TODO only one entry
 
 
-# def set_length_units():
-#     pass
+def set_length_units(client, units, current_file=None, convert=None):
+    """Set the current length units for a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        units (str):
+            New length units.
+        current_file (str, optional):
+            File name; only used if files is not given.
+        convert (boolean, optional):
+            Whether to convert the model's length values to the
+            new units (True) or leave them the same value (False).
+            Defaults is True.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "set_length_units",
+        "date": {
+            "units": units,
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if convert:
+        request["data"]["convert"] = convert
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def set_mass_units():
