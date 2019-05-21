@@ -322,8 +322,37 @@ def get_active(client):
         raise Warning(data)
 
 
-# def get_fileinfo():
-#     pass
+def get_fileinfo(client, current_file=None):
+    """Open one or more files in memory or from the drive.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            dirname (str): Directory name of the file.
+            file (str): File name.
+            revision (int): Revision number of file.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "get_fileinfo",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
 
 
 # def get_length_units():
