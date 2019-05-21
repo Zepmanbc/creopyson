@@ -169,9 +169,6 @@ def close_window(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "close_window",
-        "data": {
-            "file": current_file
-        }
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -182,8 +179,38 @@ def close_window(client, current_file=None):
         raise Warning(data)
 
 
-# def display():
-#     pass
+def display(client, current_file, activate=None):
+    """Display a model in a window.
+
+    Args:
+        client (obj):
+            creopyson object.
+        current_file (str):
+            File name
+        activate (boolean, optional):
+            Activate the model after displayong. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "display",
+        "data": {
+            "file": current_file
+        }
+    }
+    if activate:
+        request["data"]["activate"] = activate
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def erase():
