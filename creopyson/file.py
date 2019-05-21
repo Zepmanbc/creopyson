@@ -144,9 +144,7 @@ def backup(client, target_dir, current_file=None):
     if current_file:
         request["data"]["file"] = current_file
     status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
+    if status:
         raise Warning(data)
 
 
@@ -173,9 +171,7 @@ def close_window(client, current_file=None):
     if current_file:
         request["data"]["file"] = current_file
     status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
+    if status:
         raise Warning(data)
 
 
@@ -207,9 +203,7 @@ def display(client, current_file, activate=None):
     if activate:
         request["data"]["activate"] = activate
     status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
+    if status:
         raise Warning(data)
 
 
@@ -246,14 +240,30 @@ def erase(client, current_file=None, files=None, erase_children=None):
     if erase_children:
         request["data"]["erase_children"] = erase_children
     status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
+    if status:
         raise Warning(data)
 
 
-# def erase_not_displayed():
-#     pass
+def erase_not_displayed(client):
+    """Erase all non-displayed models from memory.
+
+    Args:
+        client (obj): creopyson Client.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "erase_not_displayed",
+    }
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def exists(client, current_file):
