@@ -466,7 +466,7 @@ def has_instances(client, current_file=None):
     Raises:
         Warning: error message from creoson.
 
-    Returns: (boolean) Whether the file has a family table
+    Returns: (boolean) Whether the file has a family table.
 
     """
     request = {
@@ -483,8 +483,32 @@ def has_instances(client, current_file=None):
         raise Warning(data)
 
 
-# def is_active():
-#     pass
+def is_active(client, current_file):
+    """Check whether a model is the active model.
+
+    Args:
+        client (obj): creopyson Client.
+        current_file (str): File name.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: (boolean) Whether the file is the currently active model.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "is_active",
+        "data": {
+            "file": current_file
+        }
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["active"]
+    else:
+        raise Warning(data)
 
 
 # def list_():
