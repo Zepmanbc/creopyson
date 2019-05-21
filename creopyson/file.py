@@ -856,25 +856,40 @@ def refresh(client, current_file=None):
         raise Warning(data)
 
 
-def regenerate(client, *args):
+def regenerate(client, current_file=None, files=None, display=None):
+    """Regenerate one or more models.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+        files (list:str, optional):
+            List of file names. Defaults: the file parameter is used.
+        display (boolean, optional):
+            Display the model before regenerating. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
         "function": "regenerate",
-        "data": {
-            "file": args,
-            "display": True
-        }
     }
-    if len(args) == 1:
-        request["data"]["file"] = args[0]
-    elif len(args) > 1:
-        request["data"]["files"] = list(args)
-    else:
-        print("raise Error")
+    if current_file:
+        request["data"]["file"] = current_file
+    if files:
+        request["data"]["files"] = files
+    if display:
+        request["data"]["display"] = display
     status, data = creoson_post(client, request)
-    return status
-    # TODO: raise error
+    if status:
+        raise Warning(data)
 
 
 # def relations_get():
