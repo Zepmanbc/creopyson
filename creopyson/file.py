@@ -892,8 +892,34 @@ def regenerate(client, current_file=None, files=None, display=None):
         raise Warning(data)
 
 
-# def relations_get():
-#     pass
+def relations_get(client, current_file=None):
+    """Get relations for a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:srt): Exported relations text, one entry per line.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "relations_get",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["relations"]
+    else:
+        raise Warning(data)
 
 
 # def relations_set():
