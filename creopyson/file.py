@@ -615,8 +615,38 @@ def list_simp_reps(client, current_file=None, rep=None):
         raise Warning(data)
 
 
-# def massprops():
-#     pass
+def massprops(client, current_file=None):
+    """Get mass property information about a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            volume (float): Model volume.
+            mass (float): Model mass.
+            density (float): Model density.
+            surface_area (float): Model surface area.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "massprops",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def open_(client, query, dirname=None, generic=None, display=True,
