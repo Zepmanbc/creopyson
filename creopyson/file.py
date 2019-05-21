@@ -1058,6 +1058,9 @@ def save(client, current_file=None, files=None):
 def set_length_units(client, units, current_file=None, convert=None):
     """Set the current length units for a model.
 
+    This will search the model's available Unit Systems for the first one
+    which contains the given length unit.
+
     Args:
         client (obj):
             creopyson Client.
@@ -1094,5 +1097,43 @@ def set_length_units(client, units, current_file=None, convert=None):
         raise Warning(data)
 
 
-# def set_mass_units():
-#     pass
+def set_mass_units(client, units, current_file=None, convert=None):
+    """Set the mass units for a model.
+
+    This will search the model's available Unit Systems for the first one
+    which contains the given mass unit.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        units (str):
+            New mass units.
+        current_file (str, optional):
+            File name; only used if files is not given.
+        convert (boolean, optional):
+            Whether to convert the model's mass values to the
+            new units (True) or leave them the same value (False).
+            Defaults is True.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "set_length_units",
+        "date": {
+            "units": units,
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if convert:
+        request["data"]["convert"] = convert
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
