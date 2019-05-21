@@ -937,6 +937,9 @@ def relations_set(client, current_file=None, relations=None):
     Raises:
         Warning: error message from creoson.
 
+    Returns:
+        None
+
     """
     request = {
         "sessionId": client.sessionId,
@@ -952,8 +955,43 @@ def relations_set(client, current_file=None, relations=None):
         raise Warning(data)
 
 
-# def rename():
-#     pass
+def rename(client, new_name, current_file=None, onlysession=None):
+    """Rename a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        new_name (str):
+            New file name.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+        onlysession (boolean, optional):
+            Modify only in memory, not on disk. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): The new model name.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "rename",
+        "data": {
+            "new_name": new_name,
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if onlysession:
+        request["data"]["onlysession"] = onlysession
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["file"]
+    else:
+        raise Warning(data)
 
 
 # def repaint():
