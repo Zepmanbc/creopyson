@@ -180,12 +180,73 @@ from creopyson.dimension import set_ as dimension_set
 Client.dimension_set = make_api_method(dimension_set)
 
 # file.py
+from creopyson.file import assemble as file_assemble
+from creopyson.file import backup as file_backup
+from creopyson.file import close_window as file_close_window
+from creopyson.file import display as file_display
+from creopyson.file import erase as file_erase
+from creopyson.file import erase_not_displayed as file_erase_not_displayed
 from creopyson.file import exists as file_exists
+from creopyson.file import get_active as file_get_active
+from creopyson.file import get_fileinfo as file_get_fileinfo
+from creopyson.file import get_length_units as file_get_length_units
+from creopyson.file import get_mass_units as file_get_mass_units
+from creopyson.file import get_transform as file_get_transform
+from creopyson.file import has_instances as file_has_instances
+from creopyson.file import is_active as file_is_active
+from creopyson.file import list_instances as file_list_instances
+from creopyson.file import list_ as file_list
+from creopyson.file import list_simp_reps as file_list_simp_reps
+from creopyson.file import massprops as file_massprops
+from creopyson.file import open_errors as file_open_errors
 from creopyson.file import open_ as file_open
+from creopyson.file import postregen_relations_get as \
+    file_postregen_relations_get
+from creopyson.file import postregen_relations_set as \
+    file_postregen_relations_set
+from creopyson.file import refresh as file_refresh
 from creopyson.file import regenerate as file_regenerate
+from creopyson.file import relations_get as file_relations_get
+from creopyson.file import relations_set as file_relations_set
+from creopyson.file import rename as file_rename
+from creopyson.file import repaint as file_repaint
+from creopyson.file import save as file_save
+from creopyson.file import set_length_units as file_set_length_units
+from creopyson.file import set_mass_units as file_set_mass_units
+Client.file_assemble = make_api_method(file_assemble)
+Client.file_backup = make_api_method(file_backup)
+Client.file_close_window = make_api_method(file_close_window)
+Client.file_display = make_api_method(file_display)
+Client.file_erase = make_api_method(file_erase)
+Client.file_erase_not_displayed = make_api_method(file_erase_not_displayed)
 Client.file_exists = make_api_method(file_exists)
+Client.file_get_active = make_api_method(file_get_active)
+Client.file_get_fileinfo = \
+    make_api_method(file_get_fileinfo)
+Client.file_get_length_units = make_api_method(file_get_length_units)
+Client.file_get_mass_units = make_api_method(file_get_mass_units)
+Client.file_get_transform = make_api_method(file_get_transform)
+Client.file_has_instances = make_api_method(file_has_instances)
+Client.file_is_active = make_api_method(file_is_active)
+Client.file_list_instances = make_api_method(file_list_instances)
+Client.file_list = make_api_method(file_list)
+Client.file_list_simp_reps = make_api_method(file_list_simp_reps)
+Client.file_massprops = make_api_method(file_massprops)
+Client.file_open_errors = make_api_method(file_open_errors)
 Client.file_open = make_api_method(file_open)
+Client.file_postregen_relations_get = \
+    make_api_method(file_postregen_relations_get)
+Client.file_postregen_relations_set = \
+    make_api_method(file_postregen_relations_set)
+Client.file_refresh = make_api_method(file_refresh)
 Client.file_regenerate = make_api_method(file_regenerate)
+Client.file_relations_get = make_api_method(file_relations_get)
+Client.file_relations_set = make_api_method(file_relations_set)
+Client.file_rename = make_api_method(file_rename)
+Client.file_repaint = make_api_method(file_repaint)
+Client.file_save = make_api_method(file_save)
+Client.file_set_length_units = make_api_method(file_set_length_units)
+Client.file_set_mass_units = make_api_method(file_set_mass_units)
 
 # interface.py
 from creopyson.interface import export_3dpdf as interface_export_3dpdf
