@@ -413,8 +413,45 @@ def get_mass_units(client, current_file=None):
         raise Warning(data)
 
 
-# def get_transform():
-#     pass
+def get_transform(client, asm=None, path=None, csys=None):
+    """Get the 3D transform for a component in an assembly.
+
+    Args:
+        client (obj):
+            creopyson Client
+        asm (str, optional):
+            Assembly name. Defaults is currently active model.
+        path (list:int, optional):
+            Path to a component in the assembly.
+            Defaults is the transform is calculated for the assembly itself.
+        csys (str, optional):
+            Coordinate system on the component to calculate the transform for.
+            Defaults is the component's default coordinate system.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (obj:JLTransform) The 3D transform from the assembly to
+        the component's coordinate system.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "get_transform",
+    }
+    if asm:
+        request["data"]["asm"] = asm
+    if path:
+        request["data"]["path"] = path
+    if csys:
+        request["data"]["csys"] = csys
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["transform"]
+    else:
+        raise Warning(data)
 
 
 # def has_instances():
