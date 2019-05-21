@@ -454,8 +454,33 @@ def get_transform(client, asm=None, path=None, csys=None):
         raise Warning(data)
 
 
-# def has_instances():
-#     pass
+def has_instances(client, current_file=None):
+    """Check whether a model has a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: (boolean) Whether the file has a family table
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "has_instances",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
 
 
 # def is_active():
