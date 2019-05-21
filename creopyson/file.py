@@ -350,13 +350,38 @@ def get_fileinfo(client, current_file=None):
         request["data"]["file"] = current_file
     status, data = creoson_post(client, request)
     if not status:
-        return data["exists"]
+        return data
     else:
         raise Warning(data)
 
 
-# def get_length_units():
-#     pass
+def get_length_units(client, current_file=None):
+    """Get the current length units for a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: (str) Length units.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "get_length_units",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["units"]
+    else:
+        raise Warning(data)
 
 
 # def get_mass_units():
