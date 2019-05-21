@@ -213,8 +213,43 @@ def display(client, current_file, activate=None):
         raise Warning(data)
 
 
-# def erase():
-#     pass
+def erase(client, current_file=None, files=None, erase_children=None):
+    """Erase one or more models from memory.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name; only used if files is not given
+            (Wildcards allowed: True). Defaults to None.
+        files (list:str, optional):
+            List of file names. Defaults is the file parameter is used;
+            if both are empty, then all models in memory are erased.
+        erase_children (boolean, optional):
+            Erase children of the models too. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "erase",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if files:
+        request["data"]["files"] = files
+    if erase_children:
+        request["data"]["erase_children"] = erase_children
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def erase_not_displayed():
