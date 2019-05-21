@@ -3,8 +3,117 @@
 from .core import creoson_post
 
 
-# def assemble():
-#     pass
+def assemble(
+    client,
+    current_file,
+    dirname=None,
+    generic=None,
+    into_asm=None,
+    path=None,
+    ref_model=None,
+    transform=None,
+    constraints=None,
+    package_assembly=None,
+    walk_children=None,
+    assemble_to_root=None,
+    suppress=None
+):
+    """Assemble a component into an assembly.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str):
+            File name component.
+        dirname (str, optional):
+            Diretory name. Defaults is Creo's current working directory.
+        generic (str, optional):
+            Generic model name (if file name represents an instance).
+            Defaults is generic model name (if file name represents an
+            instance).
+        into_asm (str, optional):
+            Target assembly. Defaults is currently active model.
+        path (list:int, optional):
+            Path to a component that the new part will be constrained to.
+            Defaults to None.
+        ref_model (str, optional):
+            Reference model that the new part will be constrained to;
+            only used if path is not given.  If there are multiple of this
+            model in the assembly, the component will be assembled multiple
+            times, once to each occurrence. Defaults to None.
+        transform (obj:JLTransform, optional):
+            Transform structure for the initial position and orientation of
+            the new component; only used if there are no constraints, or for
+            certain constraint types. Defaults to None.
+        constraints (obj_array:JLConstraint, optional):
+            Assembly constraints. Defaults to None.
+        package_assembly (boolean, optional):
+            Whether to package the component to the assembly; only used if
+            there are no constraints specified. Defaults is If there are no
+            constraints, then the user will be prompted to constrain the
+            component through the Creo user interface.
+        walk_children (boolean, optional):
+            Whether to walk into subassemblies to find reference models to
+            constrain to. Defaults to None.
+        assemble_to_root (boolean, optional):
+            Whether to always assemble to the root assembly, or assemble to
+            the subassembly containing the reference path/model.
+            Defaults to None.
+        suppress (boolean, optional):
+            Whether to suppress the components immediately after assembling
+            them. Defaults to None.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            dirname (str):
+                Directory name of component.
+            files (list:str):
+                File name of component.
+            revision (int):
+                Revision of file that was opened; if more than one
+                file was opened, this field is not returned.
+            featureid (int):
+                Last Feature ID of component after assembly.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "assemble",
+        "data": {
+            "file": current_file
+        }
+    }
+    if dirname:
+        request["data"]["dirname"] = dirname
+    if generic:
+        request["data"]["generic"] = generic
+    if into_asm:
+        request["data"]["into_asm"] = into_asm
+    if path:
+        request["data"]["path"] = path
+    if ref_model:
+        request["data"]["ref_model"] = ref_model
+    if transform:
+        request["data"]["transform"] = transform
+    if constraints:
+        request["data"]["constraints"] = constraints
+    if package_assembly:
+        request["data"]["package_assembly"] = package_assembly
+    if walk_children:
+        request["data"]["walk_children"] = walk_children
+    if assemble_to_root:
+        request["data"]["assemble_to_root"] = assemble_to_root
+    if suppress:
+        request["data"]["suppress"] = suppress
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def backup():
@@ -28,16 +137,6 @@ from .core import creoson_post
 
 
 def exists(client, current_file):
-    """Test if file exists in Workdirectory.
-
-    Args:
-        client (obj): creopyson Client
-        current_file (str): path to file
-
-    Returns:
-        Boolean: True if exists, False if not
-
-    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
@@ -171,19 +270,6 @@ def open_(client, query, dirname=None, generic=None, display=True,
 
 
 def regenerate(client, *args):
-    """Regenerate Creo model.
-
-    Args:
-        client (obj): creopyson Client
-
-    Raises:
-        Error: [description]
-        error: [description]
-
-    Returns:
-        Boolean: error status
-
-    """
     request = {
         "sessionId": client.sessionId,
         "command": "file",
