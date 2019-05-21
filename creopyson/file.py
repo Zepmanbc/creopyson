@@ -295,8 +295,31 @@ def exists(client, current_file):
         raise Warning(data)
 
 
-# def get_active():
-#     pass
+def get_active(client):
+    """Get the active model from Creo.
+
+    Args:
+        client (obj): creopyson Client.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        dict:
+            dirname (str): Directory name of current model.
+            file (str): File name of current model.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "get_active",
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def get_fileinfo():
