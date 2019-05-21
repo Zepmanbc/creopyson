@@ -116,8 +116,38 @@ def assemble(
         raise Warning(data)
 
 
-# def backup():
-#     pass
+def backup(client, target_dir, current_file=None):
+    """Backup a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        target_dir (str):
+            Target directory name.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "backup",
+        "data": {
+            "target_dir": target_dir
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 # def close_window():
