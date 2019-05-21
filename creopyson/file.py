@@ -511,8 +511,37 @@ def is_active(client, current_file):
         raise Warning(data)
 
 
-# def list_():
-#     pass
+def list_(client, current_file=None, files=None):
+    """Get a list of files in the current Creo session that match patterns.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name; only used if files is not given. Defaults to None.
+        files (list:str, optional):
+            List of file names. Defaults to None.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns: (list:str) List of files.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "is_active",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if files:
+        request["data"]["files"] = files
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["files"]
+    else:
+        raise Warning(data)
 
 
 # def list_instances():
