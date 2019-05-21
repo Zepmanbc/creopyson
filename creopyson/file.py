@@ -828,8 +828,32 @@ def postregen_relations_set(client, current_file=None, relations=None):
         raise Warning(data)
 
 
-# def refresh():
-#     pass
+def refresh(client, current_file=None):
+    """Refresh the window containing a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "refresh",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def regenerate(client, *args):
