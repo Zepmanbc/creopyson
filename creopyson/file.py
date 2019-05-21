@@ -994,8 +994,32 @@ def rename(client, new_name, current_file=None, onlysession=None):
         raise Warning(data)
 
 
-# def repaint():
-#     pass
+def repaint(client, current_file=None):
+    """Repaint the window containing a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "file",
+        "function": "repaint",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def save():
