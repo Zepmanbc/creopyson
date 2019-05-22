@@ -73,8 +73,34 @@ def delete_files(client, dirname=None, filename=None, filenames=None):
         raise Warning(data)
 
 
-# def get_config():
-#     pass
+def get_config(client, name):
+    """Get the value of a Creo config option.
+
+    Args:
+        client (obj): creopyson Client.
+        name (str): Option name.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str):
+            List of option values (some options can have multiple values).
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "get_config",
+        "data": {
+            "name": name
+        }
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["values"]
+    else:
+        raise Warning(data)
 
 
 # def get_std_color():
