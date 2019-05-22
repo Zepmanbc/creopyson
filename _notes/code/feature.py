@@ -260,8 +260,48 @@ def param_exists(client, current_file=None, param=None, params=None):
     # TODO: param/params
 
 
-# def rename():
-#     pass
+def rename(client, new_name, current_file=None, feat_id=None, name=None):
+    """Rename a feature.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        new_name (str):
+            New name for the feature.
+        current_file (str, optional):
+            File name.
+            Defaults is the currently active model.
+        feat_id (int, optional):
+            Feature ID. Defaults: the name parameter is used.
+        name (list:str, optional):
+            Feature name; only used if feat_id is not given.
+            Defaults to None.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "rename",
+        "data": {
+            "new_name": new_name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if feat_id:
+        request["data"]["feat_id"] = feat_id
+    if name:
+        request["data"]["name"] = name
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
+    # TODO: feat_id/name
 
 
 # def resume():
