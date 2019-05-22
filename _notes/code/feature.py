@@ -72,8 +72,44 @@ def delete(
         raise Warning(data)
 
 
-# def delete_param():
-#     pass
+def delete_param(client, name=None, current_file=None, param=None):
+    """Delete a feature parameter.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str, optional):
+            Parameter name (wildcards allowed: True).
+            Defaults: All parameter names.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        param (str, optional):
+            Parameter name (wildcards allowed: True).
+            Defaults: All parameter names.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "delete_param",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if param:
+        request["data"]["param"] = param
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
 
 
 # def list():
