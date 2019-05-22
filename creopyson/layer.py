@@ -118,5 +118,37 @@ def list_(client, name=None, current_file=None):
         raise Warning(data)
 
 
-def show():
-    pass
+def show(client, name=None, current_file=None, show_=None):
+    """how/Hide one or more layers.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str, optional):
+            Layer name (wildcards allowed: True).
+            Defaults: All layers are listed.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is current active model.
+        show_ (boolean, optional):
+            Whether to show or hide the layers.
+            Defaults is True (show).
+
+    Raises:
+        Warning: error message from creoson.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "exists",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if show_:
+        request["data"]["show"] = show_
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
