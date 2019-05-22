@@ -86,8 +86,8 @@ def list_(
     """
     request = {
         "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_program",
+        "command": "dimension",
+        "function": "list",
     }
     if current_file:
         request["data"]["file"] = current_file
