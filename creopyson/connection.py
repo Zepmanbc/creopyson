@@ -57,27 +57,43 @@ class Client(object):
         connection to Creo and returns whether the connection succeeds.
         The sessionId is optional, and ignored.
 
-        return:
-            Boolean: True if Creo is running, False instead.
+        Raises:
+            Warning: error message from creoson.
+
+        Returns:
+            (boolean): True if Creo is running, False instead.
+
         """
         request = {
             "command": "connection",
             "function": "is_creo_running"
         }
         status, data = creoson_post(self, request)
-        return data['running']
+        if not status:
+            return data["running"]
+        else:
+            raise Warning(data)
 
     def kill_creo(self):
         """Kill primary Creo processes.
 
         This will kill the 'xtop.exe' and 'nmsd.exe' processes by name.
         The sessionId is optional, and ignored.
+
+        Raises:
+            Warning: error message from creoson.
+
+        Returns:
+            None
+
         """
         request = {
             "command": "connection",
             "function": "kill_creo"
         }
-        creoson_post(self, request)
+        status, data = creoson_post(self, request)
+        if status:
+            raise Warning(data)
 
     def start_creo(self, path, retries=0):
         """Execute an external .bat file to start Creo.
@@ -100,12 +116,11 @@ class Client(object):
                 Number of retries to make when connecting
                 (default 0)
 
+        Raises:
+            Warning: error message from creoson.
+
         Returns:
-            None:
-                'nitro_proe_remote.bat' was found and executed
-            string:
-                "You may only specify 'nitro_proe_remote.bat'
-                for the startCommand parameter"
+            None
 
         """
         start_command = path.split('/')[-1]
@@ -121,7 +136,7 @@ class Client(object):
         }
         status, data = creoson_post(self, request)
         if status:
-            return data
+            raise Warning(data)
 
     def stop_creo(self):
         """Disconnect current session from Creo and cause Creo to exit.
@@ -129,13 +144,22 @@ class Client(object):
         NOTE that this will cause Creo to exit cleanly.
         If there is no current connection to Creo, this function
         will do nothing.
+
+        Raises:
+            Warning: error message from creoson.
+
+        Returns:
+            None
+
         """
         request = {
             "sessionId": self.sessionId,
             "command": "connection",
             "function": "stop_creo"
         }
-        creoson_post(self, request)
+        status, data = creoson_post(self, request)
+        if status:
+            raise Warning(data)
 
 
 def make_api_method(func):
