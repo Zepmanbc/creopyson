@@ -176,8 +176,18 @@ Client.list_files = make_api_method(list_files)
 
 
 # dimension.py
+from creopyson.dimension import copy as dimension_copy
+from creopyson.dimension import list_detail as dimension_list_detail
+from creopyson.dimension import list_ as dimension_list
 from creopyson.dimension import set_ as dimension_set
+from creopyson.dimension import show as dimension_show
+from creopyson.dimension import user_select as dimension_user_select
+Client.dimension_copy = make_api_method(dimension_copy)
+Client.dimension_list_detail = make_api_method(dimension_list_detail)
+Client.dimension_list = make_api_method(dimension_list)
 Client.dimension_set = make_api_method(dimension_set)
+Client.dimension_show = make_api_method(dimension_show)
+Client.dimension_user_select = make_api_method(dimension_user_select)
 
 # file.py
 from creopyson.file import assemble as file_assemble
