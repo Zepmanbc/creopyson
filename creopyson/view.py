@@ -7,8 +7,10 @@ def activate(client, name, current_file=None):
     """Activate a model view.
 
     Args:
-        client (obj): creopyson Client.
-        name (str): View name.
+        client (obj):
+            creopyson Client.
+        name (str):
+            View name.
         current_file (str, optional):
             Model name. Defaults is current active model.
 
@@ -38,7 +40,8 @@ def list_exploded(client, current_file=None, name=None):
     """List views that match criteria and are exploded.
 
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
@@ -73,7 +76,8 @@ def list_(client, current_file=None, name=None):
     """List views that match criteria.
 
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
@@ -109,8 +113,10 @@ def save(client, name, current_file=None):
     """Save a model's current orientation as a new view.
 
     Args:
-        client (obj): creopyson Client.
-        name (str): View name.
+        client (obj):
+            creopyson Client.
+        name (str):
+            View name.
         current_file (str, optional):
             Model name. Defaults is current active model.
 

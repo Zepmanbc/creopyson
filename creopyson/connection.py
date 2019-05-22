@@ -190,6 +190,7 @@ def make_api_method(func):
 from creopyson.bom import get_paths as bom_get_paths
 Client.bom_get_paths = make_api_method(bom_get_paths)
 
+
 # creo.py
 from creopyson.creo import cd as creo_cd
 from creopyson.creo import delete_files as creo_delete_files
@@ -214,6 +215,7 @@ Client.creo_rmdir = make_api_method(creo_rmdir)
 Client.creo_set_config = make_api_method(creo_set_config)
 Client.creo_set_std_color = make_api_method(creo_set_std_color)
 
+
 # dimension.py
 from creopyson.dimension import copy as dimension_copy
 from creopyson.dimension import list_detail as dimension_list_detail
@@ -227,6 +229,7 @@ Client.dimension_list = make_api_method(dimension_list)
 Client.dimension_set = make_api_method(dimension_set)
 Client.dimension_show = make_api_method(dimension_show)
 Client.dimension_user_select = make_api_method(dimension_user_select)
+
 
 # file.py
 from creopyson.file import assemble as file_assemble
@@ -297,6 +300,7 @@ Client.file_save = make_api_method(file_save)
 Client.file_set_length_units = make_api_method(file_set_length_units)
 Client.file_set_mass_units = make_api_method(file_set_mass_units)
 
+
 # interface.py
 from creopyson.interface import export_3dpdf as interface_export_3dpdf
 from creopyson.interface import export_file as interface_export_file
@@ -314,6 +318,18 @@ Client.interface_export_program = make_api_method(interface_export_program)
 Client.interface_import_program = make_api_method(interface_import_program)
 Client.interface_mapkey = make_api_method(interface_mapkey)
 Client.interface_plot = make_api_method(interface_plot)
+
+
+# View
+from creopyson.view import activate as view_activate
+from creopyson.view import list_exploded as view_list_exploded
+from creopyson.view import list_ as view_list
+from creopyson.view import save as view_save
+Client.view_activate = make_api_method(view_activate)
+Client.view_list_exploded = make_api_method(view_list_exploded)
+Client.view_list = make_api_method(view_list)
+Client.view_save = make_api_method(view_save)
+
 
 # Windchill
 from creopyson.windchill import authorize as windchill_authorize
