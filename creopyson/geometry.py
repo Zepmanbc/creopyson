@@ -40,8 +40,53 @@ def bound_box(client, current_file=None):
         raise Warning(data)
 
 
-# def get_edges():
-#     pass
+def get_edges(client, surface_ids, current_file=None):
+    """Get the list of edges for a model for given surfaces.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        surface_ids (list:int):
+            List of surface IDs.
+        current_file (str, optional):
+            File name.
+            Defaults is current active model
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+        surface_id (int): Surface ID.
+        traversal (string): Traversal type. Valid values: internal, external.
+        edglist (list:dict): Information about an edge.
+            edgeid (integer): Edge ID.
+            length (float): Edge length.
+            start (list:dict): A 3D coordinate.
+                x (float): X-coordinate.
+                y (float): Y-coordinate.
+                z (float): Z-coordinate.
+            end (list:dict): A 3D coordinate.
+                x (float): X-coordinate.
+                y (float): Y-coordinate.
+                z (float): Z-coordinate.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "note",
+        "function": "delete",
+        "data": {
+            "surface_ids": surface_ids
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["contourlist"]
+    else:
+        raise Warning(data)
 
 
 # def get_surfaces():
