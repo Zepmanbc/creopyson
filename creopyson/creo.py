@@ -257,12 +257,69 @@ def pwd(client):
         raise Warning(data)
 
 
-# def rmdir():
-#     pass
+def rmdir(client, dirname):
+    """Delete a directory.
+
+    Args:
+        client (obj): creopyson Client.
+        dirname (str): Directory name to delete.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "rmdir",
+        "data": {
+            "dirname": dirname
+        }
+    }
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
-# def set_config():
-#     pass
+def set_config(client, name, value=None, ignore_errors=None):
+    """Set a Creo config option.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Option name.
+        value (str, optional):
+            New option value. Defaults to None: clear the option.
+        ignore_errors (boolean, optional):
+            Whether to ignore errors that might occur when setting the config
+            option. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "dele_files",
+        "data": {
+            "name": name
+        }
+    }
+    if value:
+        request["data"]["value"] = value
+    if ignore_errors:
+        request["data"]["ignore_errors"] = ignore_errors
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def set_std_color():
