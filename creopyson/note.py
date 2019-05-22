@@ -122,8 +122,44 @@ def exists(client, current_file=None, name=None, names=None):
     # TODO: group name/names
 
 
-def get():
-    pass
+def get(client, name, current_file=None):
+    """Get the text of a model or drawing note.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Note name.
+        current_file (str, optional):
+            Model name.
+            Defaults is current active model or drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict):
+            file (str): File name.
+            name (str): Note name.
+            encoded (boolean): Value is Base64-encoded.
+            url (str): "Note URL, if there is one.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "note",
+        "function": "get",
+        "data": {
+            "name": name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def list_():
