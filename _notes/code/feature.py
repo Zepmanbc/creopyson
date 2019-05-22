@@ -112,8 +112,112 @@ def delete_param(client, name=None, current_file=None, param=None):
         raise Warning(data)
 
 
-# def list():
-#     pass
+def list_(
+    client,
+    current_file=None,
+    name=None,
+    type_=None,
+    no_datum=None,
+    inc_unnamed=None,
+    no_comp=None,
+    param=None,
+    params=None,
+    value=None,
+    encoded=None
+):
+    """List feature parameters that match criteria.
+
+    Will only list parameters on visible features.
+    Args:
+        client (obj): creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is the currently active model.
+        name ([str, optional):
+            Feature name (wildcards allowed: True).
+            Defaults: All features are listed.
+        type_ (str, optional):
+            Feature type patter (wildcards allowed: True).
+            Defaults: All feature types.
+        no_datum (boolean, optional):
+            Whether to exclude datum-type features from the list;
+            these are COORD_SYS, CURVE, DATUM_AXIS, DATUM_PLANE, DATUM_POINT,
+            DATUM_QUILT, and DATUM_SURFACE features.
+            Defaults is False.
+        inc_unnamed (boolean, optional):
+            Whether to include unnamed features in the list.
+            Defaults is False.
+        no_comp (boolean, optional):
+            Whether to include component-type features in the list.
+            Defaults is False.
+        param (string, optional):
+            Parameter name; only used if params is not given.
+            (wildcards allowed: True)
+        params (list:str, optional):
+            List of parameter names.
+            Defaults: The param parameter is used; if both are empty,
+            then all parameters are listed.
+        value (str, optional):
+            Parameter value filter (wildcards allowed: True).
+            Defaults is no filter.
+        encoded (boolean, optional):
+            Whether to return the values Base64-encoded.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict): List of parameter information.
+            name (str):
+                Parameter nam.
+            value (depends on data type):
+                Parameter value.
+            type (string):
+                Data type. Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+            designate (boolean):
+                Value is designated.
+            encoded (boolean):
+                Value is Base64-encoded.
+            owner_name (str):
+                Owner Name.
+            owner_id (int):
+                Owner ID.
+            owner_type (str):
+                Owner type.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "interface",
+        "function": "export_program",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if type_:
+        request["data"]["type"] = type_
+    if no_datum:
+        request["data"]["no_datum"] = no_datum
+    if inc_unnamed:
+        request["data"]["inc_unnamed"] = inc_unnamed
+    if no_comp:
+        request["data"]["no_comp"] = no_comp
+    if param:
+        request["data"]["param"] = param
+    if params:
+        request["data"]["params"] = params
+    if value:
+        request["data"]["value"] = value
+    if encoded:
+        request["data"]["encoded"] = encoded
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
+    # TODO: param/params
+
 
 
 # def param_exist():
