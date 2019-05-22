@@ -193,5 +193,66 @@ def list_(
         raise Warning(data)
 
 
-def set_():
-    pass
+def set_(
+    client,
+    name,
+    value=None,
+    current_file=None,
+    type_=None,
+    encoded=None,
+    designate=None,
+    no_create=None,
+):
+    """Set the value of a parameter.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Parameter name (wildcards allowed: True).
+        value (depends on data type, optional):
+            Parameter value. Defaults to None.
+            Clears the parameter value if missing.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        type_ (str, optional):
+            Data type. Defaults is `STRING`.
+            Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+        encoded (boolean, optional):
+            Whether the value is Base64-encoded. Defaults is False.
+        designate (boolean, optional):
+            Set parameter to be designated/not designated, blank=do not set.
+            Defaults is `blank`.
+        no_create (boolean, optional):
+            If parameter does not already exist, do not create it.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "lisetst",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if type_:
+        request["data"]["type"] = type_
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if value:
+        request["data"]["value"] = value
+    if designate:
+        request["data"]["designate"] = designate
+    if no_create:
+        request["data"]["no_create"] = no_create
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
