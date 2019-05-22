@@ -215,7 +215,7 @@ def set_(
             Clears the parameter value if missing.
         current_file (str, optional):
             Model name. Defaults is current active model.
-        type_ (str, optional):
+        `type_` (str, optional):
             Data type. Defaults is `STRING`.
             Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
         encoded (boolean, optional):
@@ -238,11 +238,12 @@ def set_(
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "lisetst",
+        "data": {
+            "name": name
+        }
     }
     if current_file:
         request["data"]["file"] = current_file
-    if name:
-        request["data"]["name"] = name
     if type_:
         request["data"]["type"] = type_
     if encoded:

@@ -320,6 +320,19 @@ Client.interface_mapkey = make_api_method(interface_mapkey)
 Client.interface_plot = make_api_method(interface_plot)
 
 
+# Parameter
+from creopyson.parameter import copy as parameter_copy
+from creopyson.parameter import delete as parameter_delete
+from creopyson.parameter import exists as parameter_exists
+from creopyson.parameter import list_ as parameter_list
+from creopyson.parameter import set_ as parameter_set
+Client.parameter_copy = make_api_method(parameter_copy)
+Client.parameter_delete = make_api_method(parameter_delete)
+Client.parameter_exists = make_api_method(parameter_exists)
+Client.parameter_list = make_api_method(parameter_list)
+Client.parameter_set = make_api_method(parameter_set)
+
+
 # Server
 from creopyson.server import pwd as server_pwd
 Client.server_pwd = make_api_method(server_pwd)
