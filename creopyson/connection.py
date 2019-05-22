@@ -167,13 +167,28 @@ from creopyson.bom import get_paths as bom_get_paths
 Client.bom_get_paths = make_api_method(bom_get_paths)
 
 # creo.py
-from creopyson.creo import pwd
-from creopyson.creo import list_dirs
-from creopyson.creo import list_files
-Client.pwd = make_api_method(pwd)
-Client.list_dirs = make_api_method(list_dirs)
-Client.list_files = make_api_method(list_files)
-
+from creopyson.creo import cd as creo_cd
+from creopyson.creo import delete_files as creo_delete_files
+from creopyson.creo import get_config as creo_get_config
+from creopyson.creo import get_std_color as creo_get_std_color
+from creopyson.creo import list_dirs as creo_list_dirs
+from creopyson.creo import list_files as creo_list_files
+from creopyson.creo import mkdir as creo_mkdir
+from creopyson.creo import pwd as creo_pwd
+from creopyson.creo import rmdir as creo_rmdir
+from creopyson.creo import set_config as creo_set_config
+from creopyson.creo import set_std_color as creo_set_std_color
+Client.creo_cd = make_api_method(creo_cd)
+Client.creo_delete_files = make_api_method(creo_delete_files)
+Client.creo_get_config = make_api_method(creo_get_config)
+Client.creo_get_std_color = make_api_method(creo_get_std_color)
+Client.creo_list_dirs = make_api_method(creo_list_dirs)
+Client.creo_list_files = make_api_method(creo_list_files)
+Client.creo_mkdir = make_api_method(creo_mkdir)
+Client.creo_pwd = make_api_method(creo_pwd)
+Client.creo_rmdir = make_api_method(creo_rmdir)
+Client.creo_set_config = make_api_method(creo_set_config)
+Client.creo_set_std_color = make_api_method(creo_set_std_color)
 
 # dimension.py
 from creopyson.dimension import copy as dimension_copy
