@@ -130,12 +130,15 @@ def show(client, name=None, current_file=None, show_=None):
         current_file (str, optional):
             File name (wildcards allowed: True).
             Defaults is current active model.
-        show_ (boolean, optional):
+        `show_` (boolean, optional):
             Whether to show or hide the layers.
             Defaults is True (show).
 
     Raises:
         Warning: error message from creoson.
+
+    Returns:
+        None
 
     """
     request = {
