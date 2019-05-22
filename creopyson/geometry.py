@@ -57,19 +57,32 @@ def get_edges(client, surface_ids, current_file=None):
 
     Returns:
         (list:dict):
-        surface_id (int): Surface ID.
-        traversal (string): Traversal type. Valid values: internal, external.
-        edglist (list:dict): Information about an edge.
-            edgeid (integer): Edge ID.
-            length (float): Edge length.
-            start (list:dict): A 3D coordinate.
-                x (float): X-coordinate.
-                y (float): Y-coordinate.
-                z (float): Z-coordinate.
-            end (list:dict): A 3D coordinate.
-                x (float): X-coordinate.
-                y (float): Y-coordinate.
-                z (float): Z-coordinate.
+            surface_id (int):
+                Surface ID.
+            traversal (string):
+                Traversal type. Valid values: internal, external.
+            edglist (list:dict):
+                Information about an edge.
+                    edgeid (integer):
+                        Edge ID.
+                    length (float):
+                        Edge length.
+                    start (list:dict):
+                        A 3D coordinate.
+                            x (float):
+                                X-coordinate.
+                            y (float):
+                                Y-coordinate.
+                            z (float):
+                                Z-coordinate.
+                    end (list:dict):
+                        A 3D coordinate.
+                            x (float):
+                                X-coordinate.
+                            y (float):
+                                Y-coordinate.
+                            z (float):
+                                Z-coordinate.
 
     """
     request = {
@@ -104,16 +117,26 @@ def get_surfaces(client, current_file=None):
 
     Returns:
         (list:dict):
-            surface_id (int): Surface ID.
-            area (float): Surface area
-            min_extent (list:dict): A 3D coordinate.
-                x (float): X-coordinate.
-                y (float): Y-coordinate.
-                z (float): Z-coordinate.
-            max_extent (list:dict): A 3D coordinate.
-                x (float): X-coordinate.
-                y (float): Y-coordinate.
-                z (float): Z-coordinate.
+            surface_id (int):
+                Surface ID.
+            area (float):
+                Surface area
+            min_extent (list:dict):
+                A 3D coordinate.
+                    x (float):
+                        X-coordinate.
+                    y (float):
+                        Y-coordinate.
+                    z (float):
+                        Z-coordinate.
+            max_extent (list:dict):
+                A 3D coordinate.
+                    x (float):
+                        X-coordinate.
+                    y (float):
+                        Y-coordinate.
+                    z (float):
+                        Z-coordinate.
 
     """
     request = {

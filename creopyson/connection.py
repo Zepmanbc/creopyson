@@ -301,6 +301,15 @@ Client.file_set_length_units = make_api_method(file_set_length_units)
 Client.file_set_mass_units = make_api_method(file_set_mass_units)
 
 
+# Geometry
+from creopyson.geometry import bound_box as geometry_bound_box
+from creopyson.geometry import get_edges as geometry_get_edges
+from creopyson.geometry import get_surfaces as geometry_get_surfaces
+Client.geometry_bound_box = make_api_method(geometry_bound_box)
+Client.geometry_get_edges = make_api_method(geometry_get_edges)
+Client.geometry_get_surfaces = make_api_method(geometry_get_surfaces)
+
+
 # interface.py
 from creopyson.interface import export_3dpdf as interface_export_3dpdf
 from creopyson.interface import export_file as interface_export_file
