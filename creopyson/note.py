@@ -47,8 +47,38 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
         raise Warning(data)
 
 
-def delete():
-    pass
+def delete(client, name, current_file=None):
+    """Delete a model or drawing note.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Note name (wildcards allowed: True).
+        current_file (str, optional):
+            Model name (wildcards allowed: True).
+            Defaults is current active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "note",
+        "function": "delete",
+        "data": {
+            "name": name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def exists():
