@@ -132,8 +132,65 @@ def exists(client, current_file=None, name=None, names=None):
     # TODO: group name/names
 
 
-def list_():
-    pass
+def list_(
+    client,
+    current_file=None,
+    name=None,
+    names=None,
+    encoded=None,
+    value=None
+):
+    """Get a list of parameters from one or more models.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        name (str, optional):
+            Parameter name; only used if names is not given. Defaults to None.
+        names (list:str, optional):
+            List of parameter names.
+            Defaults to None. The name parameter is used;
+            if both are empty, then it checks for any parameter's existence.
+        encoded (boolean, optional):
+            Whether to return the values Base64-encoded. Defaults is False.
+        value (str, optional):
+            Parameter value filter. Defaults is `no filter`.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            name (str): Parameter name.
+            type (str): Parameter type.
+            value (various): Parameter value # TODO
+            designate (boolean): Whether the parameter is designated.
+            encoded (boolean): Whether the parameter is encoded.
+            owner_name (str): File name.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "list",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if value:
+        request["data"]["value"] = value
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["paramlist"]
+    else:
+        raise Warning(data)
 
 
 def set_():
