@@ -103,8 +103,42 @@ def get_config(client, name):
         raise Warning(data)
 
 
-# def get_std_color():
-#     pass
+def get_std_color(client, color_type):
+    """Get one of Creo's standard colors.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        color_type (str):
+            Color type.
+            Valid values: letter, highlight, drawing, background, half_tone,
+            edge_highlight, dimmed, error, warning, sheetmetal, curve,
+            presel_highlight, selected, secondary_selected, preview,
+            secondary_preview, datum, quilt.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict):
+            red (int): Red value (0-255)
+            green (int): Green value (0-255)
+            blue (int): Blue value (0-255)
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "get_std_color",
+        "data": {
+            "color_type": color_type
+        }
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def list_dirs(client, query="*"):
