@@ -188,8 +188,8 @@ def list_(
     """
     request = {
         "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_program",
+        "command": "feature",
+        "function": "list",
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -219,9 +219,45 @@ def list_(
     # TODO: param/params
 
 
+def param_exists(client, current_file=None, param=None, params=None):
+    """Check whether parameter(s) exists on a feature.
 
-# def param_exist():
-#     pass
+    Args:
+        client (obj): creopyson Client.
+        current_file (str, optional):
+            File name. Defaults is the currently active model.
+        param (string, optional):
+            Parameter name; only used if params is not given.
+            (wildcards allowed: True)
+        params (list:str, optional):
+            List of parameter names.
+            Defaults: The param parameter is used; if both are empty,
+            then all parameters are listed.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (boolean): Whether the parameter exists on the model
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "param_exists",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if param:
+        request["data"]["param"] = param
+    if params:
+        request["data"]["params"] = params
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
+    # TODO: param/params
 
 
 # def rename():
