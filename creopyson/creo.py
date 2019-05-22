@@ -203,11 +203,48 @@ def list_files(client, filename=None):
         raise Warning(data)
 
 
-# def mkdir():
-#     pass
+def mkdir(client, dirname):
+    """Create a new directory.
+
+    Args:
+        client (obj): creopyson Client.
+        dirname (str): New directory name.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): Full name of new working directory.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "mkdir",
+        "data": {
+            "dirname": dirname
+        }
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["dirname"]
+    else:
+        raise Warning(data)
 
 
 def pwd(client):
+    """Return Creo's current working directory.
+
+    Args:
+        client (obj): creopyson Client.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): Full name of working directory.
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
@@ -215,7 +252,9 @@ def pwd(client):
     }
     status, data = creoson_post(client, request)
     if not status:
-        return data['dirname']
+        return data["dirname"]
+    else:
+        raise Warning(data)
 
 
 # def rmdir():
