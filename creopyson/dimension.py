@@ -279,5 +279,46 @@ def show(client, name, current_file=None, assembly=None, path=None):
         raise Warning(data)
 
 
-# def user_select():
-#     pass
+def user_select(client, current_file=None, maxi=None):
+    """Prompt user to select one or more dimensions, and return their selections.
+
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        maxi (int, optional):
+            The maximum number of dimensions that the user can select.
+            Defaults is `1`.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict): List of selected dimension information
+            name (str):
+                Dimension name
+            value (str|float):
+                Dimension value; if encoded is True it is a str,
+                if encoded is False it is a float.
+            encoded (boolean):
+                Whether the returned value is Base64-encoded.
+            file (str):
+                File name.
+            relation_id (int):
+                Relation ID number.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "dimension",
+        "function": "user_select",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if maxi:
+        request["data"]["max"] = maxi
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["dimlist"]
+    else:
+        raise Warning(data)
