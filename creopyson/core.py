@@ -5,18 +5,19 @@ import json
 
 
 def creoson_post(client, request):
-    """Send a POST request to the server.
+    """Send a POST request to creoson server.
 
-    args:
-        client (obj): the creopyson client
-        request (dict): command for creoson
+    Args:
+        client (obj): creopyson Client.
+        request (dict): Command for creoson.
 
-    returns:
-        status (boolean):
-            'True' if creoson return an error
-            'False" if creoson is ok
-        data (dict):
-            creoson return (it depend the request)
+    Returns:
+        (dict):
+            status (boolean):
+                'True' if creoson return an error
+                'False" if creoson is ok
+            data (dict):
+                creoson return (it depend the request)
 
     """
     r = requests.post(client.server, data=json.dumps(request))
