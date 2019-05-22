@@ -162,8 +162,67 @@ def get(client, name, current_file=None):
         raise Warning(data)
 
 
-def list_():
-    pass
+def list_(
+    client,
+    current_file=None,
+    name=None,
+    names=None,
+    value=None,
+    get_expanded=None
+):
+    """Get a list of notes from one or more models.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            Model name (wildcards allows: True).
+            Defaults is current active model.
+        name (str, optional):
+            Note name; only used if names is not given. Defaults to None.
+        names (list:str, optional):
+            List of notes names.
+            Defaults to None. The name parameter is used;
+            if both are empty, then all notes are listed.
+        value (str, optional):
+            Parameter value filter (wildcards allows: True).
+            Defaults is `no filter`.
+        get_expanded (boolean, optional):
+            Whether to return text with parameter values replaced.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            name (str): Note name.
+            value (str): Note text with parameters not expanded.
+            value_expanded (str): Note text with parameters expanded.
+            encoded (boolean): Value is Base64-encoded.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "note",
+        "function": "list",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    if get_expanded:
+        request["data"]["get_expanded"] = get_expanded
+    if value:
+        request["data"]["value"] = value
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["itemlist"]
+    else:
+        raise Warning(data)
+    # TODO: group name/names
 
 
 def set_():
