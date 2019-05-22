@@ -58,8 +58,37 @@ def copy(
         raise Warning(data)
 
 
-def delete():
-    pass
+def delete(client, name, current_file=None):
+    """Delete a parameter.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Parameter name (wildcards allowed: True).
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "delete",
+        "data": {
+            "name": name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def exists():
