@@ -320,6 +320,21 @@ Client.interface_mapkey = make_api_method(interface_mapkey)
 Client.interface_plot = make_api_method(interface_plot)
 
 
+# Note
+from creopyson.note import copy as note_copy
+from creopyson.note import delete as note_delete
+from creopyson.note import exists as note_exists
+from creopyson.note import get as note_get
+from creopyson.note import list_ as note_list
+from creopyson.note import set_ as note_set
+Client.note_copy = make_api_method(note_copy)
+Client.note_delete = make_api_method(note_delete)
+Client.note_exists = make_api_method(note_exists)
+Client.note_get = make_api_method(note_get)
+Client.note_list = make_api_method(note_list)
+Client.note_set = make_api_method(note_set)
+
+
 # Parameter
 from creopyson.parameter import copy as parameter_copy
 from creopyson.parameter import delete as parameter_delete
