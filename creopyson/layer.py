@@ -13,7 +13,7 @@ def delete(client, name=None, current_file=None):
             Layer name (wildcards allowed: True).
             Defaults: All layers will be deleted.
         current_file (str, optional):
-            Model name (wildcards alloawed: True).
+            File name (wildcards alloawed: True).
             Defaults is current active model.
 
     Raises:
@@ -48,9 +48,9 @@ def exists(client, name=None, current_file=None):
             creopyson Client.
         name (str, optional):
             Layer name (wildcards allowed: True).
-            Defaults: All layers will be deleted.
+            Defaults: All layers are listed.
         current_file (str, optional):
-            Model name.
+            File name.
             Defaults is current active model.
 
     Raises:
@@ -76,8 +76,46 @@ def exists(client, name=None, current_file=None):
         raise Warning(data)
 
 
-def list_():
-    pass
+def list_(client, name=None, current_file=None):
+    """List layers that match criteria.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str, optional):
+            Layer name (wildcards allowed: True).
+            Defaults: All layers are listed.
+        current_file (str, optional):
+            File name.
+            Defaults is current active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            name (str):
+                Layer name.
+            status (str): Layer status.
+                Valid values: BLANK, DISPLAY, HIDDEN, NORMAL.
+            ID (int):
+                Layer ID.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "exists",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["layers"]
+    else:
+        raise Warning(data)
 
 
 def show():
