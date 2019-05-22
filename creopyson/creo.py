@@ -3,8 +3,33 @@
 from .core import creoson_post
 
 
-# def cd():
-#     pass
+def cd(client, dirname):
+    """Change Creo's working directory.
+
+    Args:
+        client (obj): creopyson Client.
+        dirname (str): New directory name.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): Name of new working directory.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "cd",
+        "data": {
+            "dirname": dirname
+        }
+    }
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["dirname"]
+    else:
+        raise Warning(data)
 
 
 # def delete_files():
