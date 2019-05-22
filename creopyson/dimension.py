@@ -192,20 +192,47 @@ def list_detail(
         raise Warning(data)
 
 
-def set_(client, name, value, current_file=None):
+def set_(client, name, current_file=None, encoded=None, value=None,):
+    """Set a dimension value.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Dimension name.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        encoded (boolean, optional):
+            Whether the value is Base64-encoded.
+            Defaults is False.
+        value (str|float, optional):
+            Dimension value.
+            Defaults to None, clears the dimension value if missing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "dimension",
         "function": "set",
         "data": {
-            "name": name,
-            "value": value,
-            "encoded": False
+            "name": name
         }
     }
     if current_file:
         request["data"]["file"] = current_file
-        requests.post(client.server, data=json.dumps(request))
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if value:
+        request["data"]["value"] = value
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def show():
