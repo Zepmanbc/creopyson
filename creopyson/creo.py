@@ -322,5 +322,44 @@ def set_config(client, name, value=None, ignore_errors=None):
         raise Warning(data)
 
 
-# def set_std_color():
-#     pass
+def set_std_color(client, color_type, red, green, blue):
+    """Set one of Creo's standard colors.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        color_type (str):
+            Color type.
+            Valid values: letter, highlight, drawing, background, half_tone,
+            edge_highlight, dimmed, error, warning, sheetmetal, curve,
+            presel_highlight, selected, secondary_selected, preview,
+            secondary_preview, datum, quilt.
+        red (int):
+            Red value (0-255).
+        green (int):
+            Green value (0-255).
+        blue (int):
+            Blue value (0-255).
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "creo",
+        "function": "rmdir",
+        "data": {
+            "color_type": color_type,
+            "red": red,
+            "green": green,
+            "blue": blue
+        }
+    }
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
+    # TODO: convert RGB to a tuple or hexa color?
