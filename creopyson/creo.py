@@ -141,18 +141,35 @@ def get_std_color(client, color_type):
         raise Warning(data)
 
 
-def list_dirs(client, query="*"):
+def list_dirs(client, dirname=None):
+    """List subdirectories of Creo's current working directory.
+
+    Args:
+        client (obj):
+            creoopyson Client.
+        dirname (str, optional):
+            Directory name filter (wildcards_allowed: True).
+            Defaults: All subdirectories are listed.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict:str): List of subdirectories
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "list_dirs",
-        "data": {
-            "dirname": query
-        }
+        "function": "dele_files",
     }
+    if dirname:
+        request["data"]["dirname"] = dirname
     status, data = creoson_post(client, request)
     if not status:
-        return data['dirlist']
+        return data["dirlist"]
+    else:
+        raise Warning(data)
 
 
 def list_files(client, query='*prt|*drw|*asm'):
