@@ -320,6 +320,11 @@ Client.interface_mapkey = make_api_method(interface_mapkey)
 Client.interface_plot = make_api_method(interface_plot)
 
 
+# Server
+from creopyson.server import pwd as server_pwd
+Client.server_pwd = make_api_method(server_pwd)
+
+
 # View
 from creopyson.view import activate as view_activate
 from creopyson.view import list_exploded as view_list_exploded
