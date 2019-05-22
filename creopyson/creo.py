@@ -172,18 +172,35 @@ def list_dirs(client, dirname=None):
         raise Warning(data)
 
 
-def list_files(client, query='*prt|*drw|*asm'):
+def list_files(client, filename=None):
+    """List files in Creo's current working directory.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        filename (str, optional):
+            File name filter (wildcards_allowed: True).
+            Defaults: all files are listed.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:int): List of files.
+
+    """
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "list_files",
-        "data": {
-            "filename": query
-        }
+        "function": "dele_files",
     }
+    if filename:
+        request["data"]["filename"] = filename
     status, data = creoson_post(client, request)
     if not status:
-        return data['filelist']
+        return data["filelist"]
+    else:
+        raise Warning(data)
 
 
 # def mkdir():
