@@ -1,11 +1,46 @@
 """Name module."""
 
-import requests
-import json
+from .core import creoson_post
 
 
-# def copy():
-#     pass
+def copy(client, name, to_name, current_file=None, to_file=None):
+    """Copy dimension to another in the same model or another model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Dimension name to copy.
+        to_name (str):
+            Destination dimension; th dimension must already exist.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        to_file (str, optional):
+            Destination model. Defaults is the source model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "dimension",
+        "function": "copy",
+        "data": {
+            "name": name,
+            "to_name": to_name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if to_file:
+        request["data"]["to_file"] = to_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def list_():
