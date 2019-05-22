@@ -74,8 +74,8 @@ def get_edges(client, surface_ids, current_file=None):
     """
     request = {
         "sessionId": client.sessionId,
-        "command": "note",
-        "function": "delete",
+        "command": "geometry",
+        "function": "get_edges",
         "data": {
             "surface_ids": surface_ids
         }
@@ -89,5 +89,42 @@ def get_edges(client, surface_ids, current_file=None):
         raise Warning(data)
 
 
-# def get_surfaces():
-#     pass
+def get_surfaces(client, current_file=None):
+    """Get the list of surfaces for a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name.
+            Defaults is current active model
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            surface_id (int): Surface ID.
+            area (float): Surface area
+            min_extent (list:dict): A 3D coordinate.
+                x (float): X-coordinate.
+                y (float): Y-coordinate.
+                z (float): Z-coordinate.
+            max_extent (list:dict): A 3D coordinate.
+                x (float): X-coordinate.
+                y (float): Y-coordinate.
+                z (float): Z-coordinate.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "geometry",
+        "function": "get_surfaces",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["contourlist"]
+    else:
+        raise Warning(data)
