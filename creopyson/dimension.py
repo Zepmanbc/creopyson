@@ -235,8 +235,48 @@ def set_(client, name, current_file=None, encoded=None, value=None,):
         raise Warning(data)
 
 
-# def show():
-#     pass
+def show(client, name, current_file=None, assembly=None, path=None):
+    """Display or hide a dimension in Creo.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Dimension name.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        assembly (str, optional):
+            Assembly name; only used if path is given.
+            Defaults is the currently active model.
+        path (list:int, optional):
+            Path to occurrence of the model within the assembly;
+            the dimension will only be shown for that occurrence.
+            Defaults: all occurrences of the component are affected.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "dimension",
+        "function": "show",
+        "data": {
+            "name": name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if assembly:
+        request["data"]["assembly"] = assembly
+    if path:
+        request["data"]["path"] = path
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def user_select():
