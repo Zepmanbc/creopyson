@@ -225,6 +225,44 @@ def list_(
     # TODO: group name/names
 
 
-def set_():
-    pass
+def set_(client, name, current_file=None, encoded=None, value=None):
+    """Set the text of a model or drawing note.
 
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Note name (wildcards allowed: True).
+        current_file (str, optional):
+            Model name. Defaults is current active model or drawing.
+        encoded (boolean, optional):
+            Whether the value is Base64-encoded. Defaults is False.
+        value (str, optional):
+            Note text with parameters not expanded.
+            Defaults to None: clears the note if missing;
+            embed newlines for line breaks
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "note",
+        "function": "set",
+        "data": {
+            "name": name
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if value:
+        request["data"]["value"] = value
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
