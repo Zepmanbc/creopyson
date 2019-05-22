@@ -320,6 +320,17 @@ Client.interface_mapkey = make_api_method(interface_mapkey)
 Client.interface_plot = make_api_method(interface_plot)
 
 
+# Layer
+from creopyson.layer import delete as layer_delete
+from creopyson.layer import exists as layer_exists
+from creopyson.layer import list_ as layer_list
+from creopyson.layer import show as layer_show
+Client.layer_delete = make_api_method(layer_delete)
+Client.layer_exists = make_api_method(layer_exists)
+Client.layer_list = make_api_method(layer_list)
+Client.layer_show = make_api_method(layer_show)
+
+
 # Note
 from creopyson.note import copy as note_copy
 from creopyson.note import delete as note_delete
