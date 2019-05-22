@@ -91,8 +91,45 @@ def delete(client, name, current_file=None):
         raise Warning(data)
 
 
-def exists():
-    pass
+def exists(client, current_file=None, name=None, names=None):
+    """Check whether parameter(s) exists on a model.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            Model name. Defaults is current active model.
+        name (str, optional):
+            Parameter name; only used if names is not given. Defaults to None.
+        names (list:str, optional):
+            List of parameter names.
+            Defaults to None. The name parameter is used;
+            if both are empty, then it checks for any parameter's existence.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (boolean): Whether the parameter exists on the model.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "parameter",
+        "function": "exists",
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
+    # TODO: group name/names
 
 
 def list_():
