@@ -412,7 +412,7 @@ def set_param(
 
     Raises:
         Warning: error message from creoson.
-    
+
     Returns:
         None
 
@@ -444,8 +444,77 @@ def set_param(
         raise Warning(data)
 
 
-# def suppress():
-#     pass
+def suppress(
+    client,
+    current_file=None,
+    name=None,
+    names=None,
+    status=None,
+    type_=None,
+    clip=None,
+    with_children=None
+):
+    """Suppress one or more features that match criteria.
+
+    Will only suppress visible features.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is the currently active model.
+        name (str, optional):
+            Feature name; only used if names is not given
+            (wildcards allowed: True). Defaults to None.
+        names (lst:str, optional):
+            List of feature names. Defaults to None.
+            The name parameter is used; if both are empty,
+            then all features may be suppressed.
+        status (str, optional):
+            Feature status pattern. Defaults: All feature statuses.
+            Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+            SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED
+        type_ (str, optional):
+            Feature type pattern (wildcards allowed: True).
+            Defaults: All feature types.
+        clip (boolean, optional):
+            Whether to clip-suppress ANY features from this feature through
+            the end of the structure. Defaults is True.
+        with_children (boolean, optional):
+            Whether to resume any child features of the resumed feature.
+            Defaults is True.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "suppress",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    if status:
+        request["data"]["status"] = status
+    if type_:
+        request["data"]["type"] = type_
+    if clip:
+        request["data"]["clip"] = clip
+    if with_children:
+        request["data"]["with_children"] = with_children
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def user_select_csys():
