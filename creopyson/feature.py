@@ -517,5 +517,47 @@ def suppress(
         raise Warning(data)
 
 
-# def user_select_csys():
-#     pass
+def user_select_csys(client, current_file=None, max_=None):
+    """Prompt the user to select one or more coordinate systems, and return their selections.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name.
+            Defaults is the currently active model.
+        max_ (int, optional):
+            The maximum number of dimensions that the user can select.
+            Defaults is `1`.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict): List of feature information.
+            name (str): Feature name.
+            type (string): Feature type.
+            status (str):
+                Feature status.
+                Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+                SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED,
+                UNREGENERATED.
+            feat_id (int): Feature ID.
+            feat_number (int): Feature Number.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "user_select_csys",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if max_:
+        request["data"]["max"] = max_
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
