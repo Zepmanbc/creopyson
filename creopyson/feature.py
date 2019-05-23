@@ -128,14 +128,16 @@ def list_(
     """List feature parameters that match criteria.
 
     Will only list parameters on visible features.
+
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             File name. Defaults is the currently active model.
         name ([str, optional):
             Feature name (wildcards allowed: True).
             Defaults: All features are listed.
-        type_ (str, optional):
+        `type_` (str, optional):
             Feature type patter (wildcards allowed: True).
             Defaults: All feature types.
         no_datum (boolean, optional):
@@ -223,7 +225,8 @@ def param_exists(client, current_file=None, param=None, params=None):
     """Check whether parameter(s) exists on a feature.
 
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             File name. Defaults is the currently active model.
         param (string, optional):
@@ -334,7 +337,7 @@ def resume(
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
             SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED
-        type_ (str, optional):
+        `type_` (str, optional):
             Feature type pattern (wildcards allowed: True).
             Defaults: All feature types.
         with_children (boolean, optional):
@@ -396,7 +399,7 @@ def set_param(
             Feature name. Defaults: All features are updated.
         param (str, optional):
             Parameter name. Defaults is True.
-        type_ (str, optional):
+        `type_` (str, optional):
             Parameter data type. Defaults is True.
             Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
         value (depends on data type, optional):
@@ -475,7 +478,7 @@ def suppress(
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
             SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED
-        type_ (str, optional):
+        `type_` (str, optional):
             Feature type pattern (wildcards allowed: True).
             Defaults: All feature types.
         clip (boolean, optional):
@@ -518,7 +521,9 @@ def suppress(
 
 
 def user_select_csys(client, current_file=None, max_=None):
-    """Prompt the user to select one or more coordinate systems, and return their selections.
+    """Prompt the user to select one or more coordinate systems.
+
+    and return their selections.
 
     Args:
         client (obj):
@@ -526,7 +531,7 @@ def user_select_csys(client, current_file=None, max_=None):
         current_file (str, optional):
             File name.
             Defaults is the currently active model.
-        max_ (int, optional):
+        `max_` (int, optional):
             The maximum number of dimensions that the user can select.
             Defaults is `1`.
 
@@ -534,16 +539,21 @@ def user_select_csys(client, current_file=None, max_=None):
         Warning: error message from creoson.
 
     Returns:
-        (list:dict): List of feature information.
-            name (str): Feature name.
-            type (string): Feature type.
-            status (str):
-                Feature status.
-                Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
-                SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED,
-                UNREGENERATED.
-            feat_id (int): Feature ID.
-            feat_number (int): Feature Number.
+        (list:dict):
+            List of feature information.
+                name (str):
+                    Feature name.
+                type (string):
+                    Feature type.
+                status (str):
+                    Feature status.
+                    Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+                    SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED,
+                    UNREGENERATED.
+                feat_id (int):
+                    Feature ID.
+                feat_number (int):
+                    Feature Number.
 
     """
     request = {
