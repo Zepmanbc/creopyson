@@ -315,6 +315,8 @@ def resume(
 ):
     """Resume one or more features that match criteria.
 
+    Will only resume visible features.
+
     Args:
         client (obj):
             creopyson Client.
@@ -369,8 +371,77 @@ def resume(
         raise Warning(data)
 
 
-# def set_param():
-#     pass
+def set_param(
+    client,
+    current_file=None,
+    name=None,
+    param=None,
+    type_=None,
+    value=None,
+    encoded=None,
+    designate=None,
+    no_create=None
+):
+    """Set the value of a feature parameter.
+
+    Will only set parameters on visible features.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is the currently active model.
+        name (str, optional):
+            Feature name. Defaults: All features are updated.
+        param (str, optional):
+            Parameter name. Defaults is True.
+        type_ (str, optional):
+            Parameter data type. Defaults is True.
+            Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+        value (depends on data type, optional):
+            Parameter value. Defaults: Clears the parameter value if missing.
+        encoded (boolean, optional):
+            Value is Base64-encoded. Defaults is False.
+        designate (boolean, optional):
+            Set parameter to be designated/not designated, blank=do not set.
+            Defaults is `blank`.
+        no_create (boolean, optional):
+            If parameter does not already exist, do not create it.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+    
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "set_param",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if param:
+        request["data"]["param"] = param
+    if type_:
+        request["data"]["type"] = type_
+    if value:
+        request["data"]["value"] = value
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if designate:
+        request["data"]["designate"] = designate
+    if no_create:
+        request["data"]["no_create"] = no_create
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 # def suppress():
