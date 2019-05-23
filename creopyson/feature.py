@@ -128,14 +128,16 @@ def list_(
     """List feature parameters that match criteria.
 
     Will only list parameters on visible features.
+
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             File name. Defaults is the currently active model.
         name ([str, optional):
             Feature name (wildcards allowed: True).
             Defaults: All features are listed.
-        type_ (str, optional):
+        `type_` (str, optional):
             Feature type patter (wildcards allowed: True).
             Defaults: All feature types.
         no_datum (boolean, optional):
@@ -223,7 +225,8 @@ def param_exists(client, current_file=None, param=None, params=None):
     """Check whether parameter(s) exists on a feature.
 
     Args:
-        client (obj): creopyson Client.
+        client (obj):
+            creopyson Client.
         current_file (str, optional):
             File name. Defaults is the currently active model.
         param (string, optional):
@@ -304,19 +307,267 @@ def rename(client, new_name, current_file=None, feat_id=None, name=None):
     # TODO: feat_id/name
 
 
-# def resume():
-#     valid_values = ["ACTIVE", "INACTIVE", "FAMILY_TABLE_SUPPRESSED", \
-# "SIMP_REP_SUPPRESSED", "PROGRAM_SUPPRESSED", "SUPPRESSED", "UNREGENERATED"]
-#     pass
+def resume(
+    client,
+    current_file=None,
+    name=None,
+    names=None,
+    status=None,
+    type_=None,
+    with_children=None
+):
+    """Resume one or more features that match criteria.
+
+    Will only resume visible features.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is the currently active model.
+        name (str, optional):
+            Feature name; only used if names is not given
+            (wildcards allowed: True). Defaults to None.
+        names (lst:str, optional):
+            List of feature names. Defaults to None.
+            The name parameter is used; if both are empty,
+            then all features may be resumed.
+        status (str, optional):
+            Feature status pattern. Defaults: All feature statuses.
+            Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+            SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED
+        `type_` (str, optional):
+            Feature type pattern (wildcards allowed: True).
+            Defaults: All feature types.
+        with_children (boolean, optional):
+            Whether to resume any child features of the resumed feature.
+            Defaults is True.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "resume",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    if status:
+        request["data"]["status"] = status
+    if type_:
+        request["data"]["type"] = type_
+    if with_children:
+        request["data"]["with_children"] = with_children
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
-# def set_param():
-#     pass
+def set_param(
+    client,
+    current_file=None,
+    name=None,
+    param=None,
+    type_=None,
+    value=None,
+    encoded=None,
+    designate=None,
+    no_create=None
+):
+    """Set the value of a feature parameter.
+
+    Will only set parameters on visible features.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is the currently active model.
+        name (str, optional):
+            Feature name. Defaults: All features are updated.
+        param (str, optional):
+            Parameter name. Defaults is True.
+        `type_` (str, optional):
+            Parameter data type. Defaults is True.
+            Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+        value (depends on data type, optional):
+            Parameter value. Defaults: Clears the parameter value if missing.
+        encoded (boolean, optional):
+            Value is Base64-encoded. Defaults is False.
+        designate (boolean, optional):
+            Set parameter to be designated/not designated, blank=do not set.
+            Defaults is `blank`.
+        no_create (boolean, optional):
+            If parameter does not already exist, do not create it.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "set_param",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if param:
+        request["data"]["param"] = param
+    if type_:
+        request["data"]["type"] = type_
+    if value:
+        request["data"]["value"] = value
+    if encoded:
+        request["data"]["encoded"] = encoded
+    if designate:
+        request["data"]["designate"] = designate
+    if no_create:
+        request["data"]["no_create"] = no_create
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
-# def suppress():
-#     pass
+def suppress(
+    client,
+    current_file=None,
+    name=None,
+    names=None,
+    status=None,
+    type_=None,
+    clip=None,
+    with_children=None
+):
+    """Suppress one or more features that match criteria.
+
+    Will only suppress visible features.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is the currently active model.
+        name (str, optional):
+            Feature name; only used if names is not given
+            (wildcards allowed: True). Defaults to None.
+        names (lst:str, optional):
+            List of feature names. Defaults to None.
+            The name parameter is used; if both are empty,
+            then all features may be suppressed.
+        status (str, optional):
+            Feature status pattern. Defaults: All feature statuses.
+            Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+            SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED
+        `type_` (str, optional):
+            Feature type pattern (wildcards allowed: True).
+            Defaults: All feature types.
+        clip (boolean, optional):
+            Whether to clip-suppress ANY features from this feature through
+            the end of the structure. Defaults is True.
+        with_children (boolean, optional):
+            Whether to resume any child features of the resumed feature.
+            Defaults is True.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "suppress",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if name:
+        request["data"]["name"] = name
+    if names:
+        request["data"]["names"] = names
+    if status:
+        request["data"]["status"] = status
+    if type_:
+        request["data"]["type"] = type_
+    if clip:
+        request["data"]["clip"] = clip
+    if with_children:
+        request["data"]["with_children"] = with_children
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
-# def user_select_csys():
-#     pass
+def user_select_csys(client, current_file=None, max_=None):
+    """Prompt the user to select one or more coordinate systems.
+
+    and return their selections.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name.
+            Defaults is the currently active model.
+        `max_` (int, optional):
+            The maximum number of dimensions that the user can select.
+            Defaults is `1`.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            List of feature information.
+                name (str):
+                    Feature name.
+                type (string):
+                    Feature type.
+                status (str):
+                    Feature status.
+                    Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+                    SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED,
+                    UNREGENERATED.
+                feat_id (int):
+                    Feature ID.
+                feat_number (int):
+                    Feature Number.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "feature",
+        "function": "user_select_csys",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if max_:
+        request["data"]["max"] = max_
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)

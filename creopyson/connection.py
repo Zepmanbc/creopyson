@@ -186,12 +186,12 @@ def make_api_method(func):
 
 """Add API methods to CLient."""
 
-# bom.py
+# Bom
 from creopyson.bom import get_paths as bom_get_paths
 Client.bom_get_paths = make_api_method(bom_get_paths)
 
 
-# creo.py
+# Creo
 from creopyson.creo import cd as creo_cd
 from creopyson.creo import delete_files as creo_delete_files
 from creopyson.creo import get_config as creo_get_config
@@ -216,7 +216,7 @@ Client.creo_set_config = make_api_method(creo_set_config)
 Client.creo_set_std_color = make_api_method(creo_set_std_color)
 
 
-# dimension.py
+# Dimension
 from creopyson.dimension import copy as dimension_copy
 from creopyson.dimension import list_detail as dimension_list_detail
 from creopyson.dimension import list_ as dimension_list
@@ -231,7 +231,28 @@ Client.dimension_show = make_api_method(dimension_show)
 Client.dimension_user_select = make_api_method(dimension_user_select)
 
 
-# file.py
+# Feature
+from creopyson.feature import delete as feature_delete
+from creopyson.feature import delete_param as feature_delete_param
+from creopyson.feature import list_ as feature_list
+from creopyson.feature import param_exists as feature_param_exists
+from creopyson.feature import rename as feature_rename
+from creopyson.feature import resume as feature_resume
+from creopyson.feature import set_param as feature_set_param
+from creopyson.feature import suppress as feature_suppress
+from creopyson.feature import user_select_csys as feature_user_select_csys
+Client.feature_delete = make_api_method(feature_delete)
+Client.feature_delete_param = make_api_method(feature_delete_param)
+Client.feature_list = make_api_method(feature_list)
+Client.feature_param_exists = make_api_method(feature_param_exists)
+Client.feature_rename = make_api_method(feature_rename)
+Client.feature_resume = make_api_method(feature_resume)
+Client.feature_set_param = make_api_method(feature_set_param)
+Client.feature_suppress = make_api_method(feature_suppress)
+Client.feature_user_select_csys = make_api_method(feature_user_select_csys)
+
+
+# File
 from creopyson.file import assemble as file_assemble
 from creopyson.file import backup as file_backup
 from creopyson.file import close_window as file_close_window
@@ -310,7 +331,7 @@ Client.geometry_get_edges = make_api_method(geometry_get_edges)
 Client.geometry_get_surfaces = make_api_method(geometry_get_surfaces)
 
 
-# interface.py
+# Interface
 from creopyson.interface import export_3dpdf as interface_export_3dpdf
 from creopyson.interface import export_file as interface_export_file
 from creopyson.interface import export_image as interface_export_image
