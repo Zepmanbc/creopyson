@@ -34,12 +34,12 @@ def authorize(client, user, password):
         raise Warning(data)
 
 
-def clear_workspace(client, workspace_name):
+def clear_workspace(client, workspace):
     """Clear a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): workspace name
+        workspace (str): workspace name
 
     Returns:
         None
@@ -50,7 +50,7 @@ def clear_workspace(client, workspace_name):
         "command": "windchill",
         "function": "clear_workspace",
         "data": {
-            "workspace": workspace_name
+            "workspace": workspace
         }
     }
     status, data = creoson_post(client, request)
@@ -58,12 +58,12 @@ def clear_workspace(client, workspace_name):
         raise Warning(data)
 
 
-def create_workspace(client, workspace_name, context_name):
+def create_workspace(client, workspace, context_name):
     """Create a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): Workspace name
+        workspace (str): Workspace name
         context_name (str): Context name
 
     Returns:
@@ -75,7 +75,7 @@ def create_workspace(client, workspace_name, context_name):
         "command": "windchill",
         "function": "create_workspace",
         "data": {
-            "workspace": workspace_name,
+            "workspace": workspace,
             "context": context_name
         }
     }
@@ -84,12 +84,12 @@ def create_workspace(client, workspace_name, context_name):
         raise Warning(data)
 
 
-def delete_workspace(client, workspace_name):
+def delete_workspace(client, workspace):
     """Delete a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): Workspace name
+        workspace (str): Workspace name
 
     Returns:
         None
@@ -100,7 +100,7 @@ def delete_workspace(client, workspace_name):
         "command": "windchill",
         "function": "delete_workspace",
         "data": {
-            "workspace": workspace_name
+            "workspace": workspace
         }
     }
     status, data = creoson_post(client, request)
@@ -108,12 +108,12 @@ def delete_workspace(client, workspace_name):
         raise Warning(data)
 
 
-def file_checked_out(client, workspace_name, filename):
+def file_checked_out(client, workspace, filename):
     """Check whether a file is checked out in a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): Workspace name
+        workspace (str): Workspace name
         filename (str): File name
 
     Returns:
@@ -125,7 +125,7 @@ def file_checked_out(client, workspace_name, filename):
         "command": "windchill",
         "function": "file_checked_out",
         "data": {
-            "workspace": workspace_name,
+            "workspace": workspace,
             "filename": filename
         }
     }
@@ -147,19 +147,21 @@ def get_workspace(client):
     request = {
         "sessionId": client.sessionId,
         "command": "windchill",
-        "function": "get_workspace"
+        "function": "get_workspace",
+        "data": {}
     }
     status, data = creoson_post(client, request)
     if not status:
         return data["workspace"]
 
 
-def list_workspace_files(client, filename=None):
+def list_workspace_files(client, workspace, filename):
     """Get a list of files in a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        filename (str, optional): File name or search. Defaults to None.
+        workspace (str): Workspace name.
+        filename (str): File name or search.
         ex: `*.asm`, `screw_*.prt`
 
     Returns:
@@ -170,9 +172,11 @@ def list_workspace_files(client, filename=None):
         "sessionId": client.sessionId,
         "command": "windchill",
         "function": "list_workspace_files",
+        "data": {
+            "workspace": workspace,
+            "filename": filename
+        }
     }
-    if filename:
-        request["data"]["filename"] = filename
     status, data = creoson_post(client, request)
     if not status:
         return data["filelist"]
@@ -191,7 +195,8 @@ def list_workspaces(client):
     request = {
         "sessionId": client.sessionId,
         "command": "windchill",
-        "function": "list_workspaces"
+        "function": "list_workspaces",
+        "data": {}
     }
     status, data = creoson_post(client, request)
     if not status:
@@ -246,12 +251,12 @@ def set_server(client, server_url):
         raise Warning(data)
 
 
-def set_workspace(client, workspace_name):
+def set_workspace(client, workspace):
     """Select a workspace on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): Workspace name
+        workspace (str): Workspace name
 
     Returns:
         None
@@ -262,7 +267,7 @@ def set_workspace(client, workspace_name):
         "command": "windchill",
         "function": "set_workspace",
         "data": {
-            "workspace": workspace_name
+            "workspace": workspace
         }
     }
     status, data = creoson_post(client, request)
@@ -270,12 +275,12 @@ def set_workspace(client, workspace_name):
         raise Warning(data)
 
 
-def workspace_exists(client, workspace_name):
+def workspace_exists(client, workspace):
     """Check whether a workspace exists on the active server.
 
     Args:
         client (obj): creopyson Client
-        workspace_name (str): Workspace name
+        workspace (str): Workspace name
 
     Returns:
         Boolean: Whether the workspace exists
@@ -286,7 +291,7 @@ def workspace_exists(client, workspace_name):
         "command": "windchill",
         "function": "workspace_exists",
         "data": {
-            "workspace": workspace_name
+            "workspace": workspace
         }
     }
     status, data = creoson_post(client, request)
