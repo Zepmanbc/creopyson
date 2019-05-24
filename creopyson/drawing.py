@@ -584,8 +584,35 @@ def get_cur_sheet(client, drawing=None):
         raise Warning(data)
 
 
-def get_num_sheets(client, ):
-    pass
+def get_num_sheets(client, drawing=None):
+    """Get the number of sheets on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (int): Number of sheets.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_num_sheets",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["sheet"]
+    else:
+        raise Warning(data)
 
 
 def get_sheet_scale(client, ):
