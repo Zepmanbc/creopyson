@@ -655,8 +655,39 @@ def get_sheet_scale(client, sheet, drawing=None, model=None):
         raise Warning(data)
 
 
-def get_sheet_size(client, ):
-    pass
+def get_sheet_size(client, sheet, drawing=None):
+    """Get the size of a drawing sheet.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int):
+            Sheet number.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): Sheet size.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_sheet_size",
+        "data": {
+            "sheet": sheet
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["size"]
+    else:
+        raise Warning(data)
 
 
 def get_view_loc(client, ):
