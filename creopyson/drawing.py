@@ -441,8 +441,37 @@ def delete_symbol_def(client, symbol_file, drawing=None):
         raise Warning(data)
 
 
-def delete_symbol_inst(client, ):
-    pass
+def delete_symbol_inst(client, symbol_id, drawing=None):
+    """Delete a specific symbol instance from a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        symbol_id (str):
+            ID of the symbol instance.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "delete_symbol_inst",
+        "data": {
+            "symbol_id": symbol_id
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def delete_view(client, ):
