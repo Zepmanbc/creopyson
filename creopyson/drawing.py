@@ -690,8 +690,43 @@ def get_sheet_size(client, sheet, drawing=None):
         raise Warning(data)
 
 
-def get_view_loc(client, ):
-    pass
+def get_view_loc(client, view, drawing=None):
+    """Get the location of a drawing view.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            View name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict):
+            x (float): X-coordinate of the view
+            y (float): Y-coordinate of the view
+            z (float): Z-coordinate of the view
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_sheet_size",
+        "data": {
+            "view": view
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
+    # TODO: retrun a tuple (x,y,z)?
 
 
 def get_view_scale(client, ):
