@@ -70,8 +70,69 @@ def add_sheet(client, position=None, drawing=None):
         raise Warning(data)
 
 
-def create_gen_view(client, ):
-    pass
+def create_gen_view(
+    client,
+    template,
+    model=None,
+    drawing=None,
+    scale=None,
+    display=None,
+    activate=None,
+    new_window=None
+):
+    """Create a new drawing from a template.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        template (str):
+            Template
+        model (str, optional):
+            Model name. Defaults: Current active model.
+        drawing (str, optional):
+            New drawing name.
+            Defaults: A name derived from the model's instance name.
+        scale (float, optional):
+            Drawing scale. Defaults is `1.0`.
+        display (boolean, optional):
+            Display the drawing after open. Defaults is False.
+        activate (boolean, optional):
+            Activate the drawing window after open. Defaults is False.
+        new_window (boolean, optional):
+            Open drawing in a new window. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): New drawing name.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "create_gen_view",
+        "data": {
+            "template": template,
+        }
+    }
+    if model:
+        request["data"]["model"] = model
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if scale:
+        request["data"]["scale"] = scale
+    if display:
+        request["data"]["display"] = display
+    if activate:
+        request["data"]["activate"] = activate
+    if new_window:
+        request["data"]["new_window"] = new_window
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["drawing"]
+    else:
+        raise Warning(data)
 
 
 def create(client, ):
