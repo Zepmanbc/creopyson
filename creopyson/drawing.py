@@ -798,8 +798,40 @@ def get_view_sheet(client, view, drawing=None):
     else:
         raise Warning(data)
 
-def is_symbol_def_loaded(client, ):
-    pass
+
+def is_symbol_def_loaded(client, symbol_file, drawing=None):
+    """Check whether a symbol definition file is loaded into Creo.
+
+    Args:
+        client (obj):
+            creopyson Client
+        symbol_file (str):
+            Name of the symbol file.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (boolean): Whether the symbol definition is loaded into Creo.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "is_symbol_def_loaded",
+        "data": {
+            "symbol_file": symbol_file
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["loaded"]
+    else:
+        raise Warning(data)
 
 
 def list_models(client, ):
