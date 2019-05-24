@@ -70,7 +70,7 @@ def add_sheet(client, position=None, drawing=None):
         raise Warning(data)
 
 
-def create_gen_view(
+def create(
     client,
     template,
     model=None,
@@ -111,7 +111,7 @@ def create_gen_view(
     request = {
         "sessionId": client.sessionId,
         "command": "drawing",
-        "function": "create_gen_view",
+        "function": "create",
         "data": {
             "template": template,
         }
@@ -135,8 +135,78 @@ def create_gen_view(
         raise Warning(data)
 
 
-def create(client, ):
-    pass
+def create_gen_view(
+    client,
+    model_view,
+    point,
+    drawing=None,
+    view=None,
+    sheet=None,
+    model=None,
+    scale=None,
+    display_data=None,
+    exploded=None
+):
+    """Create general view on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        model_view (str):
+            Model view to use for the drawing view orientation.
+        point (dict):
+            Coordinates for the view in Drawing Units.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        view (str, optional):
+            New view name. Defaults: the model_view parameter.
+        sheet (int, optional):
+            Sheet number. Defaults: current active sheet on the drawing.
+        model (str, optional):
+            Model for the view. Defaults: current active model on the drawing.
+        scale (float, optional):
+            View scale. Defaults: the sheet's scale.
+        display_data (dict, optional):
+            Display parameters used to create the view.
+            Defaults: Creo defaults.
+        exploded (boolean, optional):
+            Whether to create the view as an exploded view. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "create_gen_view",
+        "data": {
+            "model_view": model_view,
+            "point": point
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if view:
+        request["data"]["view"] = view
+    if sheet:
+        request["data"]["sheet"] = sheet
+    if model:
+        request["data"]["model"] = model
+    if scale:
+        request["data"]["scale"] = scale
+    if display_data:
+        request["data"]["display_data"] = display_data
+    if exploded:
+        request["data"]["exploded"] = exploded
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
+    # TODO: JLpoint Method for point
+    # TODO: ViewDisplayData method for display_data
 
 
 def create_proj_view(client, ):
