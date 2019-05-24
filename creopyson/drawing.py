@@ -329,8 +329,48 @@ def create_symbol(
         raise Warning(data)
 
 
-def delete_models(client, ):
-    pass
+def delete_models(
+    client,
+    model=None,
+    drawing=None,
+    delete_views=None
+):
+    """Delete one or more models from a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        model (str, optional):
+            Model name (wildcard allowed: True).
+            Defaults: all models will be deleted from the drawing.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        delete_views (boolean, optional):
+            Whether to delete drawing views associated with the model.
+            Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "delete_models",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if model:
+        request["data"]["model"] = model
+    if delete_views:
+        request["data"]["delete_views"] = delete_views
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def delete_sheet(client, ):
