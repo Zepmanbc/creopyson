@@ -489,7 +489,7 @@ def delete_view(
         view (str):
             View name.
         drawing (str, optional):
-            Drawing name. Defaults: current active drawing..
+            Drawing name. Defaults: current active drawing.
         sheet (int, optional):
             Sheet number; if filled in, the view will only be deleted if it is
             on that sheet. Defaults: Delete the view from any sheet.
@@ -522,8 +522,35 @@ def delete_view(
         raise Warning(data)
 
 
-def get_cur_model(client, ):
-    pass
+def get_cur_model(client, drawing=None):
+    """Get the active model on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (str): Model name.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_cur_model",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["drawing"]
+    else:
+        raise Warning(data)
 
 
 def get_cur_sheet(client, ):
