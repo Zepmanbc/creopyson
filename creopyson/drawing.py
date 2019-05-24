@@ -209,8 +209,67 @@ def create_gen_view(
     # TODO: ViewDisplayData method for display_data
 
 
-def create_proj_view(client, ):
-    pass
+def create_proj_view(
+    client,
+    parent_view,
+    point,
+    drawing=None,
+    view=None,
+    sheet=None,
+    display_data=None,
+    exploded=None
+):
+    """Create projection view on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        parent_view (str):
+            Parent view for the projection view.
+        point (dict):
+            Coordinates for the view, relative to the location
+            of the parent view, in Drawing Units.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        view (str, optional):
+            New view name. Defaults: Creo's default name for a new view.
+        sheet (int, optional):
+            Sheet number. Defaults: current active sheet on the drawing.
+        display_data (dict, optional):
+            Display parameters used to create the view.
+            Defaults: the display parameters of the parent view.
+        exploded (boolean, optional):
+            Whether to create the view as an exploded view. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "create_proj_view",
+        "data": {
+            "parent_view": parent_view,
+            "point": point
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if view:
+        request["data"]["view"] = view
+    if sheet:
+        request["data"]["sheet"] = sheet
+    if display_data:
+        request["data"]["display_data"] = display_data
+    if exploded:
+        request["data"]["exploded"] = exploded
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def create_symbol(client, ):
