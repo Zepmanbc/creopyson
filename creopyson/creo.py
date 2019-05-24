@@ -59,6 +59,7 @@ def delete_files(client, dirname=None, filename=None, filenames=None):
         "sessionId": client.sessionId,
         "command": "creo",
         "function": "dele_files",
+        "data": {}
     }
     if dirname:
         request["data"]["dirname"] = dirname
@@ -162,6 +163,7 @@ def list_dirs(client, dirname=None):
         "sessionId": client.sessionId,
         "command": "creo",
         "function": "dele_files",
+        "data": {}
     }
     if dirname:
         request["data"]["dirname"] = dirname
@@ -193,6 +195,7 @@ def list_files(client, filename=None):
         "sessionId": client.sessionId,
         "command": "creo",
         "function": "dele_files",
+        "data": {}
     }
     if filename:
         request["data"]["filename"] = filename

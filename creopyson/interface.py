@@ -56,6 +56,7 @@ def export_3dpdf(
         "sessionId": client.sessionId,
         "command": "interface",
         "function": "export_3dpdf",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -274,6 +275,7 @@ def export_pdf(
         "sessionId": client.sessionId,
         "command": "interface",
         "function": "export_pdf",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -318,6 +320,7 @@ def export_program(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "interface",
         "function": "export_program",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -357,6 +360,7 @@ def import_program(client, current_file=None, filename=None, dirname=None):
         "sessionId": client.sessionId,
         "command": "interface",
         "function": "import_program",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -427,6 +431,7 @@ def plot(client, current_file=None, dirname=None, driver=None):
         "sessionId": client.sessionId,
         "command": "interface",
         "function": "plot",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

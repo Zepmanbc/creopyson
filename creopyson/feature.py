@@ -52,6 +52,7 @@ def delete(
         "sessionId": client.sessionId,
         "command": "feature",
         "function": "delete",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -98,6 +99,7 @@ def delete_param(client, name=None, current_file=None, param=None):
         "sessionId": client.sessionId,
         "command": "feature",
         "function": "delete_param",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -192,6 +194,7 @@ def list_(
         "sessionId": client.sessionId,
         "command": "feature",
         "function": "list",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -248,6 +251,7 @@ def param_exists(client, current_file=None, param=None, params=None):
         "sessionId": client.sessionId,
         "command": "feature",
         "function": "param_exists",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

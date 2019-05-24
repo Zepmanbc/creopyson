@@ -169,6 +169,7 @@ def close_window(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "close_window",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -236,6 +237,7 @@ def erase(client, current_file=None, files=None, erase_children=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "erase",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -265,6 +267,7 @@ def erase_not_displayed(client):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "erase_not_displayed",
+        "data": {}
     }
     status, data = creoson_post(client, request)
     if status:
@@ -319,6 +322,7 @@ def get_active(client):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "get_active",
+        "data": {}
     }
     status, data = creoson_post(client, request)
     if not status:
@@ -350,6 +354,7 @@ def get_fileinfo(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "get_fileinfo",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -380,6 +385,7 @@ def get_length_units(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "get_length_units",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -410,6 +416,7 @@ def get_mass_units(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "get_mass_units",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -447,6 +454,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "get_transform",
+        "data": {}
     }
     if asm:
         request["data"]["asm"] = asm
@@ -481,6 +489,7 @@ def has_instances(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "has_instances",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -542,6 +551,7 @@ def list_(client, current_file=None, files=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "is_active",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -577,6 +587,7 @@ def list_instances(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "list_instances",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -612,6 +623,7 @@ def list_simp_reps(client, current_file=None, rep=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "list_simp_reps",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -649,6 +661,7 @@ def massprops(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "massprops",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -711,6 +724,7 @@ def open_(
         "sessionId": client.sessionId,
         "command": "file",
         "function": "open",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -755,6 +769,7 @@ def open_errors(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "open_errors",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -785,6 +800,7 @@ def postregen_relations_get(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "postregen_relations_get",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -818,6 +834,7 @@ def postregen_relations_set(client, current_file=None, relations=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "postregen_relations_set",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -848,6 +865,7 @@ def refresh(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "refresh",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -880,6 +898,7 @@ def regenerate(client, current_file=None, files=None, display=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "regenerate",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -912,6 +931,7 @@ def relations_get(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "relations_get",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -945,6 +965,7 @@ def relations_set(client, current_file=None, relations=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "relations_set",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -1014,6 +1035,7 @@ def repaint(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "repaint",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -1044,6 +1066,7 @@ def save(client, current_file=None, files=None):
         "sessionId": client.sessionId,
         "command": "file",
         "function": "save",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

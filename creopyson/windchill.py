@@ -271,7 +271,7 @@ def set_workspace(client, workspace):
         }
     }
     status, data = creoson_post(client, request)
-    if not status:
+    if status:
         raise Warning(data)
 
 

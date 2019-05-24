@@ -1,4 +1,4 @@
-"""Name module."""
+"""Layer module."""
 
 from .core import creoson_post
 
@@ -64,6 +64,7 @@ def exists(client, name=None, current_file=None):
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "exists",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -106,6 +107,7 @@ def list_(client, name=None, current_file=None):
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "exists",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -145,6 +147,7 @@ def show(client, name=None, current_file=None, show_=None):
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "exists",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

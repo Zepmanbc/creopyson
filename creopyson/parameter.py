@@ -117,6 +117,7 @@ def exists(client, current_file=None, name=None, names=None):
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "exists",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -175,6 +176,7 @@ def list_(
         "sessionId": client.sessionId,
         "command": "parameter",
         "function": "list",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

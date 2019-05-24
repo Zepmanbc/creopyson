@@ -88,6 +88,7 @@ def list_(
         "sessionId": client.sessionId,
         "command": "dimension",
         "function": "list",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -174,6 +175,7 @@ def list_detail(
         "sessionId": client.sessionId,
         "command": "dimension",
         "function": "list_detail",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file

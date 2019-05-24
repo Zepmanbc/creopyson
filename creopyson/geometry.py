@@ -1,4 +1,4 @@
-"""Name module."""
+"""Geometry module."""
 
 from .core import creoson_post
 
@@ -30,6 +30,7 @@ def bound_box(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "geometry",
         "function": "bound_box",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
@@ -143,6 +144,7 @@ def get_surfaces(client, current_file=None):
         "sessionId": client.sessionId,
         "command": "geometry",
         "function": "get_surfaces",
+        "data": {}
     }
     if current_file:
         request["data"]["file"] = current_file
