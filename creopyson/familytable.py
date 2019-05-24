@@ -221,12 +221,78 @@ def get_cell(client, instance, colid, current_file=None):
         raise Warning(data)
 
 
-def get_header():
-    pass
+def get_header(client, current_file=None):
+    """Get the header of a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name.
+            Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            colid (str):
+                Column ID.
+            value (depends on date type):
+                Cell value.
+            datatype (str):
+                Data type. Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+            coltype (str):
+                Column Type; a string corresponding to the Creo column type.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "get_header",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["columns"]
+    else:
+        raise Warning(data)
 
 
-def get_parents():
-    pass
+def get_parents(client, current_file=None):
+    """Get the parent instances of a model in a nested family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name.
+            Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str):
+            List of parent instance names, starting with
+            the immediate parent and working back.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "get_parents",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["parents"]
+    else:
+        raise Warning(data)
 
 
 def get_row():
