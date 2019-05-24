@@ -714,7 +714,7 @@ def get_view_loc(client, view, drawing=None):
     request = {
         "sessionId": client.sessionId,
         "command": "drawing",
-        "function": "get_sheet_size",
+        "function": "get_view_loc",
         "data": {
             "view": view
         }
@@ -750,7 +750,7 @@ def get_view_scale(client, view, drawing=None):
     request = {
         "sessionId": client.sessionId,
         "command": "drawing",
-        "function": "get_sheet_size",
+        "function": "get_view_scale",
         "data": {
             "view": view
         }
@@ -764,9 +764,39 @@ def get_view_scale(client, view, drawing=None):
         raise Warning(data)
 
 
-def get_view_sheet(client, ):
-    pass
+def get_view_sheet(client, view, drawing=None):
+    """Get the sheet number that contains a drawing view.
 
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            View name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (int): Sheet number.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_view_sheet",
+        "data": {
+            "view": view
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["sheet"]
+    else:
+        raise Warning(data)
 
 def is_symbol_def_loaded(client, ):
     pass
