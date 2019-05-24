@@ -136,8 +136,41 @@ def delete(client, current_file=None):
         raise Warning(data)
 
 
-def exists():
-    pass
+def exists(client, instance, current_file=None):
+    """Check whether an instance exists in a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        instance (string):
+            Instance name.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (boolean):
+            Whether the instance exists in the model's family table;
+            returns false if there is no family table in the model.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "exists",
+        "data": {
+            "instance": instance
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["exists"]
+    else:
+        raise Warning(data)
 
 
 def get_cell():
