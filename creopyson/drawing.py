@@ -221,6 +221,10 @@ def create_proj_view(
 ):
     """Create projection view on a drawing.
 
+    When specifying the view coordinates, you should specify only an X or a Y
+    coordinate to avoid confusion.  If you specify both coordinates, it
+    appears Creo may be using whichever has the larger absolute value.
+
     Args:
         client (obj):
             creopyson Client
@@ -272,8 +276,57 @@ def create_proj_view(
         raise Warning(data)
 
 
-def create_symbol(client, ):
-    pass
+def create_symbol(
+    client,
+    symbol_file,
+    point,
+    drawing=None,
+    replace_values=None,
+    sheet=None
+):
+    """Add a symbol instance to a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        symbol_file (str):
+            Name of the symbol file.
+        point (dict):
+            Coordinates for the symbol in Drawing Units.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        replace_values (dict, optional):
+            Object containing replacement values for any
+            variable text in the symbol. Defaults to None.
+        sheet (int, optional):
+            Sheet number (0 for all sheets).
+            Defaults: the symbol will be added to all sheets.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "create_symbol",
+        "data": {
+            "symbol_file": symbol_file,
+            "point": point
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if replace_values:
+        request["data"]["replace_values"] = replace_values
+    if sheet:
+        request["data"]["sheet"] = sheet
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def delete_models(client, ):
