@@ -417,8 +417,59 @@ def list_tree(client, current_file=None, erase=None):
         raise Warning(data)
 
 
-def replace():
-    pass
+def replace(
+    client,
+    cur_model,
+    new_inst,
+    current_file=None,
+    cur_inst=None,
+    path=None
+):
+    """Replace a model in an assembly with another inst in the same family table.
+
+    You must specify either cur_inst or path.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        cur_model (str):
+            Generic model containing the instances.
+        new_inst (str):
+            New instance name.
+        current_file (str, optional):
+            File name (usually an assembly).
+            Defaults is currently active model.
+        cur_inst (str):
+            Instance name to replace. Defaults to None.
+        path (list:int, optional):
+            Path to component to replace. Defaults to None.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "replace",
+        "data": {
+            "cur_model": cur_model,
+            "new_inst": new_inst,
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if cur_inst:
+        request["data"]["cur_inst"] = cur_inst
+    if path:
+        request["data"]["path"] = path
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
+    # TODO: path/cur_inst
 
 
 def set_cell():
