@@ -396,7 +396,7 @@ def delete_sheet(client, sheet, drawing=None):
     request = {
         "sessionId": client.sessionId,
         "command": "drawing",
-        "function": "delete_models",
+        "function": "delete_sheet",
         "data": {
             "sheet": sheet
         }
@@ -408,8 +408,37 @@ def delete_sheet(client, sheet, drawing=None):
         raise Warning(data)
 
 
-def delete_symbol_def(client, ):
-    pass
+def delete_symbol_def(client, symbol_file, drawing=None):
+    """Delete a symbol definition and its instances from a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        symbol_file (str):
+            Name of the symbol file.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "delete_symbol_def",
+        "data": {
+            "symbol_file": symbol_file
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def delete_symbol_inst(client, ):
