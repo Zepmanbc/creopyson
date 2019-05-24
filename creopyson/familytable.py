@@ -365,7 +365,7 @@ def list_(client, current_file=None, instance=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    if current_file:
+    if instance:
         request["data"]["instance"] = instance
     status, data = creoson_post(client, request)
     if not status:
@@ -374,8 +374,47 @@ def list_(client, current_file=None, instance=None):
         raise Warning(data)
 
 
-def list_tree():
-    pass
+def list_tree(client, current_file=None, erase=None):
+    """Get a hierarchical structure of a nested family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        erase (boolean, optional):
+            Erase model and non-displayed models afterwards.
+            Defaults is `False`.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str):
+            List of child instances
+                total (int):
+                    Count of all child instances including their decendants.
+                children (list:dict):
+                    name (str): Name of the family table instance.
+                    total (int): Count of all child instances including their decendants.
+                    children (list:dict): List of child instances.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "list_tree",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if erase:
+        request["data"]["erase"] = erase
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["instances"]
+    else:
+        raise Warning(data)
 
 
 def replace():
