@@ -373,8 +373,39 @@ def delete_models(
         raise Warning(data)
 
 
-def delete_sheet(client, ):
-    pass
+def delete_sheet(client, sheet, drawing=None):
+    """Delete a drawing sheet.
+
+    An error will occur if you try to delete the only sheet in a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int):
+            Sheet number.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "delete_models",
+        "data": {
+            "sheet": sheet
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def delete_symbol_def(client, ):
