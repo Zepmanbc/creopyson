@@ -870,8 +870,53 @@ def list_models(client, model=None, drawing=None):
         raise Warning(data)
 
 
-def list_symbols(client, ):
-    pass
+def list_symbols(
+    client,
+    drawing=None,
+    symbol_file=None,
+    sheet=None
+):
+    """List symbols contained on a drawing.
+    
+    Args:
+        client (obj):
+            creopyson Client
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        symbol_file (str, optional):
+            Symbol file name filter. Defaults: no filter.
+        sheet (int, optional):
+            Sheet number (0 for all sheets).
+            Defaults: The symbol will be added to all sheets.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:dict):
+            List of symbols in the drawing.
+                id (int): Symbol ID.
+                symbol_name (str): Symbol name.
+                sheet (int): Sheet number.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "list_symbols",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if symbol_file:
+        request["data"]["symbol_file"] = symbol_file
+    if sheet:
+        request["data"]["sheet"] = sheet
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["symbols"]
+    else:
+        raise Warning(data)
 
 
 def list_view_details(client, ):
