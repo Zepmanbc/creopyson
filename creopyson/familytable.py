@@ -38,7 +38,7 @@ def add_inst(client, instance, current_file=None):
         raise Warning(data)
 
 
-def create_instance(client, instance, current_file=None):
+def create_inst(client, instance, current_file=None):
     """Create a new model from a family table row.
 
     Args:
@@ -59,7 +59,7 @@ def create_instance(client, instance, current_file=None):
     request = {
         "sessionId": client.sessionId,
         "command": "familytable",
-        "function": "add_inst",
+        "function": "create_inst",
         "data": {
             "instance": instance
         }
@@ -73,16 +73,67 @@ def create_instance(client, instance, current_file=None):
         raise Warning(data)
 
 
-def create_inst():
-    pass
+def delete_inst(client, instance, current_file=None):
+    """Delete an instance from a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        instance (string):
+            Instance name.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "delete_inst",
+        "data": {
+            "instance": instance
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
-def delete_inst():
-    pass
+def delete(client, current_file=None):
+    """Delete an entire family table.
 
+    Args:
+        client (obj):
+            creopyson Client.
+        current_file (str, optional):
+            File name (wildcards allowed: True).
+            Defaults is currently active model.
 
-def delete():
-    pass
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "delete",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def exists():
