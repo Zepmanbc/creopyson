@@ -231,6 +231,35 @@ Client.dimension_show = make_api_method(dimension_show)
 Client.dimension_user_select = make_api_method(dimension_user_select)
 
 
+# Familytable
+from creopyson.familytable import add_inst as familytable_add_inst
+from creopyson.familytable import create_inst as familytable_create_inst
+from creopyson.familytable import delete_inst as familytable_delete_inst
+from creopyson.familytable import delete as familytable_delete
+from creopyson.familytable import exists as familytable_exists
+from creopyson.familytable import get_cell as familytable_get_cell
+from creopyson.familytable import get_header as familytable_get_header
+from creopyson.familytable import get_parents as familytable_get_parents
+from creopyson.familytable import get_row as familytable_get_row
+from creopyson.familytable import list_ as familytable_list
+from creopyson.familytable import list_tree as familytable_list_tree
+from creopyson.familytable import replace as familytable_replace
+from creopyson.familytable import set_cell as familytable_set_cell
+Client.familytable_add_inst = make_api_method(familytable_add_inst)
+Client.familytable_create_inst = make_api_method(familytable_create_inst)
+Client.familytable_delete_inst = make_api_method(familytable_delete_inst)
+Client.familytable_delete = make_api_method(familytable_delete)
+Client.familytable_exists = make_api_method(familytable_exists)
+Client.familytable_get_cell = make_api_method(familytable_get_cell)
+Client.familytable_get_header = make_api_method(familytable_get_header)
+Client.familytable_get_parents = make_api_method(familytable_get_parents)
+Client.familytable_get_row = make_api_method(familytable_get_row)
+Client.familytable_list = make_api_method(familytable_list)
+Client.familytable_list_tree = make_api_method(familytable_list_tree)
+Client.familytable_replace = make_api_method(familytable_replace)
+Client.familytable_set_cell = make_api_method(familytable_set_cell)
+
+
 # Feature
 from creopyson.feature import delete as feature_delete
 from creopyson.feature import delete_param as feature_delete_param

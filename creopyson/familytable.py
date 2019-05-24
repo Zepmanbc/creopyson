@@ -472,6 +472,42 @@ def replace(
     # TODO: path/cur_inst
 
 
-def set_cell():
-    pass
+def set_cell(client, instance, colid, value, current_file=None):
+    """Set the value of one cell of a family table.
 
+    Args:
+        client (obj):
+            creopyson Client.
+        instance (str):
+            Family Table instance name.
+        colid (str):
+            Column ID.
+        value (depends on data type):
+            Cell value.
+        current_file (str, optional):
+            File name (usually an assembly).
+            Defaults is currently active model.
+
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "set_cell",
+        "data": {
+            "instance": instance,
+            "colid": colid,
+            "value": value,
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
