@@ -834,8 +834,40 @@ def is_symbol_def_loaded(client, symbol_file, drawing=None):
         raise Warning(data)
 
 
-def list_models(client, ):
-    pass
+def list_models(client, model=None, drawing=None):
+    """Check whether a symbol definition file is loaded into Creo.
+
+    Args:
+        client (obj):
+            creopyson Client
+        model (str, optional):
+            Model name filter (wildcards allowed: True).
+            Defaults: no filter.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str): List of model names in the drawing.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "list_models",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if model:
+        request["data"]["model"] = model
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["files"]
+    else:
+        raise Warning(data)
 
 
 def list_symbols(client, ):
