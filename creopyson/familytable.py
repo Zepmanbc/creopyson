@@ -338,8 +338,40 @@ def get_row(client, instance, current_file=None):
         raise Warning(data)
 
 
-def list_():
-    pass
+def list_(client, current_file=None, instance=None):
+    """List the instance names in a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        instance (str, optional):
+            Instance name filter (wildcards allowed: True).
+            Defaults is all instances.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str): List of matching instance names
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "list",
+        "data": {}
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    if current_file:
+        request["data"]["instance"] = instance
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["instances"]
+    else:
+        raise Warning(data)
 
 
 def list_tree():
