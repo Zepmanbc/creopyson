@@ -11,7 +11,7 @@ def add_inst(client, instance, current_file=None):
     Args:
         client (obj):
             creopyson Client.
-        instance (string):
+        instance (str):
             New instance name.
         current_file (str, optional):
             File name. Defaults is currently active model.
@@ -44,7 +44,7 @@ def create_inst(client, instance, current_file=None):
     Args:
         client (obj):
             creopyson Client.
-        instance (string):
+        instance (str):
             Instance name.
         current_file (str, optional):
             File name. Defaults is currently active model.
@@ -79,7 +79,7 @@ def delete_inst(client, instance, current_file=None):
     Args:
         client (obj):
             creopyson Client.
-        instance (string):
+        instance (str):
             Instance name.
         current_file (str, optional):
             File name. Defaults is currently active model.
@@ -142,7 +142,7 @@ def exists(client, instance, current_file=None):
     Args:
         client (obj):
             creopyson Client.
-        instance (string):
+        instance (str):
             Instance name.
         current_file (str, optional):
             File name. Defaults is currently active model.
@@ -173,8 +173,52 @@ def exists(client, instance, current_file=None):
         raise Warning(data)
 
 
-def get_cell():
-    pass
+def get_cell(client, instance, colid, current_file=None):
+    """Get one cell of a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        instance (str):
+            Instance name.
+        colid (str):
+            Colimn ID.
+        current_file (str, optional):
+            File name. Defaults is currently active model.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict):
+            instance (str):
+                Family Table instance name.
+            colid (str):
+                Column ID.
+            value (depends on datatype):
+                Cell value.
+            datatype (str):
+                Data type.
+            coltype (str):
+                Column Type; a string corresponding to the Creo column type.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "familytable",
+        "function": "get_cell",
+        "data": {
+            "instance": instance,
+            "colid": colid
+        }
+    }
+    if current_file:
+        request["data"]["file"] = current_file
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def get_header():
