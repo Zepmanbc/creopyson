@@ -610,13 +610,49 @@ def get_num_sheets(client, drawing=None):
         request["data"]["drawing"] = drawing
     status, data = creoson_post(client, request)
     if not status:
-        return data["sheet"]
+        return data["num_sheets"]
     else:
         raise Warning(data)
 
 
-def get_sheet_scale(client, ):
-    pass
+def get_sheet_scale(client, sheet, drawing=None, model=None):
+    """Get the scale of a drawing sheet.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int):
+            Sheet number.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        model (str, optional):
+            Drawing model used to calculate the scale.
+            Defaults: the active model on the drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (float): Sheet scale.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "get_sheet_scale",
+        "data": {
+            "sheet": sheet
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if model:
+        request["data"]["model"] = model
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["scale"]
+    else:
+        raise Warning(data)
 
 
 def get_sheet_size(client, ):
