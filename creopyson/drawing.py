@@ -474,8 +474,52 @@ def delete_symbol_inst(client, symbol_id, drawing=None):
         raise Warning(data)
 
 
-def delete_view(client, ):
-    pass
+def delete_view(
+    client,
+    view,
+    drawing=None,
+    sheet=None,
+    del_children=None
+):
+    """Delete a drawing view.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            View name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing..
+        sheet (int, optional):
+            Sheet number; if filled in, the view will only be deleted if it is
+            on that sheet. Defaults: Delete the view from any sheet.
+        del_children ([boolean, optional):
+            Whether to also delete any children of the view. Defaults is False.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "delete_view",
+        "data": {
+            "view": view
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if sheet:
+        request["data"]["sheet"] = sheet
+    if del_children:
+        request["data"]["del_children"] = del_children
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def get_cur_model(client, ):
