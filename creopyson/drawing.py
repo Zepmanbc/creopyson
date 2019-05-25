@@ -999,8 +999,47 @@ def list_views(client, view=None, drawing=None):
         raise Warning(data)
 
 
-def load_symbol_def(client, ):
-    pass
+def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
+    """Load a Creo symbol definition file into Creo from disk.
+
+    Args:
+        client (obj):
+            creopyson Client
+        symbol_file (str):
+            Name of the symbol file.
+        symbol_dir (str, optional):
+            Directory containing the symbol file; if relative,
+            assumed to be relative to Creo's current working directory.
+            Defaults: Creo's current working directory.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict): Symbol definition.
+            id (int): ID of the loaded symbol.
+            name (str): Symbol Name of the loaded symbol.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "load_symbol_def",
+        "data": {
+            "symbol_file": symbol_file,
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if symbol_dir:
+        request["data"]["symbol_dir"] = symbol_dir
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def regenerate(client, ):
