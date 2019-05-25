@@ -1291,8 +1291,40 @@ def set_cur_model(client, model, drawing=None):
         raise Warning(data)
 
 
-def set_view_loc(client, ):
-    pass
+def set_view_loc(client, view, point, drawing=None):
+    """Set the location of a drawing view.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            View name.
+        point (dict):
+            Coordinates for the view in Drawing Units
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "set_cur_model",
+        "data": {
+            "view": view,
+            "point": point
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def view_bound_box(client, ):
