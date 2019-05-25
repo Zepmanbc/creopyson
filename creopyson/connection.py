@@ -231,6 +231,79 @@ Client.dimension_show = make_api_method(dimension_show)
 Client.dimension_user_select = make_api_method(dimension_user_select)
 
 
+# Drawing
+from creopyson.drawing import add_model as drawing_add_model
+from creopyson.drawing import add_sheet as drawing_add_sheet
+from creopyson.drawing import create_gen_view as drawing_create_gen_view
+from creopyson.drawing import create as drawing_create
+from creopyson.drawing import create_proj_view as drawing_create_proj_view
+from creopyson.drawing import create_symbol as drawing_create_symbol
+from creopyson.drawing import delete_models as drawing_delete_models
+from creopyson.drawing import delete_sheet as drawing_delete_sheet
+from creopyson.drawing import delete_symbol_def as drawing_delete_symbol_def
+from creopyson.drawing import delete_symbol_inst as drawing_delete_symbol_inst
+from creopyson.drawing import delete_view as drawing_delete_view
+from creopyson.drawing import get_cur_model as drawing_get_cur_model
+from creopyson.drawing import get_cur_sheet as drawing_get_cur_sheet
+from creopyson.drawing import get_num_sheets as drawing_get_num_sheets
+from creopyson.drawing import get_sheet_scale as drawing_get_sheet_scale
+from creopyson.drawing import get_sheet_size as drawing_get_sheet_size
+from creopyson.drawing import get_view_loc as drawing_get_view_loc
+from creopyson.drawing import get_view_scale as drawing_get_view_scale
+from creopyson.drawing import get_view_sheet as drawing_get_view_sheet
+from creopyson.drawing import is_symbol_def_loaded as \
+    drawing_is_symbol_def_loaded
+from creopyson.drawing import list_models as drawing_list_models
+from creopyson.drawing import list_symbols as drawing_list_symbols
+from creopyson.drawing import list_view_details as drawing_list_view_details
+from creopyson.drawing import list_views as drawing_list_views
+from creopyson.drawing import load_symbol_def as drawing_load_symbol_def
+from creopyson.drawing import regenerate as drawing_regenerate
+from creopyson.drawing import regenerate_sheet as drawing_regenerate_sheet
+from creopyson.drawing import rename_view as drawing_rename_view
+from creopyson.drawing import scale_sheet as drawing_scale_sheet
+from creopyson.drawing import scale_view as drawing_scale_view
+from creopyson.drawing import select_sheet as drawing_select_sheet
+from creopyson.drawing import set_cur_model as drawing_set_cur_model
+from creopyson.drawing import set_view_loc as drawing_set_view_loc
+from creopyson.drawing import view_bound_box as drawing_view_bound_box
+Client.drawing_add_model = make_api_method(drawing_add_model)
+Client.drawing_add_sheet = make_api_method(drawing_add_sheet)
+Client.drawing_create_gen_view = make_api_method(drawing_create_gen_view)
+Client.drawing_create = make_api_method(drawing_create)
+Client.drawing_create_proj_view = make_api_method(drawing_create_proj_view)
+Client.drawing_create_symbol = make_api_method(drawing_create_symbol)
+Client.drawing_delete_models = make_api_method(drawing_delete_models)
+Client.drawing_delete_sheet = make_api_method(drawing_delete_sheet)
+Client.drawing_delete_symbol_def = make_api_method(drawing_delete_symbol_def)
+Client.drawing_delete_symbol_inst = make_api_method(drawing_delete_symbol_inst)
+Client.drawing_delete_view = make_api_method(drawing_delete_view)
+Client.drawing_get_cur_model = make_api_method(drawing_get_cur_model)
+Client.drawing_get_cur_sheet = make_api_method(drawing_get_cur_sheet)
+Client.drawing_get_num_sheets = make_api_method(drawing_get_num_sheets)
+Client.drawing_get_sheet_scale = make_api_method(drawing_get_sheet_scale)
+Client.drawing_get_sheet_size = make_api_method(drawing_get_sheet_size)
+Client.drawing_get_view_loc = make_api_method(drawing_get_view_loc)
+Client.drawing_get_view_scale = make_api_method(drawing_get_view_scale)
+Client.drawing_get_view_sheet = make_api_method(drawing_get_view_sheet)
+Client.drawing_is_symbol_def_loaded = \
+    make_api_method(drawing_is_symbol_def_loaded)
+Client.drawing_list_models = make_api_method(drawing_list_models)
+Client.drawing_list_symbols = make_api_method(drawing_list_symbols)
+Client.drawing_list_view_details = make_api_method(drawing_list_view_details)
+Client.drawing_list_views = make_api_method(drawing_list_views)
+Client.drawing_load_symbol_def = make_api_method(drawing_load_symbol_def)
+Client.drawing_regenerate = make_api_method(drawing_regenerate)
+Client.drawing_regenerate_sheet = make_api_method(drawing_regenerate_sheet)
+Client.drawing_rename_view = make_api_method(drawing_rename_view)
+Client.drawing_scale_sheet = make_api_method(drawing_scale_sheet)
+Client.drawing_scale_view = make_api_method(drawing_scale_view)
+Client.drawing_select_sheet = make_api_method(drawing_select_sheet)
+Client.drawing_set_cur_model = make_api_method(drawing_set_cur_model)
+Client.drawing_set_view_loc = make_api_method(drawing_set_view_loc)
+Client.drawing_view_bound_box = make_api_method(drawing_view_bound_box)
+
+
 # Familytable
 from creopyson.familytable import add_inst as familytable_add_inst
 from creopyson.familytable import create_inst as familytable_create_inst
