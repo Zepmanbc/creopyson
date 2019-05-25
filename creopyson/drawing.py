@@ -1225,8 +1225,37 @@ def scale_view(client, scale, view=None, drawing=None):
         raise Warning(data)
 
 
-def select_sheet(client, ):
-    pass
+def select_sheet(client, sheet, drawing=None):
+    """Make a drawing sheet the current sheet.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int):
+            Sheet number.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "select_sheet",
+        "data": {
+            "sheet": sheet,
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def set_cur_model(client, ):
