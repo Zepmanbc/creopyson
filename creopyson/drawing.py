@@ -1105,8 +1105,40 @@ def regenerate_sheet(client, sheet=None, drawing=None):
         raise Warning(data)
 
 
-def rename_view(client, ):
-    pass
+def rename_view(client, view, new_view, drawing=None):
+    """Rename a drawing view.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            Old view name.
+        new_view (str):
+            New view name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "rename_view",
+        "data": {
+            "view": view,
+            "new_view": new_view
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def scale_sheet(client, ):
