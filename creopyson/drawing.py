@@ -1071,8 +1071,38 @@ def regenerate(client, drawing=None):
         raise Warning(data)
 
 
-def regenerate_sheet(client, ):
-    pass
+def regenerate_sheet(client, sheet=None, drawing=None):
+    """Regenerate a sheet on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int, optional):
+            Sheet number (0 for all sheets).
+            Defaults: all sheets will be regenerated.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "regenerate_sheet",
+        "data": {}
+    }
+    if sheet:
+        request["data"]["sheet"] = sheet
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def rename_view(client, ):
