@@ -1042,8 +1042,33 @@ def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
         raise Warning(data)
 
 
-def regenerate(client, ):
-    pass
+def regenerate(client, drawing=None):
+    """Regenerate a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "regenerate",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def regenerate_sheet(client, ):
