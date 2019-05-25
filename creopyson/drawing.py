@@ -1258,8 +1258,37 @@ def select_sheet(client, sheet, drawing=None):
         raise Warning(data)
 
 
-def set_cur_model(client, ):
-    pass
+def set_cur_model(client, model, drawing=None):
+    """Set the active model on a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        model (str):
+            Model name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "set_cur_model",
+        "data": {
+            "model": model,
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def set_view_loc(client, ):
