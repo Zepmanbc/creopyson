@@ -1181,8 +1181,48 @@ def scale_sheet(client, sheet, scale, drawing=None, model=None):
         raise Warning(data)
 
 
-def scale_view(client, ):
-    pass
+def scale_view(client, scale, view=None, drawing=None):
+    """Set the scale of one or more drawing views.
+
+    Args:
+        client (obj):
+            creopyson Client
+        scale (float):
+            View scale.
+        view (str, optional):
+            View name (wildcards allowed: True).
+            Defaults: all views will be scaled.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict)
+            succes_views (list):
+                List of view which were successfully scaled.
+            failed_views (list):
+                List of view which failed to scale.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "scale_view",
+        "data": {
+            "scale": scale
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if view:
+        request["data"]["view"] = view
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
 
 
 def select_sheet(client, ):
