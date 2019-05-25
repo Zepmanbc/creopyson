@@ -1327,5 +1327,40 @@ def set_view_loc(client, view, point, drawing=None):
         raise Warning(data)
 
 
-def view_bound_box(client, ):
-    pass
+def view_bound_box(client, view, drawing=None):
+    """Get the 2D bounding box for a drawing view.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str):
+            View name.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (dict):
+            xmin (float): Minimum X-coordinate of drawing view.
+            xmax (float): Maximum X-coordinate of drawing view.
+            ymin (float): Minimum Y-coordinate of drawing view.
+            ymax (float): Maximum Y-coordinate of drawing view.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "view_bound_box",
+        "data": {
+            "view": view
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    status, data = creoson_post(client, request)
+    if not status:
+        return data
+    else:
+        raise Warning(data)
