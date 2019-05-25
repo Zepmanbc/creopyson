@@ -964,8 +964,39 @@ def list_view_details(client, view=None, drawing=None):
         raise Warning(data)
 
 
-def list_views(client, ):
-    pass
+def list_views(client, view=None, drawing=None):
+    """List the views contained in a drawing.
+
+    Args:
+        client (obj):
+            creopyson Client
+        view (str, optional):
+            View name filter (wildcards allowed: True). Defaults: no filter.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        (list:str): List of views in the drawing.
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "list_views",
+        "data": {}
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if view:
+        request["data"]["view"] = view
+    status, data = creoson_post(client, request)
+    if not status:
+        return data["views"]
+    else:
+        raise Warning(data)
 
 
 def load_symbol_def(client, ):
