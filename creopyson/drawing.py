@@ -1141,8 +1141,44 @@ def rename_view(client, view, new_view, drawing=None):
         raise Warning(data)
 
 
-def scale_sheet(client, ):
-    pass
+def scale_sheet(client, sheet, scale, drawing=None, model=None):
+    """Set the scale of a drawing sheet.
+
+    Args:
+        client (obj):
+            creopyson Client
+        sheet (int):
+            Sheet number.
+        scale (float):
+            View scale.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+        model (str, optional):
+            Drawing model to scale. Defaults: tThe active model on the drawing.
+
+    Raises:
+        Warning: error message from creoson.
+
+    Returns:
+        None
+
+    """
+    request = {
+        "sessionId": client.sessionId,
+        "command": "drawing",
+        "function": "scale_sheet",
+        "data": {
+            "sheet": sheet,
+            "scale": scale
+        }
+    }
+    if drawing:
+        request["data"]["drawing"] = drawing
+    if model:
+        request["data"]["model"] = model
+    status, data = creoson_post(client, request)
+    if status:
+        raise Warning(data)
 
 
 def scale_view(client, ):
