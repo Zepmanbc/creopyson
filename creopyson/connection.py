@@ -105,7 +105,7 @@ class Client(object):
 
         Args:
             path (string):
-                path to the .bat file
+                path to the .bat file (must be full path)
                 will be split in 'start_command' and 'start_dir'
             retries (int):
                 Number of retries to make when connecting

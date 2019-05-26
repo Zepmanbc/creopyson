@@ -130,14 +130,6 @@ def test_connection_start_creo_ok(mk_creoson_post_F_no_data):
     assert result is None
 
 
-# TODO tester si le path peut planter
-def test_connection_start_creo_bad_path(mk_creoson_post_F_no_data):
-    """Test no error returned from creoson."""
-    c = creopyson.Client()
-    result = c.start_creo("nitro_proe_remote.bat")
-    assert result is None
-
-
 def test_connection_start_creo_error(mk_creoson_post_T):
     """Test creoson return error."""
     c = creopyson.Client()
