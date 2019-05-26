@@ -35,19 +35,14 @@ class Client(object):
         """Disconnect from CREOSON.
 
         Empty sessionId.
-        Exit if server not found.
         """
         request = {
             "sessionId": self.sessionId,
             "command": "connection",
             "function": "disconnect"
         }
-        try:
-            status, data = creoson_post(self, request)
-            self.sessionId = ''
-        except requests.exceptions.RequestException as e:
-            print(e)
-            exit()
+        status, data = creoson_post(self, request)
+        self.sessionId = ''
 
     def is_creo_running(self):
         """Check whether Creo is running.
