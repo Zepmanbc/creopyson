@@ -2,6 +2,7 @@
 import requests
 import json
 import functools
+import sys
 
 from .core import creoson_post
 
@@ -28,8 +29,7 @@ class Client(object):
             r = requests.post(self.server, data=json.dumps(request))
             self.sessionId = json.loads(r.content)['sessionId']
         except requests.exceptions.RequestException as e:
-            print(e)
-            exit()
+            sys.exit(e)
 
     def disconnect(self):
         """Disconnect from CREOSON.
