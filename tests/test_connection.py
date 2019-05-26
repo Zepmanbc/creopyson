@@ -4,6 +4,12 @@ import requests
 import json
 import pytest
 import creopyson
+# from creopyson.core import creoson_post
+
+
+@pytest.fixture(autouse=True)
+def no_requests(monkeypatch):
+    monkeypatch.delattr("requests.sessions.Session.request")
 
 
 def test_connection_wether_params_exists():
@@ -52,7 +58,70 @@ def test_connection_connect_fails(monkeypatch):
     assert pytest_wrapped_e.type == SystemExit
 
 
-# def test_connection_disconnect_ok():
+@pytest.fixture
+def mk_creoson_post(monkeypatch):
+    def creoson_post_mk(client, request):
+        status = False
+        data = {}
+        return (status, data)
+    monkeypatch.setattr(creopyson.core, 'creoson_post', creoson_post_mk)
+
+
+def test_connection_disconnect_ok(mk_creoson_post):
+    c = creopyson.Client()
+    c.sessionId = "12345"
+    c.disconnect()
+    assert c.sessionId == ""
+
+
+from unittest.mock import MagicMock
+
+
+def test_connection_disconnect_ok2():
+    creopyson.core.creoson_post = MagicMock(return_value=(False, {}))
+    c = creopyson.Client()
+    c.sessionId = "12345"
+    c.disconnect()
+    assert c.sessionId == ""
+
+
+from creopyson.core import creoson_post
+
+def test_connection_disconnect_ok3(monkeypatch):
+    def creoson_post_mk(creoson_post):
+        status = False
+        data = {}
+        return (status, data)
+    monkeypatch.setattr(creopyson.core, 'creoson_post', creoson_post_mk)
+    c = creopyson.Client()
+    c.sessionId = "12345"
+    c.disconnect()
+    assert c.sessionId == ""
+
+def test_connection_disconnect_ok4(monkeypatch):
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        @property
+        def content(self):
+            results = {
+                "sessionId": "123456"
+            }
+            return json.dumps(results).encode()
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    def creoson_post_mk(client, request):
+        status = False
+        data = {}
+        return (status, data)
+    monkeypatch.setattr(creopyson.core, 'creoson_post', creoson_post_mk)
+    c = creopyson.Client()
+    c.connect()
+    c.disconnect()
+    assert c.sessionId == ""
+
+
 # def test_connection_disconnect_error():
 # def test_connection_is_creo_running_yes():
 # def test connection_is_crei_running_no():

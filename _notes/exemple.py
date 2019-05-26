@@ -17,8 +17,8 @@ drawing_file = "toto.drw"
 c.connect()
 
 
-listfiles = c.list_files()
-listdirs = c.list_dirs()
+# listfiles = c.list_files()
+# listdirs = c.list_dirs()
 
 if not c.is_creo_running():
     c.start_creo(start_command)

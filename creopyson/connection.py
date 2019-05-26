@@ -4,7 +4,7 @@ import json
 import functools
 import sys
 
-from .core import creoson_post
+from creopyson.core import creoson_post
 
 
 class Client(object):
