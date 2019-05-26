@@ -2,8 +2,9 @@
 import requests
 import json
 import functools
+import sys
 
-from .core import creoson_post
+from creopyson.core import creoson_post
 
 
 class Client(object):
@@ -28,26 +29,20 @@ class Client(object):
             r = requests.post(self.server, data=json.dumps(request))
             self.sessionId = json.loads(r.content)['sessionId']
         except requests.exceptions.RequestException as e:
-            print(e)
-            exit()
+            sys.exit(e)
 
     def disconnect(self):
         """Disconnect from CREOSON.
 
         Empty sessionId.
-        Exit if server not found.
         """
         request = {
             "sessionId": self.sessionId,
             "command": "connection",
             "function": "disconnect"
         }
-        try:
-            status, data = creoson_post(self, request)
-            self.sessionId = ''
-        except requests.exceptions.RequestException as e:
-            print(e)
-            exit()
+        status, data = creoson_post(self, request)
+        self.sessionId = ''
 
     def is_creo_running(self):
         """Check whether Creo is running.
@@ -110,7 +105,7 @@ class Client(object):
 
         Args:
             path (string):
-                path to the .bat file
+                path to the .bat file (must be full path)
                 will be split in 'start_command' and 'start_dir'
             retries (int):
                 Number of retries to make when connecting

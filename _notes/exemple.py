@@ -9,7 +9,6 @@ import time
 
 IP_CREO = "192.168.56.101"
 start_command = "C:/Users/Public/Documents/nitro_proe_remote.bat"
-
 c = creopyson.Client(ip_adress=IP_CREO)
 current_file = "toto.prt"
 drawing_file = "toto.drw"
@@ -17,8 +16,8 @@ drawing_file = "toto.drw"
 c.connect()
 
 
-listfiles = c.list_files()
-listdirs = c.list_dirs()
+# listfiles = c.list_files()
+# listdirs = c.list_dirs()
 
 if not c.is_creo_running():
     c.start_creo(start_command)
@@ -35,7 +34,7 @@ if not c.is_creo_running():
 
 wait = 0
 print("opening file...")
-while not c.file_open(current_file):
+while not c.file_open(current_file, display=True):
     c.is_creo_running()
     time.sleep(1)
     wait = wait + 1
@@ -44,15 +43,17 @@ while not c.file_open(current_file):
         exit("too long...")
 
 if c.file_exists(current_file):
-    c.dimension_set("diamm", 180, current_file)
-    if c.file_regenerate(current_file):
-        c.dimension_set("diamm", 50, current_file)
+    c.dimension_set("diamm", value=180, current_file=current_file)
+    try:
+        c.file_regenerate(current_file)
+    except Warning:
+        c.dimension_set("diamm", value=50, current_file=current_file)
         c.file_regenerate(current_file)
 
 # current_file = "toto.asm"
 # c.file_open(current_file)
 # c.bom_get_paths()
-
+exit()
 
 c.file_open(drawing_file, new_window=True)
 if c.file_exists(drawing_file):

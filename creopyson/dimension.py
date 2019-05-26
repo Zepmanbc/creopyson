@@ -1,9 +1,9 @@
-"""Name module."""
+"""Dimension module."""
 
 from .core import creoson_post
 
 
-def copy(client, name, to_name, current_file=None, to_file=None):
+def copy(client, name, to_name, file_=None, to_file=None):
     """Copy dimension to another in the same model or another model.
 
     Args:
@@ -13,7 +13,7 @@ def copy(client, name, to_name, current_file=None, to_file=None):
             Dimension name to copy.
         to_name (str):
             Destination dimension; th dimension must already exist.
-        current_file (str, optional):
+        file_ (str, optional):
             Model name. Defaults is current active model.
         to_file (str, optional):
             Destination model. Defaults is the source model.
@@ -34,8 +34,8 @@ def copy(client, name, to_name, current_file=None, to_file=None):
             "to_name": to_name
         }
     }
-    if current_file:
-        request["data"]["file"] = current_file
+    if file_:
+        request["data"]["file"] = file_
     if to_file:
         request["data"]["to_file"] = to_file
     status, data = creoson_post(client, request)
@@ -45,7 +45,7 @@ def copy(client, name, to_name, current_file=None, to_file=None):
 
 def list_(
     client,
-    current_file=None,
+    file_=None,
     name=None,
     names=None,
     dim_type=None,
@@ -56,7 +56,7 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        file_ (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             Dimension name; only used if names is not given.
@@ -90,8 +90,8 @@ def list_(
         "function": "list",
         "data": {}
     }
-    if current_file:
-        request["data"]["file"] = current_file
+    if file_:
+        request["data"]["file"] = file_
     if name:
         request["data"]["name"] = name
     if names:
@@ -110,7 +110,7 @@ def list_(
 
 def list_detail(
     client,
-    current_file=None,
+    file_=None,
     name=None,
     names=None,
     dim_type=None,
@@ -121,7 +121,7 @@ def list_detail(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        file_ (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             Dimension name; only used if names is not given.
@@ -177,8 +177,8 @@ def list_detail(
         "function": "list_detail",
         "data": {}
     }
-    if current_file:
-        request["data"]["file"] = current_file
+    if file_:
+        request["data"]["file"] = file_
     if name:
         request["data"]["name"] = name
     if names:
@@ -194,22 +194,22 @@ def list_detail(
         raise Warning(data)
 
 
-def set_(client, name, current_file=None, encoded=None, value=None,):
+def set_(client, file_, name, value, encoded=None):
     """Set a dimension value.
 
     Args:
         client (obj):
             creopyson Client.
+        file_ (str):
+            Model name.
         name (str):
             Dimension name.
-        current_file (str, optional):
-            Model name. Defaults is current active model.
+        value (str|float):
+            Dimension value.
         encoded (boolean, optional):
             Whether the value is Base64-encoded.
             Defaults is False.
-        value (str|float, optional):
-            Dimension value.
-            Defaults to None, clears the dimension value if missing.
+
 
     Raises:
         Warning: error message from creoson.
@@ -223,21 +223,19 @@ def set_(client, name, current_file=None, encoded=None, value=None,):
         "command": "dimension",
         "function": "set",
         "data": {
-            "name": name
+            "file": file_,
+            "name": name,
+            "value": value,
         }
     }
-    if current_file:
-        request["data"]["file"] = current_file
     if encoded:
         request["data"]["encoded"] = encoded
-    if value:
-        request["data"]["value"] = value
     status, data = creoson_post(client, request)
     if status:
         raise Warning(data)
 
 
-def show(client, name, current_file=None, assembly=None, path=None):
+def show(client, name, file_=None, assembly=None, path=None):
     """Display or hide a dimension in Creo.
 
     Args:
@@ -245,7 +243,7 @@ def show(client, name, current_file=None, assembly=None, path=None):
             creopyson Client.
         name (str):
             Dimension name.
-        current_file (str, optional):
+        file_ (str, optional):
             Model name. Defaults is current active model.
         assembly (str, optional):
             Assembly name; only used if path is given.
@@ -270,8 +268,8 @@ def show(client, name, current_file=None, assembly=None, path=None):
             "name": name
         }
     }
-    if current_file:
-        request["data"]["file"] = current_file
+    if file_:
+        request["data"]["file"] = file_
     if assembly:
         request["data"]["assembly"] = assembly
     if path:
@@ -281,12 +279,12 @@ def show(client, name, current_file=None, assembly=None, path=None):
         raise Warning(data)
 
 
-def user_select(client, current_file=None, maxi=None):
+def user_select(client, file_=None, maxi=None):
     """Prompt user to select one or more dimensions, and return their selections.
 
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        file_ (str, optional):
             Model name. Defaults is current active model.
         maxi (int, optional):
             The maximum number of dimensions that the user can select.
@@ -315,8 +313,8 @@ def user_select(client, current_file=None, maxi=None):
         "command": "dimension",
         "function": "user_select",
     }
-    if current_file:
-        request["data"]["file"] = current_file
+    if file_:
+        request["data"]["file"] = file_
     if maxi:
         request["data"]["max"] = maxi
     status, data = creoson_post(client, request)
