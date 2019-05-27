@@ -6,6 +6,9 @@ from .core import creoson_post
 def cd(client, dirname):
     """Change Creo's working directory.
 
+    You can use absolute path or relative:
+    "C:\\My Workdir\\"
+    "..\\Other_directory\\"
     Args:
         client (obj): creopyson Client.
         dirname (str): New directory name.
@@ -58,7 +61,7 @@ def delete_files(client, dirname=None, filename=None, filenames=None):
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "dele_files",
+        "function": "delete_files",
         "data": {}
     }
     if dirname:
