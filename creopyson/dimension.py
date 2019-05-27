@@ -13,7 +13,7 @@ def copy(client, name, to_name, file_=None, to_file=None):
             Dimension name to copy.
         to_name (str):
             Destination dimension; th dimension must already exist.
-        file_ (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         to_file (str, optional):
             Destination model. Defaults is the source model.
@@ -56,7 +56,7 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             Dimension name; only used if names is not given.
@@ -121,7 +121,7 @@ def list_detail(
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             Dimension name; only used if names is not given.
@@ -200,7 +200,7 @@ def set_(client, file_, name, value, encoded=None):
     Args:
         client (obj):
             creopyson Client.
-        file_ (str):
+        `file_` (str):
             Model name.
         name (str):
             Dimension name.
@@ -243,7 +243,7 @@ def show(client, name, file_=None, assembly=None, path=None):
             creopyson Client.
         name (str):
             Dimension name.
-        file_ (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         assembly (str, optional):
             Assembly name; only used if path is given.
@@ -284,7 +284,7 @@ def user_select(client, file_=None, maxi=None):
 
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         maxi (int, optional):
             The maximum number of dimensions that the user can select.

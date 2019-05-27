@@ -4,7 +4,11 @@ from .core import creoson_post
 
 
 def cd(client, dirname):
-    """Change Creo's working directory.
+    r"""Change Creo's working directory.
+
+    You can use absolute path or relative:
+    "C:\\My Workdir\\"
+    "..\\Other_directory\\"
 
     Args:
         client (obj): creopyson Client.
@@ -32,21 +36,18 @@ def cd(client, dirname):
         raise Warning(data)
 
 
-def delete_files(client, dirname=None, filename=None, filenames=None):
+def delete_files(client, filename=None, dirname=None):
     """Delete files from a directory working directory.
 
     Args:
         client (obj):
             creopyson Client.
+        filename (str or list:str, optional):
+            File name filter or list of file names.
+            if blank all files will be deleted.
+            (wildcards_allowed: True). Defaults to None.
         dirname (str, optional):
             Directory name. Defaults is Creo's current working directory.
-        filename (str, optional):
-            File name filter; only used if filenames is not give
-            (wildcards_allowed: True). Defaults to None.
-        filenames (list:str, optional):
-            List of file names. Defaults to None.
-            The filename parameter is used; if both are blank,
-            all files will be deleted.
 
     Raises:
         Warning: error message from creoson.
@@ -58,15 +59,16 @@ def delete_files(client, dirname=None, filename=None, filenames=None):
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "dele_files",
+        "function": "delete_files",
         "data": {}
     }
+    if filename:
+        if isinstance(filename, (list)):
+            request["data"]["filenames"] = filename
+        else:
+            request["data"]["filename"] = str(filename)
     if dirname:
         request["data"]["dirname"] = dirname
-    if filename:
-        request["data"]["filename"] = filename
-    if filenames:
-        request["data"]["filenames"] = filenames
     status, data = creoson_post(client, request)
     if not status:
         return data["filelist"]
@@ -162,8 +164,10 @@ def list_dirs(client, dirname=None):
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "dele_files",
-        "data": {}
+        "function": "list_dirs",
+        "data": {
+            "dirname": "*"
+        }
     }
     if dirname:
         request["data"]["dirname"] = dirname
@@ -194,8 +198,10 @@ def list_files(client, filename=None):
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "dele_files",
-        "data": {}
+        "function": "list_files",
+        "data": {
+            "filename": "*"
+        }
     }
     if filename:
         request["data"]["filename"] = filename
@@ -311,7 +317,7 @@ def set_config(client, name, value=None, ignore_errors=None):
     request = {
         "sessionId": client.sessionId,
         "command": "creo",
-        "function": "dele_files",
+        "function": "set_config",
         "data": {
             "name": name
         }
