@@ -4,12 +4,12 @@ from .core import creoson_post
 
 def get_paths(
     client,
-    current_asm=None,
-    paths=False,
-    skeletons=False,
-    top_level=False,
-    get_transforms=False,
-    exclude_inactive=False
+    file_=None,
+    paths=None,
+    skeletons=None,
+    top_level=None,
+    get_transforms=None,
+    exclude_inactive=None
 ):
     """Get a hierarchy of components within an assembly.
 
@@ -17,21 +17,23 @@ def get_paths(
     exclude any components with a status of INACTIVE or UNREGENERATED.
 
     Args:
-        current_asm (string):
+        client (obj):
+            creopyson Client.
+        `file_` (string, optional):
             file name, if not set, active model is used.
-        paths (Boolean):
+        paths (boolean, optional):
             Whether to return component paths for each component
             (default" : False)
-        skeletons (Boolean):
+        skeletons (boolean, optional):
             Whether to include skeleton components
             (default" : False)
-        top_level (Boolean):
+        top_level (boolean, optional):
             Whether to return only the top-level components
             in the assembly. (default" : False)
-        get_transforms (Boolean):
+        get_transforms (boolean, optional):
             Whether to return the 3D transform matrix
             for each component. (default" : False)
-        exclude_inactive (Boolean):
+        exclude_inactive (boolean, optional):
             Whether to exclude components which do not
             have an ACTIVE status. (default" : False)
 
@@ -53,18 +55,22 @@ def get_paths(
         "sessionId": client.sessionId,
         "command": "bom",
         "function": "get_paths",
-        "data": {
-            "paths": paths,
-            "skeletons": skeletons,
-            "top_level": top_level,
-            "get_transforms": get_transforms,
-            "exclude_inactive": exclude_inactive,
-        }
+        "data": {}
     }
-    if current_asm:
-        request["data"]["file"] = current_asm
+    if file_:
+        request["data"]["file"] = file_
+    if paths:
+        request["data"]["paths"] = paths
+    if skeletons:
+        request["data"]["skeletons"] = skeletons
+    if top_level:
+        request["data"]["top_level"] = top_level
+    if get_transforms:
+        request["data"]["get_transforms"] = get_transforms
+    if exclude_inactive:
+        request["data"]["exclude_inactive"] = exclude_inactive
     status, data = creoson_post(client, request)
     if not status:
         return data
     else:
-        raise TypeError(data)
+        raise Warning(data)
