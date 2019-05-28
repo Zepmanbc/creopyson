@@ -34,26 +34,31 @@ def authorize(client, user, password):
         raise Warning(data)
 
 
-def clear_workspace(client, workspace):
+def clear_workspace(client, workspace=None):
     """Clear a workspace on the active server.
 
     Args:
-        client (obj): creopyson Client
-        workspace (str): workspace name
+        client (obj):
+            creopyson Client
+        workspace (str, optionnal):
+            Workspace name. Default is current workspace.
 
     Returns:
         None
 
     """
+    active_workspace = client.windchill_get_workspace()
     request = {
         "sessionId": client.sessionId,
         "command": "windchill",
         "function": "clear_workspace",
         "data": {
-            "workspace": workspace
+            "workspace": active_workspace
         }
     }
     status, data = creoson_post(client, request)
+    if workspace:
+        request["data"]["workspace"] = workspace
     if status:
         raise Warning(data)
 
@@ -108,30 +113,38 @@ def delete_workspace(client, workspace):
         raise Warning(data)
 
 
-def file_checked_out(client, workspace, filename):
+def file_checked_out(client, filename, workspace=None):
     """Check whether a file is checked out in a workspace on the active server.
 
     Args:
-        client (obj): creopyson Client
-        workspace (str): Workspace name
-        filename (str): File name
+        client (obj):
+            creopyson Client
+        filename (str):
+            File name
+        workspace (str, optionnal):
+            Workspace name. Default is current workspace.
 
     Returns:
         Boolean: Whether the file is checked out in the workspace.
 
     """
+    active_workspace = client.windchill_get_workspace()
     request = {
         "sessionId": client.sessionId,
         "command": "windchill",
         "function": "file_checked_out",
         "data": {
-            "workspace": workspace,
+            "workspace": active_workspace,
             "filename": filename
         }
     }
+    if workspace:
+        request["data"]["workspace"] = workspace
     status, data = creoson_post(client, request)
     if not status:
         return data["checked_out"]
+    else:
+        raise Warning(data)
 
 
 def get_workspace(client):
@@ -153,33 +166,45 @@ def get_workspace(client):
     status, data = creoson_post(client, request)
     if not status:
         return data["workspace"]
+    else:
+        raise Warning(data)
 
 
-def list_workspace_files(client, workspace, filename):
+def list_workspace_files(client, workspace=None, filename=None):
     """Get a list of files in a workspace on the active server.
 
     Args:
-        client (obj): creopyson Client
-        workspace (str): Workspace name.
-        filename (str): File name or search.
+        client (obj):
+            creopyson Client
+        workspace (str, optionnal):
+            Workspace name. Default is current workspace.
+        filename (str, optional):
+            File name or search. Default is all files.
         ex: `*.asm`, `screw_*.prt`
 
     Returns:
         list: List of files in the workspace correspnding to the request.
 
     """
+    active_workspace = client.windchill_get_workspace()
     request = {
         "sessionId": client.sessionId,
         "command": "windchill",
         "function": "list_workspace_files",
         "data": {
-            "workspace": workspace,
-            "filename": filename
+            "workspace": active_workspace,
+            "filename": "*"
         }
     }
+    if workspace:
+        request["data"]["workspace"] = workspace
+    if filename:
+        request["data"]["filename"] = filename
     status, data = creoson_post(client, request)
     if not status:
         return data["filelist"]
+    else:
+        raise Warning(data)
 
 
 def list_workspaces(client):
@@ -201,6 +226,8 @@ def list_workspaces(client):
     status, data = creoson_post(client, request)
     if not status:
         return data["workspaces"]
+    else:
+        raise Warning(data)
 
 
 def server_exists(client, server_url):
@@ -225,6 +252,8 @@ def server_exists(client, server_url):
     status, data = creoson_post(client, request)
     if not status:
         return data["exists"]
+    else:
+        raise Warning(data)
 
 
 def set_server(client, server_url):
@@ -297,3 +326,5 @@ def workspace_exists(client, workspace):
     status, data = creoson_post(client, request)
     if not status:
         return data["exists"]
+    else:
+        raise Warning(data)
