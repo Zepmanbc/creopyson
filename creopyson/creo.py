@@ -293,7 +293,7 @@ def rmdir(client, dirname):
         raise Warning(data)
 
 
-def set_config(client, name, value=None, ignore_errors=None):
+def set_config(client, name, value, ignore_errors=None):
     """Set a Creo config option.
 
     Args:
@@ -301,8 +301,8 @@ def set_config(client, name, value=None, ignore_errors=None):
             creopyson Client.
         name (str):
             Option name.
-        value (str, optional):
-            New option value. Defaults to None: clear the option.
+        value (str):
+            New option value.
         ignore_errors (boolean, optional):
             Whether to ignore errors that might occur when setting the config
             option. Defaults is False.
@@ -319,11 +319,11 @@ def set_config(client, name, value=None, ignore_errors=None):
         "command": "creo",
         "function": "set_config",
         "data": {
-            "name": name
+            "name": name,
+            "value": value,
+            "ignore_errors": False
         }
     }
-    if value:
-        request["data"]["value"] = value
     if ignore_errors:
         request["data"]["ignore_errors"] = ignore_errors
     status, data = creoson_post(client, request)

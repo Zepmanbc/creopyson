@@ -222,16 +222,15 @@ def test_creo_rmdir_error(mk_creoson_post_T):
 def test_creo_set_config_ok(mk_creoson_post_F_None):
     """Test creo_set_config ok."""
     c = creopyson.Client()
-    result = c.creo_set_config("option", value=12, ignore_errors=True)
+    result = c.creo_set_config("option", 12, True)
     assert result is None
-    # TODO essayer les parametres
 
 
 def test_creo_set_config_error(mk_creoson_post_T):
     """Test creoson return error."""
     c = creopyson.Client()
     with pytest.raises(Warning) as pytest_wrapped_e:
-        c.creo_set_config("option")
+        c.creo_set_config("option", 12)
     assert pytest_wrapped_e.value.args[0] == "error message"
 
 
