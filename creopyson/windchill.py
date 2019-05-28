@@ -180,7 +180,7 @@ def list_workspace_files(client, workspace=None, filename=None):
             Workspace name. Default is current workspace.
         filename (str, optional):
             File name or search. Default is all files.
-        ex: `*.asm`, `screw_*.prt`
+            ex: `*.asm`, `screw_*.prt`
 
     Returns:
         list: List of files in the workspace correspnding to the request.

@@ -1,10 +1,11 @@
 """Server module."""
 
-from .core import creoson_post
+import requests
+import json
 
 
 def pwd(client):
-    """Return the server's execution directory.
+    """Return the creoson server's execution directory.
 
     Args:
         client (obj):
@@ -22,8 +23,16 @@ def pwd(client):
         "command": "server",
         "function": "pwd",
     }
-    status, data = creoson_post(client, request)
+    # asking `http://localhost:9056/server` instead `http://localhost:9056/creoson`
+    list_adress = client.server.split('/')[:-1]
+    list_adress.append('server')
+    server_adress = "/".join(list_adress)
+    server_adress = client.server.replace("creoson", "server")
+    r = requests.post(server_adress, data=json.dumps(request))
+    json_result = json.loads(r.content)
+    status = json_result["status"]["error"]
+
     if not status:
-        return data["dirname"]
+        return json_result["data"]["dirname"]
     else:
-        raise Warning(data)
+        raise Warning(json_result["status"]["message"])
