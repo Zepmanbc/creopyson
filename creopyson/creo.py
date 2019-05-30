@@ -102,7 +102,7 @@ def list_dirs(client, dirname=None):
             Defaults: All subdirectories are listed.
 
     Returns:
-        (dict:str): List of subdirectories
+        (list:str): List of subdirectories
 
     """
     data = {"dirname": "*"}
