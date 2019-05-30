@@ -3,9 +3,8 @@
 
 def delete(
     client,
-    current_file=None,
     name=None,
-    names=None,
+    file_=None,
     status=None,
     type_=None,
     clip=None
@@ -15,17 +14,12 @@ def delete(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        name (str|list:str, optional):
+            Dimension name, (wildcards allowed: True);
+            if empty then all features are listed.
+        `file_` (str, optional):
             Model name (wildcards allowed: True).
             Defaults is current active model.
-        name (str, optional):
-            Feature name; only used if names is not given
-            (wildcards allowed: True).
-            Defaults to None.
-        names (list:str, optional):
-            List of feature names.
-            Defaults to None: The name parameter is used;
-            if both are empty, then all features may be deleted.
         status (str, optional):
             Feature status pattern (wildcards allowed: True).
             Defaults: All feature statuses.
@@ -44,22 +38,23 @@ def delete(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if status:
         data["status"] = status
     if type_:
         data["type"] = type_
     if clip:
         data["clip"] = clip
-    return client.creoson_post("feature", "delete", data)["exists"]
+    return client.creoson_post("feature", "delete", data)
 
 
-def delete_param(client, name=None, current_file=None, param=None):
+def delete_param(client, name=None, file_=None, param=None):
     """Delete a feature parameter.
 
     Args:
@@ -68,7 +63,7 @@ def delete_param(client, name=None, current_file=None, param=None):
         name (str, optional):
             Parameter name (wildcards allowed: True).
             Defaults: All parameter names.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         param (str, optional):
             Parameter name (wildcards allowed: True).
@@ -79,25 +74,24 @@ def delete_param(client, name=None, current_file=None, param=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     if param:
         data["param"] = param
-    return client.creoson_post("feature", "delete_param", data)["exists"]
+    return client.creoson_post("feature", "delete_param", data)
 
 
 def list_(
     client,
-    current_file=None,
+    file_=None,
     name=None,
     type_=None,
     no_datum=None,
     inc_unnamed=None,
     no_comp=None,
     param=None,
-    params=None,
     value=None,
     encoded=None
 ):
@@ -108,7 +102,7 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is the currently active model.
         name ([str, optional):
             Feature name (wildcards allowed: True).
@@ -127,13 +121,9 @@ def list_(
         no_comp (boolean, optional):
             Whether to include component-type features in the list.
             Defaults is False.
-        param (string, optional):
-            Parameter name; only used if params is not given.
-            (wildcards allowed: True)
-        params (list:str, optional):
-            List of parameter names.
-            Defaults: The param parameter is used; if both are empty,
-            then all parameters are listed.
+        param (str|list:str, optional):
+            Parameter name; (wildcards allowed: True)
+            if empty all parameters are listed.
         value (str, optional):
             Parameter value filter (wildcards allowed: True).
             Defaults is no filter.
@@ -162,8 +152,8 @@ def list_(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     if type_:
@@ -175,85 +165,79 @@ def list_(
     if no_comp:
         data["no_comp"] = no_comp
     if param:
-        data["param"] = param
-    if params:
-        data["params"] = params
+        if isinstance(param, (str)):
+            data["param"] = param
+        elif isinstance(param, (list)):
+            data["params"] = param
     if value:
         data["value"] = value
     if encoded:
         data["encoded"] = encoded
     return client.creoson_post("feature", "list", data)
-    # TODO: param/params
 
 
-def param_exists(client, current_file=None, param=None, params=None):
+def param_exists(client, file_=None, param=None):
     """Check whether parameter(s) exists on a feature.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is the currently active model.
-        param (string, optional):
-            Parameter name; only used if params is not given.
-            (wildcards allowed: True)
-        params (list:str, optional):
-            List of parameter names.
-            Defaults: The param parameter is used; if both are empty,
-            then all parameters are listed.
+        param (str|list:str, optional):
+            Parameter name; (wildcards allowed: True)
+            if empty all parameters are listed.
 
     Returns:
         (boolean): Whether the parameter exists on the model
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if param:
-        data["param"] = param
-    if params:
-        data["params"] = params
+        if isinstance(param, (str)):
+            data["param"] = param
+        elif isinstance(param, (list)):
+            data["params"] = param
     return client.creoson_post("feature", "param_exists", data)["exists"]
-    # TODO: param/params
 
 
-def rename(client, new_name, current_file=None, feat_id=None, name=None):
+def rename(client, name, new_name, file_=None):
     """Rename a feature.
 
     Args:
         client (obj):
             creopyson Client.
+        name (str|int, optional):
+            Feature name (str) or Feature ID (int).
         new_name (str):
             New name for the feature.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is the currently active model.
-        feat_id (int, optional):
-            Feature ID. Defaults: the name parameter is used.
-        name (list:str, optional):
-            Feature name; only used if feat_id is not given.
-            Defaults to None.
 
     Returns:
         None
 
     """
     data = {"new_name": new_name}
-    if current_file:
-        data["file"] = current_file
-    if feat_id:
-        data["feat_id"] = feat_id
-    if name:
+    if file_:
+        data["file"] = file_
+    if isinstance(name, (str)):
         data["name"] = name
+    elif isinstance(name, (int)):
+        data["feat_id"] = name
+    else:
+        raise TypeError("name must be str or int")
     return client.creoson_post("feature", "rename", data)
     # TODO: feat_id/name
 
 
 def resume(
     client,
-    current_file=None,
+    file_=None,
     name=None,
-    names=None,
     status=None,
     type_=None,
     with_children=None
@@ -265,16 +249,12 @@ def resume(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is the currently active model.
-        name (str, optional):
-            Feature name; only used if names is not given
-            (wildcards allowed: True). Defaults to None.
-        names (lst:str, optional):
-            List of feature names. Defaults to None.
-            The name parameter is used; if both are empty,
-            then all features may be resumed.
+        name (str|list:str, optional):
+            Dimension name, (wildcards allowed: True);
+            if empty then all features are resumed.
         status (str, optional):
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
@@ -291,12 +271,13 @@ def resume(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if status:
         data["status"] = status
     if type_:
@@ -308,9 +289,9 @@ def resume(
 
 def set_param(
     client,
-    current_file=None,
+    param,
+    file_=None,
     name=None,
-    param=None,
     type_=None,
     value=None,
     encoded=None,
@@ -324,13 +305,13 @@ def set_param(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        param (str):
+            Parameter name.
+        `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is the currently active model.
         name (str, optional):
             Feature name. Defaults: All features are updated.
-        param (str, optional):
-            Parameter name. Defaults is True.
         `type_` (str, optional):
             Parameter data type. Defaults is True.
             Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
@@ -350,8 +331,8 @@ def set_param(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     if param:
@@ -371,9 +352,8 @@ def set_param(
 
 def suppress(
     client,
-    current_file=None,
+    file_=None,
     name=None,
-    names=None,
     status=None,
     type_=None,
     clip=None,
@@ -386,16 +366,12 @@ def suppress(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is the currently active model.
-        name (str, optional):
-            Feature name; only used if names is not given
-            (wildcards allowed: True). Defaults to None.
-        names (lst:str, optional):
-            List of feature names. Defaults to None.
-            The name parameter is used; if both are empty,
-            then all features may be suppressed.
+        name (str|list:str, optional):
+            Dimension name, (wildcards allowed: True);
+            if empty then all features are suppressed.
         status (str, optional):
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
@@ -414,25 +390,29 @@ def suppress(
         None
 
     """
-    data = {}
-    if current_file:
-        data["file"] = current_file
+    data = {
+        "clip": True,
+        "with_children": True
+    }
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if status:
         data["status"] = status
     if type_:
         data["type"] = type_
-    if clip:
-        data["clip"] = clip
-    if with_children:
-        data["with_children"] = with_children
+    if clip is False:
+        data["clip"] = False
+    if with_children is False:
+        data["with_children"] = False
     return client.creoson_post("feature", "suppress", data)
 
 
-def user_select_csys(client, current_file=None, max_=None):
+def user_select_csys(client, file_=None, max_=None):
     """Prompt the user to select one or more coordinate systems.
 
     and return their selections.
@@ -440,7 +420,7 @@ def user_select_csys(client, current_file=None, max_=None):
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is the currently active model.
         `max_` (int, optional):
@@ -465,9 +445,11 @@ def user_select_csys(client, current_file=None, max_=None):
                     Feature Number.
 
     """
-    data = {}
-    if current_file:
-        data["file"] = current_file
+    data = {
+        "max": 1,
+    }
+    if file_:
+        data["file"] = file_
     if max_:
         data["max"] = max_
     return client.creoson_post("feature", "user_select_csys", data)
