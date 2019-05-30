@@ -34,6 +34,9 @@ class Client(object):
         Args:
             request (dict): Command for creoson.
 
+        Raises:
+            Warning: error message from creoson.
+
         Returns:
             (depends request): creoson return.
 

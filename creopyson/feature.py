@@ -39,32 +39,24 @@ def delete(
             the end of the structure.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "delete",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if status:
-        request["data"]["status"] = status
+        data["status"] = status
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if clip:
-        request["data"]["clip"] = clip
-    return client.creoson_post(request)["exists"]
+        data["clip"] = clip
+    return client.creoson_post("feature", "delete", data)["exists"]
 
 
 def delete_param(client, name=None, current_file=None, param=None):
@@ -82,27 +74,18 @@ def delete_param(client, name=None, current_file=None, param=None):
             Parameter name (wildcards allowed: True).
             Defaults: All parameter names.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "delete_param",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if param:
-        request["data"]["param"] = param
-    
-    return client.creoson_post(request)["exists"]
+        data["param"] = param
+    return client.creoson_post("feature", "delete_param", data)["exists"]
 
 
 def list_(
@@ -158,9 +141,6 @@ def list_(
             Whether to return the values Base64-encoded.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict): List of parameter information.
             name (str):
@@ -181,34 +161,28 @@ def list_(
                 Owner type.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "list",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if no_datum:
-        request["data"]["no_datum"] = no_datum
+        data["no_datum"] = no_datum
     if inc_unnamed:
-        request["data"]["inc_unnamed"] = inc_unnamed
+        data["inc_unnamed"] = inc_unnamed
     if no_comp:
-        request["data"]["no_comp"] = no_comp
+        data["no_comp"] = no_comp
     if param:
-        request["data"]["param"] = param
+        data["param"] = param
     if params:
-        request["data"]["params"] = params
+        data["params"] = params
     if value:
-        request["data"]["value"] = value
+        data["value"] = value
     if encoded:
-        request["data"]["encoded"] = encoded
-    
-    return client.creoson_post(request)
+        data["encoded"] = encoded
+    return client.creoson_post("feature", "list", data)
     # TODO: param/params
 
 
@@ -228,27 +202,18 @@ def param_exists(client, current_file=None, param=None, params=None):
             Defaults: The param parameter is used; if both are empty,
             then all parameters are listed.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the parameter exists on the model
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "param_exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if param:
-        request["data"]["param"] = param
+        data["param"] = param
     if params:
-        request["data"]["params"] = params
-    
-    return client.creoson_post(request)["exists"]
+        data["params"] = params
+    return client.creoson_post("feature", "param_exists", data)["exists"]
     # TODO: param/params
 
 
@@ -269,29 +234,18 @@ def rename(client, new_name, current_file=None, feat_id=None, name=None):
             Feature name; only used if feat_id is not given.
             Defaults to None.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "rename",
-        "data": {
-            "new_name": new_name
-        }
-    }
+    data = {"new_name": new_name}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if feat_id:
-        request["data"]["feat_id"] = feat_id
+        data["feat_id"] = feat_id
     if name:
-        request["data"]["name"] = name
-    
-    return client.creoson_post(request)
+        data["name"] = name
+    return client.creoson_post("feature", "rename", data)
     # TODO: feat_id/name
 
 
@@ -332,33 +286,24 @@ def resume(
             Whether to resume any child features of the resumed feature.
             Defaults is True.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "resume",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if status:
-        request["data"]["status"] = status
+        data["status"] = status
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if with_children:
-        request["data"]["with_children"] = with_children
-    
-    return client.creoson_post(request)
+        data["with_children"] = with_children
+    return client.creoson_post("feature", "resume", data)
 
 
 def set_param(
@@ -400,37 +345,28 @@ def set_param(
             If parameter does not already exist, do not create it.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "set_param",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if param:
-        request["data"]["param"] = param
+        data["param"] = param
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if value:
-        request["data"]["value"] = value
+        data["value"] = value
     if encoded:
-        request["data"]["encoded"] = encoded
+        data["encoded"] = encoded
     if designate:
-        request["data"]["designate"] = designate
+        data["designate"] = designate
     if no_create:
-        request["data"]["no_create"] = no_create
-    
-    return client.creoson_post(request)
+        data["no_create"] = no_create
+    return client.creoson_post("feature", "set_param", data)
 
 
 def suppress(
@@ -474,35 +410,26 @@ def suppress(
             Whether to resume any child features of the resumed feature.
             Defaults is True.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "suppress",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if status:
-        request["data"]["status"] = status
+        data["status"] = status
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if clip:
-        request["data"]["clip"] = clip
+        data["clip"] = clip
     if with_children:
-        request["data"]["with_children"] = with_children
-    
-    return client.creoson_post(request)
+        data["with_children"] = with_children
+    return client.creoson_post("feature", "suppress", data)
 
 
 def user_select_csys(client, current_file=None, max_=None):
@@ -519,9 +446,6 @@ def user_select_csys(client, current_file=None, max_=None):
         `max_` (int, optional):
             The maximum number of dimensions that the user can select.
             Defaults is `1`.
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict):
@@ -541,15 +465,9 @@ def user_select_csys(client, current_file=None, max_=None):
                     Feature Number.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "feature",
-        "function": "user_select_csys",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if max_:
-        request["data"]["max"] = max_
-
-    return client.creoson_post(request)
+        data["max"] = max_
+    return client.creoson_post("feature", "user_select_csys", data)

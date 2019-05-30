@@ -6,6 +6,8 @@ Import/Export program (pls, als)
 
 """
 
+# TODO : add STL export
+
 
 def export_3dpdf(
     client,
@@ -41,37 +43,28 @@ def export_3dpdf(
             Whether to use special settings for exporting drawings.
             Defaut is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_3dpdf",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if filename:
-        request["data"]["filename"] = filename
+        data["filename"] = filename
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if height:
-        request["data"]["height"] = height
+        data["height"] = height
     if width:
-        request["data"]["width"] = width
+        data["width"] = width
     if dpi:
-        request["data"]["dpi"] = dpi
+        data["dpi"] = dpi
     if use_drawing_settings:
-        request["data"]["use_drawing_settings"] = use_drawing_settings
-
-    return client.creoson_post(request)
+        data["use_drawing_settings"] = use_drawing_settings
+    return client.creoson_post("interface", "export_3dpdf", data)
 
 
 def export_file(
@@ -116,35 +109,24 @@ def export_file(
             Whether to use the newer Creo 4 file export function.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_file",
-        "data": {
-            "type": file_type
-        }
-    }
+    data = {"type": file_type}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if filename:
-        request["data"]["filename"] = filename
+        data["filename"] = filename
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if geom_flags:
-        request["data"]["geom_flags"] = geom_flags
+        data["geom_flags"] = geom_flags
     if advanced:
-        request["data"]["advanced"] = advanced
-
-    return client.creoson_post(request)
+        data["advanced"] = advanced
+    return client.creoson_post("interface", "export_file", data)
 
 
 def export_image(
@@ -179,39 +161,28 @@ def export_image(
         depth (int, optional):
             Image depth. Defaults is `24`.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_image",
-        "data": {
-            "type": file_type
-        }
-    }
+    data = {"type": file_type}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if filename:
-        request["data"]["filename"] = filename
+        data["filename"] = filename
     # if dirname:
-    #     request["data"]["dirname"] = dirname
+    #     data["dirname"] = dirname
     if height:
-        request["data"]["height"] = height
+        data["height"] = height
     if width:
-        request["data"]["width"] = width
+        data["width"] = width
     if dpi:
-        request["data"]["dpi"] = dpi
+        data["dpi"] = dpi
     if depth:
-        request["data"]["depth"] = depth
-
-    return client.creoson_post(request)
+        data["depth"] = depth
+    return client.creoson_post("interface", "export_image", data)
 
 
 def export_pdf(
@@ -251,37 +222,28 @@ def export_pdf(
             Whether to use special settings for exporting drawings.
             Defaut is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_pdf",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if filename:
-        request["data"]["filename"] = filename
+        data["filename"] = filename
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if height:
-        request["data"]["height"] = height
+        data["height"] = height
     if width:
-        request["data"]["width"] = width
+        data["width"] = width
     if dpi:
-        request["data"]["dpi"] = dpi
+        data["dpi"] = dpi
     if use_drawing_settings:
-        request["data"]["use_drawing_settings"] = use_drawing_settings
-
-    return client.creoson_post(request)
+        data["use_drawing_settings"] = use_drawing_settings
+    return client.creoson_post("interface", "export_pdf", data)
 
 
 def export_program(client, current_file=None):
@@ -293,25 +255,16 @@ def export_program(client, current_file=None):
         current_file (str, optional):
             Model name. Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "export_program",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("interface", "export_program", data)
 
 
 def import_program(client, current_file=None, filename=None, dirname=None):
@@ -332,27 +285,18 @@ def import_program(client, current_file=None, filename=None, dirname=None):
         dirname (str, optional):
             Source directory. Defaults is Creo's current working directory.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         str: Name of the model updated
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "import_program",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if filename:
-        request["data"]["filename"] = filename
+        data["filename"] = filename
     if dirname:
-        request["data"]["dirname"] = dirname
-
-    return client.creoson_post(request)["file"]
+        data["dirname"] = dirname
+    return client.creoson_post("interface", "import_program", data)["file"]
 
 
 def mapkey(client, script):
@@ -369,16 +313,8 @@ def mapkey(client, script):
     Returns: None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "mapkey",
-        "data": {
-            "script": script,
-        }
-    }
-    
-    return client.creoson_post(request)
+    data = {"script": script}
+    return client.creoson_post("interface", "mapkey", data)
 
 
 def plot(client, current_file=None, dirname=None, driver=None):
@@ -397,26 +333,17 @@ def plot(client, current_file=None, dirname=None, driver=None):
             Defaults is `POSTSCRIPT`.
             Valid values: POSTSCRIPT, JPEG, TIFF.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         dict:
             dirname (str): Directory of the output file
             filename (str): Name of the output file
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "interface",
-        "function": "plot",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if driver:
-        request["data"]["driver"] = driver
-
-    return client.creoson_post(request)
+        data["driver"] = driver
+    return client.creoson_post("interface", "plot", data)

@@ -50,22 +50,17 @@ def get_paths(
             the children level, ex: `root.3.2`.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "bom",
-        "function": "get_paths",
-        "data": {}
-    }
+    data = {}
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if paths:
-        request["data"]["paths"] = paths
+        data["paths"] = paths
     if skeletons:
-        request["data"]["skeletons"] = skeletons
+        data["skeletons"] = skeletons
     if top_level:
-        request["data"]["top_level"] = top_level
+        data["top_level"] = top_level
     if get_transforms:
-        request["data"]["get_transforms"] = get_transforms
+        data["get_transforms"] = get_transforms
     if exclude_inactive:
-        request["data"]["exclude_inactive"] = exclude_inactive
-    return client.creoson_post(request)
+        data["exclude_inactive"] = exclude_inactive
+    return client.creoson_post("bom", "get_paths", data)

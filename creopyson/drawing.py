@@ -12,24 +12,14 @@ def add_model(client, model, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults is Current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "add_model",
-        "data": {
-            "model": model
-        }
-    }
+    data = {"model": model}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "add_model", data)
 
 
 def add_sheet(client, position=None, drawing=None):
@@ -44,24 +34,16 @@ def add_sheet(client, position=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults is current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "add_sheet",
-        "data": {}
-    }
+    data = {}
     if position:
-        request["data"]["position"] = position
+        data["position"] = position
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "add_sheet", data)
 
 
 def create(
@@ -95,34 +77,24 @@ def create(
         new_window (boolean, optional):
             Open drawing in a new window. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): New drawing name.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "create",
-        "data": {
-            "template": template,
-        }
-    }
+    data = {"template": template}
     if model:
-        request["data"]["model"] = model
+        data["model"] = model
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if scale:
-        request["data"]["scale"] = scale
+        data["scale"] = scale
     if display:
-        request["data"]["display"] = display
+        data["display"] = display
     if activate:
-        request["data"]["activate"] = activate
+        data["activate"] = activate
     if new_window:
-        request["data"]["new_window"] = new_window
-    return client.creoson_post(request)["drawing"]
+        data["new_window"] = new_window
+    return client.creoson_post("drawing", "create", data)["drawing"]
 
 
 def create_gen_view(
@@ -162,37 +134,29 @@ def create_gen_view(
         exploded (boolean, optional):
             Whether to create the view as an exploded view. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "create_gen_view",
-        "data": {
-            "model_view": model_view,
-            "point": point
-        }
+    data = {
+        "model_view": model_view,
+        "point": point
     }
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if view:
-        request["data"]["view"] = view
+        data["view"] = view
     if sheet:
-        request["data"]["sheet"] = sheet
+        data["sheet"] = sheet
     if model:
-        request["data"]["model"] = model
+        data["model"] = model
     if scale:
-        request["data"]["scale"] = scale
+        data["scale"] = scale
     if display_data:
-        request["data"]["display_data"] = display_data
+        data["display_data"] = display_data
     if exploded:
-        request["data"]["exploded"] = exploded
-    return client.creoson_post(request)
+        data["exploded"] = exploded
+    return client.creoson_post("drawing", "create_gen_view", data)
     # TODO: JLpoint Method for point
     # TODO: ViewDisplayData method for display_data
 
@@ -233,33 +197,25 @@ def create_proj_view(
         exploded (boolean, optional):
             Whether to create the view as an exploded view. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "create_proj_view",
-        "data": {
-            "parent_view": parent_view,
-            "point": point
-        }
+    data = {
+        "parent_view": parent_view,
+        "point": point
     }
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if view:
-        request["data"]["view"] = view
+        data["view"] = view
     if sheet:
-        request["data"]["sheet"] = sheet
+        data["sheet"] = sheet
     if display_data:
-        request["data"]["display_data"] = display_data
+        data["display_data"] = display_data
     if exploded:
-        request["data"]["exploded"] = exploded
-    return client.creoson_post(request)
+        data["exploded"] = exploded
+    return client.creoson_post("drawing", "create_proj_view", data)
 
 
 def create_symbol(
@@ -288,29 +244,21 @@ def create_symbol(
             Sheet number (0 for all sheets).
             Defaults: the symbol will be added to all sheets.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "create_symbol",
-        "data": {
-            "symbol_file": symbol_file,
-            "point": point
-        }
+    data = {
+        "symbol_file": symbol_file,
+        "point": point
     }
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if replace_values:
-        request["data"]["replace_values"] = replace_values
+        data["replace_values"] = replace_values
     if sheet:
-        request["data"]["sheet"] = sheet
-    return client.creoson_post(request)
+        data["sheet"] = sheet
+    return client.creoson_post("drawing", "create_symbol", data)
 
 
 def delete_models(
@@ -333,26 +281,18 @@ def delete_models(
             Whether to delete drawing views associated with the model.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "delete_models",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if model:
-        request["data"]["model"] = model
+        data["model"] = model
     if delete_views:
-        request["data"]["delete_views"] = delete_views
-    return client.creoson_post(request)
+        data["delete_views"] = delete_views
+    return client.creoson_post("drawing", "delete_models", data)
 
 
 def delete_sheet(client, sheet, drawing=None):
@@ -368,24 +308,14 @@ def delete_sheet(client, sheet, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "delete_sheet",
-        "data": {
-            "sheet": sheet
-        }
-    }
+    data = {"sheet": sheet}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "delete_sheet", data)
 
 
 def delete_symbol_def(client, symbol_file, drawing=None):
@@ -399,24 +329,14 @@ def delete_symbol_def(client, symbol_file, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "delete_symbol_def",
-        "data": {
-            "symbol_file": symbol_file
-        }
-    }
+    data = {"symbol_file": symbol_file}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "delete_symbol_def", data)
 
 
 def delete_symbol_inst(client, symbol_id, drawing=None):
@@ -430,24 +350,14 @@ def delete_symbol_inst(client, symbol_id, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "delete_symbol_inst",
-        "data": {
-            "symbol_id": symbol_id
-        }
-    }
+    data = {"symbol_id": symbol_id}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "delete_symbol_inst", data)
 
 
 def delete_view(
@@ -472,28 +382,18 @@ def delete_view(
         del_children ([boolean, optional):
             Whether to also delete any children of the view. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "delete_view",
-        "data": {
-            "view": view
-        }
-    }
+    data = {"view": view}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if sheet:
-        request["data"]["sheet"] = sheet
+        data["sheet"] = sheet
     if del_children:
-        request["data"]["del_children"] = del_children
-    return client.creoson_post(request)
+        data["del_children"] = del_children
+    return client.creoson_post("drawing", "delete_view", data)
 
 
 def get_cur_model(client, drawing=None):
@@ -505,22 +405,14 @@ def get_cur_model(client, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): Model name.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_cur_model",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)["drawing"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_cur_model", data)["drawing"]
 
 
 def get_cur_sheet(client, drawing=None):
@@ -532,22 +424,14 @@ def get_cur_sheet(client, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (int): Sheet number.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_cur_sheet",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)["sheet"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_cur_sheet", data)["sheet"]
 
 
 def get_num_sheets(client, drawing=None):
@@ -559,23 +443,14 @@ def get_num_sheets(client, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (int): Number of sheets.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_num_sheets",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)["num_sheets"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_num_sheets", data)["num_sheets"]
 
 
 def get_sheet_scale(client, sheet, drawing=None, model=None):
@@ -592,27 +467,16 @@ def get_sheet_scale(client, sheet, drawing=None, model=None):
             Drawing model used to calculate the scale.
             Defaults: the active model on the drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (float): Sheet scale.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_sheet_scale",
-        "data": {
-            "sheet": sheet
-        }
-    }
+    data = {"sheet": sheet}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if model:
-        request["data"]["model"] = model
-    
-    return client.creoson_post(request)["scale"]
+        data["model"] = model
+    return client.creoson_post("drawing", "get_sheet_scale", data)["scale"]
 
 
 def get_sheet_size(client, sheet, drawing=None):
@@ -626,25 +490,14 @@ def get_sheet_size(client, sheet, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): Sheet size.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_sheet_size",
-        "data": {
-            "sheet": sheet
-        }
-    }
+    data = {"sheet": sheet}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)["size"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_sheet_size", data)["size"]
 
 
 def get_view_loc(client, view, drawing=None):
@@ -658,9 +511,6 @@ def get_view_loc(client, view, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             x (float): X-coordinate of the view
@@ -668,18 +518,10 @@ def get_view_loc(client, view, drawing=None):
             z (float): Z-coordinate of the view
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_view_loc",
-        "data": {
-            "view": view
-        }
-    }
+    data = {"view": view}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_view_loc", data)
     # TODO: retrun a tuple (x,y,z)?
 
 
@@ -701,18 +543,10 @@ def get_view_scale(client, view, drawing=None):
         (float): View scale.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_view_scale",
-        "data": {
-            "view": view
-        }
-    }
+    data = {"view": view}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)["scale"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_view_scale", data)["scale"]
 
 
 def get_view_sheet(client, view, drawing=None):
@@ -726,25 +560,14 @@ def get_view_sheet(client, view, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (int): Sheet number.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "get_view_sheet",
-        "data": {
-            "view": view
-        }
-    }
+    data = {"view": view}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)["sheet"]
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "get_view_sheet", data)["sheet"]
 
 
 def is_symbol_def_loaded(client, symbol_file, drawing=None):
@@ -758,25 +581,15 @@ def is_symbol_def_loaded(client, symbol_file, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the symbol definition is loaded into Creo.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "is_symbol_def_loaded",
-        "data": {
-            "symbol_file": symbol_file
-        }
-    }
+    data = {"symbol_file": symbol_file}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)["loaded"]
+        data["drawing"] = drawing
+    return client.creoson_post(
+        "drawing", "is_symbol_def_loaded", data)["loaded"]
 
 
 def list_models(client, model=None, drawing=None):
@@ -791,25 +604,16 @@ def list_models(client, model=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): List of model names in the drawing.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "list_models",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if model:
-        request["data"]["model"] = model
-    
-    return client.creoson_post(request)["files"]
+        data["model"] = model
+    return client.creoson_post("drawing", "list_models", data)["files"]
 
 
 def list_symbols(
@@ -819,7 +623,7 @@ def list_symbols(
     sheet=None
 ):
     """List symbols contained on a drawing.
-    
+
     Args:
         client (obj):
             creopyson Client
@@ -831,9 +635,6 @@ def list_symbols(
             Sheet number (0 for all sheets).
             Defaults: The symbol will be added to all sheets.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict):
             List of symbols in the drawing.
@@ -842,19 +643,14 @@ def list_symbols(
                 sheet (int): Sheet number.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "list_symbols",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if symbol_file:
-        request["data"]["symbol_file"] = symbol_file
+        data["symbol_file"] = symbol_file
     if sheet:
-        request["data"]["sheet"] = sheet
-    return client.creoson_post(request)["symbols"]
+        data["sheet"] = sheet
+    return client.creoson_post("drawing", "list_symbols", data)["symbols"]
 
 
 def list_view_details(client, view=None, drawing=None):
@@ -867,9 +663,6 @@ def list_view_details(client, view=None, drawing=None):
             View name filter (wildcards allowed: True). Defaults: no filter.
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict):
@@ -885,17 +678,12 @@ def list_view_details(client, view=None, drawing=None):
                         z (float): Z-coordinate of the view
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "list_view_details",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if view:
-        request["data"]["view"] = view
-    return client.creoson_post(request)["views"]
+        data["view"] = view
+    return client.creoson_post("drawing", "list_view_details", data)["views"]
 
 
 def list_views(client, view=None, drawing=None):
@@ -909,24 +697,16 @@ def list_views(client, view=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): List of views in the drawing.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "list_views",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if view:
-        request["data"]["view"] = view
-    return client.creoson_post(request)["views"]
+        data["view"] = view
+    return client.creoson_post("drawing", "list_views", data)["views"]
 
 
 def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
@@ -944,28 +724,18 @@ def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict): Symbol definition.
             id (int): ID of the loaded symbol.
             name (str): Symbol Name of the loaded symbol.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "load_symbol_def",
-        "data": {
-            "symbol_file": symbol_file,
-        }
-    }
+    data = {"symbol_file": symbol_file}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if symbol_dir:
-        request["data"]["symbol_dir"] = symbol_dir
-    return client.creoson_post(request)
+        data["symbol_dir"] = symbol_dir
+    return client.creoson_post("drawing", "load_symbol_def", data)
 
 
 def regenerate(client, drawing=None):
@@ -977,22 +747,14 @@ def regenerate(client, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "regenerate",
-        "data": {}
-    }
+    data = {}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "regenerate", data)
 
 
 def regenerate_sheet(client, sheet=None, drawing=None):
@@ -1007,24 +769,16 @@ def regenerate_sheet(client, sheet=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "regenerate_sheet",
-        "data": {}
-    }
+    data = {}
     if sheet:
-        request["data"]["sheet"] = sheet
+        data["sheet"] = sheet
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "regenerate_sheet", data)
 
 
 def rename_view(client, view, new_view, drawing=None):
@@ -1040,25 +794,17 @@ def rename_view(client, view, new_view, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "rename_view",
-        "data": {
-            "view": view,
-            "new_view": new_view
-        }
+    data = {
+        "view": view,
+        "new_view": new_view
     }
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "rename_view", data)
 
 
 def scale_sheet(client, sheet, scale, drawing=None, model=None):
@@ -1076,27 +822,19 @@ def scale_sheet(client, sheet, scale, drawing=None, model=None):
         model (str, optional):
             Drawing model to scale. Defaults: tThe active model on the drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "scale_sheet",
-        "data": {
-            "sheet": sheet,
-            "scale": scale
-        }
+    data = {
+        "sheet": sheet,
+        "scale": scale
     }
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if model:
-        request["data"]["model"] = model
-    return client.creoson_post(request)
+        data["model"] = model
+    return client.creoson_post("drawing", "scale_sheet", data)
 
 
 def scale_view(client, scale, view=None, drawing=None):
@@ -1113,9 +851,6 @@ def scale_view(client, scale, view=None, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict)
             succes_views (list):
@@ -1124,20 +859,12 @@ def scale_view(client, scale, view=None, drawing=None):
                 List of view which failed to scale.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "scale_view",
-        "data": {
-            "scale": scale
-        }
-    }
+    data = {"scale": scale}
     if drawing:
-        request["data"]["drawing"] = drawing
+        data["drawing"] = drawing
     if view:
-        request["data"]["view"] = view
-    
-    return client.creoson_post(request)
+        data["view"] = view
+    return client.creoson_post("drawing", "scale_view", data)
 
 
 def select_sheet(client, sheet, drawing=None):
@@ -1151,25 +878,14 @@ def select_sheet(client, sheet, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "select_sheet",
-        "data": {
-            "sheet": sheet,
-        }
-    }
+    data = {"sheet": sheet}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "select_sheet", data)
 
 
 def set_cur_model(client, model, drawing=None):
@@ -1183,25 +899,14 @@ def set_cur_model(client, model, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "set_cur_model",
-        "data": {
-            "model": model,
-        }
-    }
+    data = {"model": model}
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "set_cur_model", data)
 
 
 def set_view_loc(client, view, point, drawing=None):
@@ -1217,26 +922,17 @@ def set_view_loc(client, view, point, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "set_cur_model",
-        "data": {
-            "view": view,
-            "point": point
-        }
+    data = {
+        "view": view,
+        "point": point
     }
     if drawing:
-        request["data"]["drawing"] = drawing
-    
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "set_cur_model", data)
 
 
 def view_bound_box(client, view, drawing=None):
@@ -1250,9 +946,6 @@ def view_bound_box(client, view, drawing=None):
         drawing (str, optional):
             Drawing name. Defaults: current active drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             xmin (float): Minimum X-coordinate of drawing view.
@@ -1261,14 +954,7 @@ def view_bound_box(client, view, drawing=None):
             ymax (float): Maximum Y-coordinate of drawing view.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "drawing",
-        "function": "view_bound_box",
-        "data": {
-            "view": view
-        }
-    }
+    data = {"view": view}
     if drawing:
-        request["data"]["drawing"] = drawing
-    return client.creoson_post(request)
+        data["drawing"] = drawing
+    return client.creoson_post("drawing", "view_bound_box", data)

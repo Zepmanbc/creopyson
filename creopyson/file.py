@@ -61,9 +61,6 @@ def assemble(
             Whether to suppress the components immediately after assembling
             them. Defaults to None.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             dirname (str):
@@ -77,38 +74,30 @@ def assemble(
                 Last Feature ID of component after assembly.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "assemble",
-        "data": {
-            "file": current_file
-        }
-    }
+    data = {"file": current_file}
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if generic:
-        request["data"]["generic"] = generic
+        data["generic"] = generic
     if into_asm:
-        request["data"]["into_asm"] = into_asm
+        data["into_asm"] = into_asm
     if path:
-        request["data"]["path"] = path
+        data["path"] = path
     if ref_model:
-        request["data"]["ref_model"] = ref_model
+        data["ref_model"] = ref_model
     if transform:
-        request["data"]["transform"] = transform
+        data["transform"] = transform
     if constraints:
-        request["data"]["constraints"] = constraints
+        data["constraints"] = constraints
     if package_assembly:
-        request["data"]["package_assembly"] = package_assembly
+        data["package_assembly"] = package_assembly
     if walk_children:
-        request["data"]["walk_children"] = walk_children
+        data["walk_children"] = walk_children
     if assemble_to_root:
-        request["data"]["assemble_to_root"] = assemble_to_root
+        data["assemble_to_root"] = assemble_to_root
     if suppress:
-        request["data"]["suppress"] = suppress
-    
-    return client.creoson_post(request)
+        data["suppress"] = suppress
+    return client.creoson_post("file", "assemble", data)
 
 
 def backup(client, target_dir, current_file=None):
@@ -122,25 +111,14 @@ def backup(client, target_dir, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "backup",
-        "data": {
-            "target_dir": target_dir
-        }
-    }
+    data = {"target_dir": target_dir}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "backup", data)
 
 
 def close_window(client, current_file=None):
@@ -152,23 +130,14 @@ def close_window(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "close_window",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "close_window", data)
 
 
 def display(client, current_file, activate=None):
@@ -182,25 +151,14 @@ def display(client, current_file, activate=None):
         activate (boolean, optional):
             Activate the model after displayong. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "display",
-        "data": {
-            "file": current_file
-        }
-    }
+    data = {"file": current_file}
     if activate:
-        request["data"]["activate"] = activate
-    
-    return client.creoson_post(request)
+        data["activate"] = activate
+    return client.creoson_post("file", "display", data)
 
 
 def erase(client, current_file=None, files=None, erase_children=None):
@@ -218,27 +176,18 @@ def erase(client, current_file=None, files=None, erase_children=None):
         erase_children (boolean, optional):
             Erase children of the models too. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "erase",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if files:
-        request["data"]["files"] = files
+        data["files"] = files
     if erase_children:
-        request["data"]["erase_children"] = erase_children
-    
-    return client.creoson_post(request)
+        data["erase_children"] = erase_children
+    return client.creoson_post("file", "erase", data)
 
 
 def erase_not_displayed(client):
@@ -247,21 +196,11 @@ def erase_not_displayed(client):
     Args:
         client (obj): creopyson Client.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "erase_not_displayed",
-        "data": {}
-    }
-    
-    return client.creoson_post(request)
+    return client.creoson_post("file", "erase_not_displayed")
 
 
 def exists(client, current_file):
@@ -271,23 +210,12 @@ def exists(client, current_file):
         client (obj): creopyson Client.
         current_file (str): File name.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (Boolean): Whether the file is open in Creo.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "exists",
-        "data": {
-            "file": current_file
-        }
-    }
-    
-    return client.creoson_post(request)["exists"]
+    data = {"file": current_file}
+    return client.creoson_post("file", "exists", data)["exists"]
 
 
 def get_active(client):
@@ -296,23 +224,13 @@ def get_active(client):
     Args:
         client (obj): creopyson Client.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             dirname (str): Directory name of current model.
             file (str): File name of current model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "get_active",
-        "data": {}
-    }
-    
-    return client.creoson_post(request)
+    return client.creoson_post("file", "get_active")
 
 
 def get_fileinfo(client, current_file=None):
@@ -324,9 +242,6 @@ def get_fileinfo(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             dirname (str): Directory name of the file.
@@ -334,16 +249,10 @@ def get_fileinfo(client, current_file=None):
             revision (int): Revision number of file.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "get_fileinfo",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "get_fileinfo", data)
 
 
 def get_length_units(client, current_file=None):
@@ -355,23 +264,14 @@ def get_length_units(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): Length units.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "get_length_units",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)["units"]
+        data["file"] = current_file
+    return client.creoson_post("file", "get_length_units", data)["units"]
 
 
 def get_mass_units(client, current_file=None):
@@ -383,23 +283,14 @@ def get_mass_units(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): mass units.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "get_mass_units",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)["units"]
+        data["file"] = current_file
+    return client.creoson_post("file", "get_mass_units", data)["units"]
 
 
 def get_transform(client, asm=None, path=None, csys=None):
@@ -417,28 +308,19 @@ def get_transform(client, asm=None, path=None, csys=None):
             Coordinate system on the component to calculate the transform for.
             Defaults is the component's default coordinate system.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (obj:JLTransform): The 3D transform from the assembly to
         the component's coordinate system.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "get_transform",
-        "data": {}
-    }
+    data = {}
     if asm:
-        request["data"]["asm"] = asm
+        data["asm"] = asm
     if path:
-        request["data"]["path"] = path
+        data["path"] = path
     if csys:
-        request["data"]["csys"] = csys
-    
-    return client.creoson_post(request)["transform"]
+        data["csys"] = csys
+    return client.creoson_post("file", "get_transform", data)["transform"]
 
 
 def has_instances(client, current_file=None):
@@ -450,23 +332,14 @@ def has_instances(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the file has a family table.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "has_instances",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)["exists"]
+        data["file"] = current_file
+    return client.creoson_post("file", "has_instances", data)["exists"]
 
 
 def is_active(client, current_file):
@@ -476,23 +349,12 @@ def is_active(client, current_file):
         client (obj): creopyson Client.
         current_file (str): File name.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the file is the currently active model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "is_active",
-        "data": {
-            "file": current_file
-        }
-    }
-    
-    return client.creoson_post(request)["active"]
+    data = {"file": current_file}
+    return client.creoson_post("file", "is_active", data)["active"]
 
 
 def list_(client, current_file=None, files=None):
@@ -506,25 +368,16 @@ def list_(client, current_file=None, files=None):
         files (list:str, optional):
             List of file names. Defaults to None.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str) List of files.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "is_active",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if files:
-        request["data"]["files"] = files
-    
-    return client.creoson_post(request)["files"]
+        data["files"] = files
+    return client.creoson_post("file", "is_active", data)["files"]
 
 
 def list_instances(client, current_file=None):
@@ -536,9 +389,6 @@ def list_instances(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             dirname (str): Directory name of the file.
@@ -546,16 +396,10 @@ def list_instances(client, current_file=None):
             files (list:str): List of model names in the table.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "list_instances",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "list_instances", data)
 
 
 def list_simp_reps(client, current_file=None, rep=None):
@@ -570,29 +414,19 @@ def list_simp_reps(client, current_file=None, rep=None):
             Simplified rep name pattern (wildcards_allowed: True).
             Defaults is all simplified reps.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             rep (str): Simplified rep name.
             reps (list:str): Simplified reps names.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "list_simp_reps",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if rep:
-        request["data"]["rep"] = rep
-    
-    return client.creoson_post(request)
+        data["rep"] = rep
+    return client.creoson_post("file", "list_simp_reps", data)
     # TODO return only list between `rep` and `reps`
-
 
 
 def massprops(client, current_file=None):
@@ -604,9 +438,6 @@ def massprops(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             volume (float): Model volume.
@@ -615,16 +446,10 @@ def massprops(client, current_file=None):
             surface_area (float): Model surface area.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "massprops",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "massprops", data)
 
 
 def open_(
@@ -661,9 +486,6 @@ def open_(
         regen_force (boolean, optional):
             Force regeneration after opening. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             dirname (str):
@@ -675,30 +497,25 @@ def open_(
                 if more than one file was opened, this field is not returned.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "open",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if dirname:
-        request["data"]["dirname"] = dirname
+        data["dirname"] = dirname
     if files:
-        request["data"]["files"] = files
+        data["files"] = files
     if generic:
-        request["data"]["generic"] = generic
+        data["generic"] = generic
     if display:
-        request["data"]["display"] = display
+        data["display"] = display
     if activate:
-        request["data"]["activate"] = activate
+        data["activate"] = activate
     if new_window:
-        request["data"]["new_window"] = new_window
+        data["new_window"] = new_window
     if regen_force:
-        request["data"]["regen_force"] = regen_force
-    
-    return client.creoson_post(request)
+        data["regen_force"] = regen_force
+    return client.creoson_post("file", "open", data)
+    # TODO
 
 
 def open_errors(client, current_file=None):
@@ -710,23 +527,14 @@ def open_errors(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether errors exist in Creo.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "open_errors",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)["errors"]
+        data["file"] = current_file
+    return client.creoson_post("file", "open_errors", data)["errors"]
 
 
 def postregen_relations_get(client, current_file=None):
@@ -738,23 +546,15 @@ def postregen_relations_get(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): Exported relations text, one entry per line.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "postregen_relations_get",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)["relations"]
+        data["file"] = current_file
+    return client.creoson_post(
+        "file", "postregen_relations_get", data)["relations"]
 
 
 def postregen_relations_set(client, current_file=None, relations=None):
@@ -769,25 +569,16 @@ def postregen_relations_set(client, current_file=None, relations=None):
             Relations text to import, one line per entry.
             Clear the relations if missing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Retunrs:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "postregen_relations_set",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if relations:
-        request["data"]["relations"] = relations
-    
-    return client.creoson_post(request)
+        data["relations"] = relations
+    return client.creoson_post("file", "postregen_relations_set", data)
 
 
 def refresh(client, current_file=None):
@@ -799,23 +590,14 @@ def refresh(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "refresh",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "refresh", data)
 
 
 def regenerate(client, current_file=None, files=None, display=None):
@@ -831,27 +613,18 @@ def regenerate(client, current_file=None, files=None, display=None):
         display (boolean, optional):
             Display the model before regenerating. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "regenerate",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if files:
-        request["data"]["files"] = files
+        data["files"] = files
     if display:
-        request["data"]["display"] = display
-    
-    return client.creoson_post(request)
+        data["display"] = display
+    return client.creoson_post("file", "regenerate", data)
 
 
 def relations_get(client, current_file=None):
@@ -863,23 +636,14 @@ def relations_get(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:srt): Exported relations text, one entry per line.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "relations_get",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-
-    return client.creoson_post(request)["relations"]
+        data["file"] = current_file
+    return client.creoson_post("file", "relations_get", data)["relations"]
 
 
 def relations_set(client, current_file=None, relations=None):
@@ -894,25 +658,16 @@ def relations_set(client, current_file=None, relations=None):
             Relations text to import, one line per entry.
             Clear the relations if missing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "relations_set",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if relations:
-        request["data"]["relations"] = relations
-
-    return client.creoson_post(request)
+        data["relations"] = relations
+    return client.creoson_post("file", "relations_set", data)
 
 
 def rename(client, new_name, current_file=None, onlysession=None):
@@ -928,27 +683,16 @@ def rename(client, new_name, current_file=None, onlysession=None):
         onlysession (boolean, optional):
             Modify only in memory, not on disk. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): The new model name.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "rename",
-        "data": {
-            "new_name": new_name,
-        }
-    }
+    data = {"new_name": new_name}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if onlysession:
-        request["data"]["onlysession"] = onlysession
-
-    return client.creoson_post(request)["file"]
+        data["onlysession"] = onlysession
+    return client.creoson_post("file", "rename", data)["file"]
 
 
 def repaint(client, current_file=None):
@@ -960,23 +704,14 @@ def repaint(client, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "repaint",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-
-    return client.creoson_post(request)
+        data["file"] = current_file
+    return client.creoson_post("file", "repaint", data)
 
 
 def save(client, current_file=None, files=None):
@@ -990,25 +725,16 @@ def save(client, current_file=None, files=None):
         files (list:str, optional):
             List of file names. Defaults: the file parameter is used.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "save",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if files:
-        request["data"]["files"] = files
-
-    return client.creoson_post(request)
+        data["files"] = files
+    return client.creoson_post("file", "save", data)
     # TODO only one entry
 
 
@@ -1030,27 +756,16 @@ def set_length_units(client, units, current_file=None, convert=None):
             new units (True) or leave them the same value (False).
             Defaults is True.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "set_length_units",
-        "date": {
-            "units": units,
-        }
-    }
+    data = {"units": units}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if convert:
-        request["data"]["convert"] = convert
-
-    return client.creoson_post(request)
+        data["convert"] = convert
+    return client.creoson_post("file", "set_length_units", data)
 
 
 def set_mass_units(client, units, current_file=None, convert=None):
@@ -1071,24 +786,13 @@ def set_mass_units(client, units, current_file=None, convert=None):
             new units (True) or leave them the same value (False).
             Defaults is True.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "file",
-        "function": "set_length_units",
-        "date": {
-            "units": units,
-        }
-    }
+    data = {"units": units}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if convert:
-        request["data"]["convert"] = convert
-
-    return client.creoson_post(request)
+        data["convert"] = convert
+    return client.creoson_post("file", "set_length_units", data)

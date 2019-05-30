@@ -14,27 +14,16 @@ def delete(client, name=None, current_file=None):
             File name (wildcards alloawed: True).
             Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "layer",
-        "function": "delete",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
-    
-    return client.creoson_post(request)
+        data["name"] = name
+    return client.creoson_post("layer", "delete", data)
 
 
 def exists(client, name=None, current_file=None):
@@ -50,25 +39,16 @@ def exists(client, name=None, current_file=None):
             File name.
             Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the layer exists on the model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
-
-    return client.creoson_post(request)["exists"]
+        data["name"] = name
+    return client.creoson_post("layer", "exists", data)["exists"]
 
 
 def list_(client, name=None, current_file=None):
@@ -84,9 +64,6 @@ def list_(client, name=None, current_file=None):
             File name.
             Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict):
             name (str):
@@ -97,18 +74,12 @@ def list_(client, name=None, current_file=None):
                 Layer ID.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
-
-    return client.creoson_post(request)["layers"]
+        data["name"] = name
+    return client.creoson_post("layer", "list", data)["layers"]
 
 
 def show(client, name=None, current_file=None, show_=None):
@@ -127,24 +98,15 @@ def show(client, name=None, current_file=None, show_=None):
             Whether to show or hide the layers.
             Defaults is True (show).
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if show_:
-        request["data"]["show"] = show_
-
-    return client.creoson_post(request)
+        data["show"] = show_
+    return client.creoson_post("layer", "show", data)
