@@ -16,6 +16,7 @@ def mk_creoson_post_dict(monkeypatch):
             "exists": True,
             "filelist": [],
             "values": [],
+            "viewlist": [],
             "workspace": "",
             "workspaces": [],
         }

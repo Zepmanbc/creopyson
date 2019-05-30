@@ -1,7 +1,7 @@
 """View module."""
 
 
-def activate(client, name, current_file=None):
+def activate(client, name, file_=None):
     """Activate a model view.
 
     Args:
@@ -9,7 +9,7 @@ def activate(client, name, current_file=None):
             creopyson Client.
         name (str):
             View name.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
 
     Returns:
@@ -17,18 +17,18 @@ def activate(client, name, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("view", "activate", data)
 
 
-def list_exploded(client, current_file=None, name=None):
+def list_exploded(client, file_=None, name=None):
     """List views that match criteria and are exploded.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             View name (wildcards allowed: True).
@@ -39,18 +39,18 @@ def list_exploded(client, current_file=None, name=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("view", "list_exploded", data)["viewlist"]
 
 
-def list_(client, current_file=None, name=None):
+def list_(client, file_=None, name=None):
     """List views that match criteria.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         name (str, optional):
             View name (wildcards allowed: True).
@@ -61,13 +61,13 @@ def list_(client, current_file=None, name=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("view", "list", data)["viewlist"]
     # TODO: group with list_exploded?
 
 
-def save(client, name, current_file=None):
+def save(client, name, file_=None):
     """Save a model's current orientation as a new view.
 
     Args:
@@ -75,7 +75,7 @@ def save(client, name, current_file=None):
             creopyson Client.
         name (str):
             View name.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
 
     Returns:
@@ -83,6 +83,6 @@ def save(client, name, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("view", "save", data)
