@@ -3,7 +3,7 @@
 
 def assemble(
     client,
-    current_file,
+    file_,
     dirname=None,
     generic=None,
     into_asm=None,
@@ -21,7 +21,7 @@ def assemble(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str):
+        `file_` (str):
             File name component.
         dirname (str, optional):
             Diretory name. Defaults is Creo's current working directory.
@@ -74,7 +74,7 @@ def assemble(
                 Last Feature ID of component after assembly.
 
     """
-    data = {"file": current_file}
+    data = {"file": file_}
     if dirname:
         data["dirname"] = dirname
     if generic:
@@ -100,7 +100,7 @@ def assemble(
     return client.creoson_post("file", "assemble", data)
 
 
-def backup(client, target_dir, current_file=None):
+def backup(client, target_dir, file_=None):
     """Backup a model.
 
     Args:
@@ -108,7 +108,7 @@ def backup(client, target_dir, current_file=None):
             creopyson Client.
         target_dir (str):
             Target directory name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -116,18 +116,18 @@ def backup(client, target_dir, current_file=None):
 
     """
     data = {"target_dir": target_dir}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "backup", data)
 
 
-def close_window(client, current_file=None):
+def close_window(client, file_=None):
     """Close the window containing a model.
 
     Args:
         client (obj):
             creopyson object.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -135,18 +135,18 @@ def close_window(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "close_window", data)
 
 
-def display(client, current_file, activate=None):
+def display(client, file_, activate=None):
     """Display a model in a window.
 
     Args:
         client (obj):
             creopyson object.
-        current_file (str):
+        `file_` (str):
             File name
         activate (boolean, optional):
             Activate the model after displayong. Defaults is False.
@@ -155,24 +155,22 @@ def display(client, current_file, activate=None):
         None
 
     """
-    data = {"file": current_file}
+    data = {"file": file_}
     if activate:
         data["activate"] = activate
     return client.creoson_post("file", "display", data)
 
 
-def erase(client, current_file=None, files=None, erase_children=None):
+def erase(client, file_=None, erase_children=None):
     """Erase one or more models from memory.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
-            File name; only used if files is not given
-            (Wildcards allowed: True). Defaults to None.
-        files (list:str, optional):
-            List of file names. Defaults is the file parameter is used;
-            if both are empty, then all models in memory are erased.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
+            (Wildcards allowed: True).
+            if emptyall models in memory are erased.
         erase_children (boolean, optional):
             Erase children of the models too. Defaults is False.
 
@@ -181,10 +179,11 @@ def erase(client, current_file=None, files=None, erase_children=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
-    if files:
-        data["files"] = files
+    if file_:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
     if erase_children:
         data["erase_children"] = erase_children
     return client.creoson_post("file", "erase", data)
@@ -203,18 +202,18 @@ def erase_not_displayed(client):
     return client.creoson_post("file", "erase_not_displayed")
 
 
-def exists(client, current_file):
+def exists(client, file_):
     """Check whether a model exists in memory.
 
     Args:
         client (obj): creopyson Client.
-        current_file (str): File name.
+        `file_` (str): File name.
 
     Returns:
         (Boolean): Whether the file is open in Creo.
 
     """
-    data = {"file": current_file}
+    data = {"file": file_}
     return client.creoson_post("file", "exists", data)["exists"]
 
 
@@ -233,13 +232,13 @@ def get_active(client):
     return client.creoson_post("file", "get_active")
 
 
-def get_fileinfo(client, current_file=None):
+def get_fileinfo(client, file_=None):
     """Open one or more files in memory or from the drive.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -250,18 +249,18 @@ def get_fileinfo(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "get_fileinfo", data)
 
 
-def get_length_units(client, current_file=None):
+def get_length_units(client, file_=None):
     """Get the current length units for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -269,18 +268,18 @@ def get_length_units(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "get_length_units", data)["units"]
 
 
-def get_mass_units(client, current_file=None):
+def get_mass_units(client, file_=None):
     """Get the current mass units for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -288,8 +287,8 @@ def get_mass_units(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "get_mass_units", data)["units"]
 
 
@@ -323,13 +322,13 @@ def get_transform(client, asm=None, path=None, csys=None):
     return client.creoson_post("file", "get_transform", data)["transform"]
 
 
-def has_instances(client, current_file=None):
+def has_instances(client, file_=None):
     """Check whether a model has a family table.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -337,56 +336,59 @@ def has_instances(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "has_instances", data)["exists"]
 
 
-def is_active(client, current_file):
+def is_active(client, file_):
     """Check whether a model is the active model.
 
     Args:
         client (obj): creopyson Client.
-        current_file (str): File name.
+        `file_` (str): File name.
 
     Returns:
         (boolean): Whether the file is the currently active model.
 
     """
-    data = {"file": current_file}
+    data = {"file": file_}
     return client.creoson_post("file", "is_active", data)["active"]
 
 
-def list_(client, current_file=None, files=None):
+def list_(client, file_=None):
     """Get a list of files in the current Creo session that match patterns.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name; only used if files is not given. Defaults to None.
         files (list:str, optional):
             List of file names. Defaults to None.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
 
     Returns:
         (list:str) List of files.
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
-    if files:
-        data["files"] = files
+    if file_:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
     return client.creoson_post("file", "is_active", data)["files"]
 
 
-def list_instances(client, current_file=None):
+def list_instances(client, file_=None):
     """List instances in a model's family table.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -397,18 +399,18 @@ def list_instances(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "list_instances", data)
 
 
-def list_simp_reps(client, current_file=None, rep=None):
+def list_simp_reps(client, file_=None, rep=None):
     """List simplified reps in a model.
 
     Args:
         client (obj):
             creopyson Client
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         rep (str, optional):
             Simplified rep name pattern (wildcards_allowed: True).
@@ -421,21 +423,20 @@ def list_simp_reps(client, current_file=None, rep=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if rep:
         data["rep"] = rep
     return client.creoson_post("file", "list_simp_reps", data)
-    # TODO return only list between `rep` and `reps`
 
 
-def massprops(client, current_file=None):
+def massprops(client, file_=None):
     """Get mass property information about a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -447,16 +448,15 @@ def massprops(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "massprops", data)
 
 
 def open_(
     client,
-    current_file=None,
+    file_,
     dirname=None,
-    files=None,
     generic=None,
     display=None,
     activate=None,
@@ -468,12 +468,10 @@ def open_(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
-            File name; only used if files is not given. Defaults to None.
+        `file_` (str|list:str):
+            File name or List of file names;
         dirname (str, optional):
             Directory name. Defaults is Creo's current working directory.
-        files (list:str, optional):
-            List of file names. Defaults: the file parameter is used.
         generic (str, optional):
             Generic model name (if file name represents an instance).
             Defaults to None.
@@ -498,12 +496,13 @@ def open_(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
     if dirname:
         data["dirname"] = dirname
-    if files:
-        data["files"] = files
     if generic:
         data["generic"] = generic
     if display:
@@ -518,13 +517,13 @@ def open_(
     # TODO
 
 
-def open_errors(client, current_file=None):
+def open_errors(client, file_=None):
     """Check whether Creo errors have occurred opening a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -532,18 +531,18 @@ def open_errors(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "open_errors", data)["errors"]
 
 
-def postregen_relations_get(client, current_file=None):
+def postregen_relations_get(client, file_=None):
     """Get post-regeneration relations for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -551,19 +550,19 @@ def postregen_relations_get(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post(
         "file", "postregen_relations_get", data)["relations"]
 
 
-def postregen_relations_set(client, current_file=None, relations=None):
+def postregen_relations_set(client, file_=None, relations=None):
     """Set post-regeneration relations for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         relations (list:str, optional):
             Relations text to import, one line per entry.
@@ -574,20 +573,20 @@ def postregen_relations_set(client, current_file=None, relations=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if relations:
         data["relations"] = relations
     return client.creoson_post("file", "postregen_relations_set", data)
 
 
-def refresh(client, current_file=None):
+def refresh(client, file_=None):
     """Refresh the window containing a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -595,21 +594,20 @@ def refresh(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "refresh", data)
 
 
-def regenerate(client, current_file=None, files=None, display=None):
+def regenerate(client, file_=None, display=None):
     """Regenerate one or more models.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
-            File name. Defaults is currently active model.
-        files (list:str, optional):
-            List of file names. Defaults: the file parameter is used.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
+            Defaults is currently active model
         display (boolean, optional):
             Display the model before regenerating. Defaults is False.
 
@@ -618,22 +616,23 @@ def regenerate(client, current_file=None, files=None, display=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
-    if files:
-        data["files"] = files
+    if file_:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
     if display:
         data["display"] = display
     return client.creoson_post("file", "regenerate", data)
 
 
-def relations_get(client, current_file=None):
+def relations_get(client, file_=None):
     """Get relations for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -641,18 +640,18 @@ def relations_get(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "relations_get", data)["relations"]
 
 
-def relations_set(client, current_file=None, relations=None):
+def relations_set(client, file_=None, relations=None):
     """Set relations for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         relations (list:str, optional):
             Relations text to import, one line per entry.
@@ -663,14 +662,14 @@ def relations_set(client, current_file=None, relations=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if relations:
         data["relations"] = relations
     return client.creoson_post("file", "relations_set", data)
 
 
-def rename(client, new_name, current_file=None, onlysession=None):
+def rename(client, new_name, file_=None, onlysession=None):
     """Rename a model.
 
     Args:
@@ -678,7 +677,7 @@ def rename(client, new_name, current_file=None, onlysession=None):
             creopyson Client.
         new_name (str):
             New file name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         onlysession (boolean, optional):
             Modify only in memory, not on disk. Defaults is False.
@@ -688,20 +687,20 @@ def rename(client, new_name, current_file=None, onlysession=None):
 
     """
     data = {"new_name": new_name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if onlysession:
         data["onlysession"] = onlysession
     return client.creoson_post("file", "rename", data)["file"]
 
 
-def repaint(client, current_file=None):
+def repaint(client, file_=None):
     """Repaint the window containing a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -709,36 +708,34 @@ def repaint(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("file", "repaint", data)
 
 
-def save(client, current_file=None, files=None):
+def save(client, file_):
     """Save one or more models.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
-            File name; only used if files is not given.
-        files (list:str, optional):
-            List of file names. Defaults: the file parameter is used.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
 
     Returns:
         None
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
-    if files:
-        data["files"] = files
+    if file_:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
     return client.creoson_post("file", "save", data)
-    # TODO only one entry
 
 
-def set_length_units(client, units, current_file=None, convert=None):
+def set_length_units(client, units, file_=None, convert=None):
     """Set the current length units for a model.
 
     This will search the model's available Unit Systems for the first one
@@ -749,7 +746,7 @@ def set_length_units(client, units, current_file=None, convert=None):
             creopyson Client.
         units (str):
             New length units.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name; only used if files is not given.
         convert (boolean, optional):
             Whether to convert the model's length values to the
@@ -761,14 +758,14 @@ def set_length_units(client, units, current_file=None, convert=None):
 
     """
     data = {"units": units}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if convert:
         data["convert"] = convert
     return client.creoson_post("file", "set_length_units", data)
 
 
-def set_mass_units(client, units, current_file=None, convert=None):
+def set_mass_units(client, units, file_=None, convert=None):
     """Set the mass units for a model.
 
     This will search the model's available Unit Systems for the first one
@@ -779,7 +776,7 @@ def set_mass_units(client, units, current_file=None, convert=None):
             creopyson Client.
         units (str):
             New mass units.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name; only used if files is not given.
         convert (boolean, optional):
             Whether to convert the model's mass values to the
@@ -791,8 +788,8 @@ def set_mass_units(client, units, current_file=None, convert=None):
 
     """
     data = {"units": units}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if convert:
         data["convert"] = convert
     return client.creoson_post("file", "set_length_units", data)

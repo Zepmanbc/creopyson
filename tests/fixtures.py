@@ -8,16 +8,23 @@ def mk_creoson_post_dict(monkeypatch):
     """Mock creoson_post return dict."""
     def fake_func(client, command, function, data=None):
         return {
-            "running": True,
+            "active": True,
             "checked_out": True,
             "dirname": "dirname",
             "dimlist": [],
             "dirlist": [],
             "exists": True,
+            "errors": True,
+            "file": "file",
             "filelist": [],
+            "files": [],
+            "relations": [],
+            "running": True,
+            "transform": {"fake obj": 123},
+            "units": "units",
             "values": [],
             "viewlist": [],
-            "workspace": "",
+            "workspace": "workspace",
             "workspaces": [],
         }
     monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
