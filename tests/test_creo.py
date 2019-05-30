@@ -17,6 +17,12 @@ def test_creo_delete_files(mk_creoson_post_dict):
     c = creopyson.Client()
     result = c.creo_delete_files()
     assert isinstance(result, (list))
+    result = c.creo_delete_files(
+        dirname="C:/dir/",
+        filename="fake_file.prt")
+    assert isinstance(result, (list))
+    result = c.creo_delete_files(filename=["C:/dir/fake_file.prt"])
+    assert isinstance(result, (list))
 
 
 def test_creo_get_config(mk_creoson_post_dict):

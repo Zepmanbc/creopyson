@@ -7,7 +7,7 @@ def test_bom_get_paths_ok(mk_creoson_post_dict):
     """Test bom_get_paths ok."""
     c = creopyson.Client()
     result = c.bom_get_paths(
-        file_="",
+        file_="fakefile",
         paths=True,
         skeletons=True,
         top_level=True,
