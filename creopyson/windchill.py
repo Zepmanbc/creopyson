@@ -27,9 +27,8 @@ def authorize(client, user, password):
             "password": password
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def clear_workspace(client, workspace=None):
@@ -54,11 +53,11 @@ def clear_workspace(client, workspace=None):
             "workspace": active_workspace
         }
     }
-    status, data = client.creoson_post(request)
+
     if workspace:
         request["data"]["workspace"] = workspace
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def create_workspace(client, workspace, context_name):
@@ -82,9 +81,7 @@ def create_workspace(client, workspace, context_name):
             "context": context_name
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_workspace(client, workspace):
@@ -106,9 +103,8 @@ def delete_workspace(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def file_checked_out(client, filename, workspace=None):
@@ -138,11 +134,8 @@ def file_checked_out(client, filename, workspace=None):
     }
     if workspace:
         request["data"]["workspace"] = workspace
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["checked_out"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["checked_out"]
 
 
 def get_workspace(client):
@@ -161,11 +154,8 @@ def get_workspace(client):
         "function": "get_workspace",
         "data": {}
     }
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["workspace"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["workspace"]
 
 
 def list_workspace_files(client, workspace=None, filename=None):
@@ -198,11 +188,8 @@ def list_workspace_files(client, workspace=None, filename=None):
         request["data"]["workspace"] = workspace
     if filename:
         request["data"]["filename"] = filename
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["filelist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["filelist"]
 
 
 def list_workspaces(client):
@@ -221,11 +208,8 @@ def list_workspaces(client):
         "function": "list_workspaces",
         "data": {}
     }
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["workspaces"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["workspaces"]
 
 
 def server_exists(client, server_url):
@@ -247,11 +231,8 @@ def server_exists(client, server_url):
             "server_url": server_url
         }
     }
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["exists"]
 
 
 def set_server(client, server_url):
@@ -273,9 +254,8 @@ def set_server(client, server_url):
             "server_url": server_url
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def set_workspace(client, workspace):
@@ -297,9 +277,8 @@ def set_workspace(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def workspace_exists(client, workspace):
@@ -321,8 +300,5 @@ def workspace_exists(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["exists"]

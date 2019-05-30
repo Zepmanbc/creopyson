@@ -4,8 +4,6 @@ import requests
 import json
 import pytest
 import creopyson
-# from creopyson.core import creoson_post
-
 
 # @pytest.fixture(autouse=True)
 # def no_requests(monkeypatch):
@@ -58,96 +56,165 @@ def test_connection_connect_fails(monkeypatch):
     assert pytest_wrapped_e.type == SystemExit
 
 
-@pytest.fixture
-def mk_creoson_post_F_no_data(monkeypatch):
-    """Mock creoson_post, no error, no data."""
-    def fake_func(client, request):
-        status = False
-        data = {}
-        return (status, data)
-    monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
+def test_connection_creoson_post_return_data(monkeypatch):
+    """Test creoson_post returning data."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
 
+        @property
+        def content(self):
+            results = {
+                "status": {
+                    "error": False,
+                    "message": "error message"
+                },
+                "data": "creoson result"
+            }
+            return json.dumps(results).encode()
 
-def test_connection_disconnect_ok(mk_creoson_post_F_no_data):
-    """Test wether client is disconnected (empty sessionId)."""
+    monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    c.sessionId = "12345"
-    c.disconnect()
-    assert c.sessionId == ""
+    result = c.creoson_post({})
+    assert result == "creoson result"
 
-@pytest.fixture
-def mk_creoson_post_F_running(monkeypatch):
-    """Mock creoson_post, no error, no data."""
-    def fake_func(client, request):
-        status = False
-        data = {"running": True}
-        return (status, data)
-    monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
 
-def test_connection_is_creo_running_yes(mk_creoson_post_F_running):
-    """Test wether creo is running OK."""
+def test_connection_creoson_post_return_None(monkeypatch):
+    """Test creoson_post returning None"""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        @property
+        def content(self):
+            results = {
+                "status": {
+                    "error": False,
+                    "message": "error message"
+                }
+            }
+            return json.dumps(results).encode()
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    result = c.is_creo_running()
-    assert result
-
-@pytest.fixture
-def mk_creoson_post_T(monkeypatch):
-    """Mock creoson_post, error, error message."""
-    def fake_func(client, request):
-        status = True
-        data = "error message"
-        return (status, data)
-    monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
-
-
-def test_connection_is_creo_running_error(mk_creoson_post_T):
-    """Test creoson return error."""
-    c = creopyson.Client()
-    with pytest.raises(Warning) as pytest_wrapped_e:
-        c.is_creo_running()
-    assert pytest_wrapped_e.value.args[0] == "error message"
-
-
-def test_connection_kill_creo_ok(mk_creoson_post_F_no_data):
-    """Test no error returned from creoson."""
-    c = creopyson.Client()
-    result = c.kill_creo()
+    result = c.creoson_post({})
     assert result is None
 
 
-def test_connection_kill_creo_error(mk_creoson_post_T):
-    """Test creoson return error."""
+def test_connection_creoson_post_raise_Warning(monkeypatch):
+    """Test creoson_post raise Warning."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        @property
+        def content(self):
+            results = {
+                "status": {
+                    "error": True,
+                    "message": "error message"
+                }
+            }
+            return json.dumps(results).encode()
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
     with pytest.raises(Warning) as pytest_wrapped_e:
-        c.kill_creo()
+        c.creoson_post({})
     assert pytest_wrapped_e.value.args[0] == "error message"
 
 
-def test_connection_start_creo_ok(mk_creoson_post_F_no_data):
-    """Test no error returned from creoson."""
-    c = creopyson.Client()
-    result = c.start_creo("C:/folder/nitro_proe_remote.bat")
-    assert result is None
+
+# @pytest.fixture
+# def mk_creoson_post_F_no_data(monkeypatch):
+#     """Mock creoson_post, no error, no data."""
+#     def fake_func(client, request):
+#         status = False
+#         data = {}
+#         return (status, data)
+#     monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
 
 
-def test_connection_start_creo_error(mk_creoson_post_T):
-    """Test creoson return error."""
-    c = creopyson.Client()
-    with pytest.raises(Warning) as pytest_wrapped_e:
-        c.start_creo("C:/folder/nitro_proe_remote.bat")
-    assert pytest_wrapped_e.value.args[0] == "error message"
+# def test_connection_disconnect_ok(mk_creoson_post_F_no_data):
+#     """Test wether client is disconnected (empty sessionId)."""
+#     c = creopyson.Client()
+#     c.sessionId = "12345"
+#     c.disconnect()
+#     assert c.sessionId == ""
+
+# @pytest.fixture
+# def mk_creoson_post_F_running(monkeypatch):
+#     """Mock creoson_post, no error, no data."""
+#     def fake_func(client, request):
+#         status = False
+#         data = {"running": True}
+#         return (status, data)
+#     monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
+
+# def test_connection_is_creo_running_yes(mk_creoson_post_F_running):
+#     """Test wether creo is running OK."""
+#     c = creopyson.Client()
+#     result = c.is_creo_running()
+#     assert result
+
+# @pytest.fixture
+# def mk_creoson_post_T(monkeypatch):
+#     """Mock creoson_post, error, error message."""
+#     def fake_func(client, request):
+#         status = True
+#         data = "error message"
+#         return (status, data)
+#     monkeypatch.setattr(creopyson.connection, 'creoson_post', fake_func)
 
 
-def test_connection_stop_creo_ok(mk_creoson_post_F_no_data):
-    """Test no error returned from creoson."""
-    c = creopyson.Client()
-    result = c.stop_creo()
-    assert result is None
+# def test_connection_is_creo_running_error(mk_creoson_post_T):
+#     """Test creoson return error."""
+#     c = creopyson.Client()
+#     with pytest.raises(Warning) as pytest_wrapped_e:
+#         c.is_creo_running()
+#     assert pytest_wrapped_e.value.args[0] == "error message"
 
 
-def test_connection_stop_creo_error(mk_creoson_post_T):
-    """Test creoson return error."""
-    c = creopyson.Client()
-    with pytest.raises(Warning) as pytest_wrapped_e:
-        c.stop_creo()
-    assert pytest_wrapped_e.value.args[0] == "error message"
+# def test_connection_kill_creo_ok(mk_creoson_post_F_no_data):
+#     """Test no error returned from creoson."""
+#     c = creopyson.Client()
+#     result = c.kill_creo()
+#     assert result is None
+
+
+# def test_connection_kill_creo_error(mk_creoson_post_T):
+#     """Test creoson return error."""
+#     c = creopyson.Client()
+#     with pytest.raises(Warning) as pytest_wrapped_e:
+#         c.kill_creo()
+#     assert pytest_wrapped_e.value.args[0] == "error message"
+
+
+# def test_connection_start_creo_ok(mk_creoson_post_F_no_data):
+#     """Test no error returned from creoson."""
+#     c = creopyson.Client()
+#     result = c.start_creo("C:/folder/nitro_proe_remote.bat")
+#     assert result is None
+
+
+# def test_connection_start_creo_error(mk_creoson_post_T):
+#     """Test creoson return error."""
+#     c = creopyson.Client()
+#     with pytest.raises(Warning) as pytest_wrapped_e:
+#         c.start_creo("C:/folder/nitro_proe_remote.bat")
+#     assert pytest_wrapped_e.value.args[0] == "error message"
+
+
+# def test_connection_stop_creo_ok(mk_creoson_post_F_no_data):
+#     """Test no error returned from creoson."""
+#     c = creopyson.Client()
+#     result = c.stop_creo()
+#     assert result is None
+
+
+# def test_connection_stop_creo_error(mk_creoson_post_T):
+#     """Test creoson return error."""
+#     c = creopyson.Client()
+#     with pytest.raises(Warning) as pytest_wrapped_e:
+#         c.stop_creo()
+#     assert pytest_wrapped_e.value.args[0] == "error message"

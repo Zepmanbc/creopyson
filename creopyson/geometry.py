@@ -32,11 +32,8 @@ def bound_box(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def get_edges(client, surface_ids, current_file=None):
@@ -94,11 +91,8 @@ def get_edges(client, surface_ids, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["contourlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["contourlist"]
 
 
 def get_surfaces(client, current_file=None):
@@ -146,8 +140,5 @@ def get_surfaces(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["contourlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["contourlist"]

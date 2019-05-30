@@ -49,11 +49,8 @@ def copy(
         request["data"]["to_file"] = to_file
     if designate:
         request["data"]["designate"] = designate
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def delete(client, name, current_file=None):
@@ -84,9 +81,8 @@ def delete(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def exists(client, current_file=None, name=None, names=None):
@@ -123,11 +119,8 @@ def exists(client, current_file=None, name=None, names=None):
         request["data"]["name"] = name
     if names:
         request["data"]["names"] = names
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["exists"]
     # TODO: group name/names
 
 
@@ -186,11 +179,8 @@ def list_(
         request["data"]["encoded"] = encoded
     if value:
         request["data"]["value"] = value
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["paramlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["paramlist"]
 
 
 def set_(
@@ -254,6 +244,5 @@ def set_(
         request["data"]["designate"] = designate
     if no_create:
         request["data"]["no_create"] = no_create
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)

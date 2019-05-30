@@ -68,8 +68,4 @@ def get_paths(
         request["data"]["get_transforms"] = get_transforms
     if exclude_inactive:
         request["data"]["exclude_inactive"] = exclude_inactive
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)

@@ -70,11 +70,8 @@ def export_3dpdf(
         request["data"]["dpi"] = dpi
     if use_drawing_settings:
         request["data"]["use_drawing_settings"] = use_drawing_settings
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def export_file(
@@ -146,11 +143,8 @@ def export_file(
         request["data"]["geom_flags"] = geom_flags
     if advanced:
         request["data"]["advanced"] = advanced
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def export_image(
@@ -216,11 +210,8 @@ def export_image(
         request["data"]["dpi"] = dpi
     if depth:
         request["data"]["depth"] = depth
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def export_pdf(
@@ -289,11 +280,8 @@ def export_pdf(
         request["data"]["dpi"] = dpi
     if use_drawing_settings:
         request["data"]["use_drawing_settings"] = use_drawing_settings
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def export_program(client, current_file=None):
@@ -322,11 +310,8 @@ def export_program(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def import_program(client, current_file=None, filename=None, dirname=None):
@@ -366,11 +351,8 @@ def import_program(client, current_file=None, filename=None, dirname=None):
         request["data"]["filename"] = filename
     if dirname:
         request["data"]["dirname"] = dirname
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["file"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["file"]
 
 
 def mapkey(client, script):
@@ -395,9 +377,8 @@ def mapkey(client, script):
             "script": script,
         }
     }
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def plot(client, current_file=None, dirname=None, driver=None):
@@ -437,8 +418,5 @@ def plot(client, current_file=None, dirname=None, driver=None):
         request["data"]["dirname"] = dirname
     if driver:
         request["data"]["driver"] = driver
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)

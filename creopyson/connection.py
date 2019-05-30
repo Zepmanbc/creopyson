@@ -12,32 +12,34 @@ class Client(object):
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
         self.sessionId = ''
 
-    def creoson_post(self, request):
+    def creoson_post(self, command, function, data):
         """Send a POST request to creoson server.
 
         Args:
             request (dict): Command for creoson.
 
         Returns:
-            (dict):
-                status (boolean):
-                    'True' if creoson return an error
-                    'False" if creoson is ok
-                data (dict):
-                    creoson return (it depend the request)
+            (depends request): creoson return.
 
         """
+        request = {
+            "sessionId": self.sessionId,
+            "command": command,
+            "function": function,
+            "data": data
+        }
         r = requests.post(self.server, data=json.dumps(request))
         json_result = json.loads(r.content)
         status = json_result["status"]["error"]
         if status:
-            data = json_result["status"]["message"]
+            error_msg = json_result["status"]["message"]
+            raise Warning(error_msg)
         else:
             if "data" in json_result.keys():
                 data = json_result["data"]
             else:
                 data = None
-        return status, data
+        return data
 
     def connect(self):
         """Connect to CREOSON.
@@ -65,8 +67,8 @@ class Client(object):
             "command": "connection",
             "function": "disconnect"
         }
-        status, data = self.creoson_post(request)
         self.sessionId = ''
+        return self.creoson_post(request)
 
     def is_creo_running(self):
         """Check whether Creo is running.
@@ -87,11 +89,7 @@ class Client(object):
             "command": "connection",
             "function": "is_creo_running"
         }
-        status, data = self.creoson_post(request)
-        if not status:
-            return data["running"]
-        else:
-            raise Warning(data)
+        return self.creoson_post(request)["running"]
 
     def kill_creo(self):
         """Kill primary Creo processes.
@@ -110,9 +108,7 @@ class Client(object):
             "command": "connection",
             "function": "kill_creo"
         }
-        status, data = self.creoson_post(request)
-        if status:
-            raise Warning(data)
+        return self.creoson_post(request)
 
     def start_creo(self, path, retries=0):
         """Execute an external .bat file to start Creo.
@@ -153,9 +149,7 @@ class Client(object):
                 "retries": retries
             }
         }
-        status, data = self.creoson_post(request)
-        if status:
-            raise Warning(data)
+        return self.creoson_post(request)
 
     def stop_creo(self):
         """Disconnect current session from Creo and cause Creo to exit.
@@ -176,9 +170,7 @@ class Client(object):
             "command": "connection",
             "function": "stop_creo"
         }
-        status, data = self.creoson_post(request)
-        if status:
-            raise Warning(data)
+        return self.creoson_post(request)
 
 
 """Add API methods to CLient."""

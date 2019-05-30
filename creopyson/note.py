@@ -40,9 +40,8 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
         request["data"]["file"] = current_file
     if to_file:
         request["data"]["to_file"] = to_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def delete(client, name, current_file=None):
@@ -74,9 +73,8 @@ def delete(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def exists(client, current_file=None, name=None, names=None):
@@ -113,11 +111,8 @@ def exists(client, current_file=None, name=None, names=None):
         request["data"]["name"] = name
     if names:
         request["data"]["names"] = names
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["exists"]
     # TODO: group name/names
 
 
@@ -154,11 +149,8 @@ def get(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def list_(
@@ -217,11 +209,8 @@ def list_(
         request["data"]["get_expanded"] = get_expanded
     if value:
         request["data"]["value"] = value
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["itemlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["itemlist"]
     # TODO: group name/names
 
 
@@ -263,6 +252,5 @@ def set_(client, name, current_file=None, encoded=None, value=None):
         request["data"]["encoded"] = encoded
     if value:
         request["data"]["value"] = value
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)

@@ -36,9 +36,7 @@ def copy(client, name, to_name, file_=None, to_file=None):
         request["data"]["file"] = file_
     if to_file:
         request["data"]["to_file"] = to_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def list_(
@@ -98,11 +96,7 @@ def list_(
         request["data"]["dim_type"] = dim_type
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["dimlist"]
     # TODO only 1 entry for name/names
 
 
@@ -185,11 +179,7 @@ def list_detail(
         request["data"]["dim_type"] = dim_type
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["dimlist"]
 
 
 def set_(client, file_, name, value, encoded=None):
@@ -228,9 +218,7 @@ def set_(client, file_, name, value, encoded=None):
     }
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def show(client, name, file_=None, assembly=None, path=None):
@@ -272,9 +260,7 @@ def show(client, name, file_=None, assembly=None, path=None):
         request["data"]["assembly"] = assembly
     if path:
         request["data"]["path"] = path
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def user_select(client, file_=None, maxi=None):
@@ -315,8 +301,4 @@ def user_select(client, file_=None, maxi=None):
         request["data"]["file"] = file_
     if maxi:
         request["data"]["max"] = maxi
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["dimlist"]

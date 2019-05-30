@@ -64,11 +64,7 @@ def delete(
         request["data"]["type"] = type_
     if clip:
         request["data"]["clip"] = clip
-    status_, data = client.creoson_post(request)
-    if not status_:
-        return data["exists"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["exists"]
 
 
 def delete_param(client, name=None, current_file=None, param=None):
@@ -105,11 +101,8 @@ def delete_param(client, name=None, current_file=None, param=None):
         request["data"]["name"] = name
     if param:
         request["data"]["param"] = param
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["exists"]
 
 
 def list_(
@@ -214,11 +207,8 @@ def list_(
         request["data"]["value"] = value
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
     # TODO: param/params
 
 
@@ -257,11 +247,8 @@ def param_exists(client, current_file=None, param=None, params=None):
         request["data"]["param"] = param
     if params:
         request["data"]["params"] = params
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["exists"]
     # TODO: param/params
 
 
@@ -303,9 +290,8 @@ def rename(client, new_name, current_file=None, feat_id=None, name=None):
         request["data"]["feat_id"] = feat_id
     if name:
         request["data"]["name"] = name
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
     # TODO: feat_id/name
 
 
@@ -371,9 +357,8 @@ def resume(
         request["data"]["type"] = type_
     if with_children:
         request["data"]["with_children"] = with_children
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def set_param(
@@ -444,9 +429,8 @@ def set_param(
         request["data"]["designate"] = designate
     if no_create:
         request["data"]["no_create"] = no_create
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def suppress(
@@ -517,9 +501,8 @@ def suppress(
         request["data"]["clip"] = clip
     if with_children:
         request["data"]["with_children"] = with_children
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def user_select_csys(client, current_file=None, max_=None):
@@ -568,8 +551,5 @@ def user_select_csys(client, current_file=None, max_=None):
         request["data"]["file"] = current_file
     if max_:
         request["data"]["max"] = max_
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)

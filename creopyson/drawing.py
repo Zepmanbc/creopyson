@@ -29,9 +29,7 @@ def add_model(client, model, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def add_sheet(client, position=None, drawing=None):
@@ -63,9 +61,7 @@ def add_sheet(client, position=None, drawing=None):
         request["data"]["position"] = position
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def create(
@@ -126,11 +122,7 @@ def create(
         request["data"]["activate"] = activate
     if new_window:
         request["data"]["new_window"] = new_window
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["drawing"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["drawing"]
 
 
 def create_gen_view(
@@ -200,9 +192,7 @@ def create_gen_view(
         request["data"]["display_data"] = display_data
     if exploded:
         request["data"]["exploded"] = exploded
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
     # TODO: JLpoint Method for point
     # TODO: ViewDisplayData method for display_data
 
@@ -269,9 +259,7 @@ def create_proj_view(
         request["data"]["display_data"] = display_data
     if exploded:
         request["data"]["exploded"] = exploded
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def create_symbol(
@@ -322,9 +310,7 @@ def create_symbol(
         request["data"]["replace_values"] = replace_values
     if sheet:
         request["data"]["sheet"] = sheet
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_models(
@@ -366,9 +352,7 @@ def delete_models(
         request["data"]["model"] = model
     if delete_views:
         request["data"]["delete_views"] = delete_views
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_sheet(client, sheet, drawing=None):
@@ -401,9 +385,7 @@ def delete_sheet(client, sheet, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_symbol_def(client, symbol_file, drawing=None):
@@ -434,9 +416,7 @@ def delete_symbol_def(client, symbol_file, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_symbol_inst(client, symbol_id, drawing=None):
@@ -467,9 +447,7 @@ def delete_symbol_inst(client, symbol_id, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def delete_view(
@@ -515,9 +493,7 @@ def delete_view(
         request["data"]["sheet"] = sheet
     if del_children:
         request["data"]["del_children"] = del_children
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def get_cur_model(client, drawing=None):
@@ -544,11 +520,7 @@ def get_cur_model(client, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["drawing"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["drawing"]
 
 
 def get_cur_sheet(client, drawing=None):
@@ -575,11 +547,7 @@ def get_cur_sheet(client, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["sheet"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["sheet"]
 
 
 def get_num_sheets(client, drawing=None):
@@ -606,11 +574,8 @@ def get_num_sheets(client, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["num_sheets"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["num_sheets"]
 
 
 def get_sheet_scale(client, sheet, drawing=None, model=None):
@@ -646,11 +611,8 @@ def get_sheet_scale(client, sheet, drawing=None, model=None):
         request["data"]["drawing"] = drawing
     if model:
         request["data"]["model"] = model
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["scale"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["scale"]
 
 
 def get_sheet_size(client, sheet, drawing=None):
@@ -681,11 +643,8 @@ def get_sheet_size(client, sheet, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["size"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["size"]
 
 
 def get_view_loc(client, view, drawing=None):
@@ -719,11 +678,8 @@ def get_view_loc(client, view, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
     # TODO: retrun a tuple (x,y,z)?
 
 
@@ -755,11 +711,8 @@ def get_view_scale(client, view, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["scale"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["scale"]
 
 
 def get_view_sheet(client, view, drawing=None):
@@ -790,11 +743,8 @@ def get_view_sheet(client, view, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["sheet"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["sheet"]
 
 
 def is_symbol_def_loaded(client, symbol_file, drawing=None):
@@ -825,11 +775,8 @@ def is_symbol_def_loaded(client, symbol_file, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["loaded"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["loaded"]
 
 
 def list_models(client, model=None, drawing=None):
@@ -861,11 +808,8 @@ def list_models(client, model=None, drawing=None):
         request["data"]["drawing"] = drawing
     if model:
         request["data"]["model"] = model
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["files"]
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)["files"]
 
 
 def list_symbols(
@@ -910,11 +854,7 @@ def list_symbols(
         request["data"]["symbol_file"] = symbol_file
     if sheet:
         request["data"]["sheet"] = sheet
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["symbols"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["symbols"]
 
 
 def list_view_details(client, view=None, drawing=None):
@@ -955,11 +895,7 @@ def list_view_details(client, view=None, drawing=None):
         request["data"]["drawing"] = drawing
     if view:
         request["data"]["view"] = view
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["views"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["views"]
 
 
 def list_views(client, view=None, drawing=None):
@@ -990,11 +926,7 @@ def list_views(client, view=None, drawing=None):
         request["data"]["drawing"] = drawing
     if view:
         request["data"]["view"] = view
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["views"]
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)["views"]
 
 
 def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
@@ -1033,11 +965,7 @@ def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
         request["data"]["drawing"] = drawing
     if symbol_dir:
         request["data"]["symbol_dir"] = symbol_dir
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def regenerate(client, drawing=None):
@@ -1064,9 +992,7 @@ def regenerate(client, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def regenerate_sheet(client, sheet=None, drawing=None):
@@ -1098,9 +1024,7 @@ def regenerate_sheet(client, sheet=None, drawing=None):
         request["data"]["sheet"] = sheet
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def rename_view(client, view, new_view, drawing=None):
@@ -1134,9 +1058,7 @@ def rename_view(client, view, new_view, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def scale_sheet(client, sheet, scale, drawing=None, model=None):
@@ -1174,9 +1096,7 @@ def scale_sheet(client, sheet, scale, drawing=None, model=None):
         request["data"]["drawing"] = drawing
     if model:
         request["data"]["model"] = model
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    return client.creoson_post(request)
 
 
 def scale_view(client, scale, view=None, drawing=None):
@@ -1216,11 +1136,8 @@ def scale_view(client, scale, view=None, drawing=None):
         request["data"]["drawing"] = drawing
     if view:
         request["data"]["view"] = view
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def select_sheet(client, sheet, drawing=None):
@@ -1251,9 +1168,8 @@ def select_sheet(client, sheet, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def set_cur_model(client, model, drawing=None):
@@ -1284,9 +1200,8 @@ def set_cur_model(client, model, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def set_view_loc(client, view, point, drawing=None):
@@ -1320,9 +1235,8 @@ def set_view_loc(client, view, point, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def view_bound_box(client, view, drawing=None):
@@ -1357,8 +1271,4 @@ def view_bound_box(client, view, drawing=None):
     }
     if drawing:
         request["data"]["drawing"] = drawing
-    status, data = client.creoson_post(request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+    return client.creoson_post(request)

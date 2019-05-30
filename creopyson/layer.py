@@ -33,9 +33,8 @@ def delete(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+    
+    return client.creoson_post(request)
 
 
 def exists(client, name=None, current_file=None):
@@ -68,11 +67,8 @@ def exists(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["exists"]
 
 
 def list_(client, name=None, current_file=None):
@@ -111,11 +107,8 @@ def list_(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["layers"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["layers"]
 
 
 def show(client, name=None, current_file=None, show_=None):
@@ -153,6 +146,5 @@ def show(client, name=None, current_file=None, show_=None):
         request["data"]["name"] = name
     if show_:
         request["data"]["show"] = show_
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)

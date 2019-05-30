@@ -29,9 +29,8 @@ def activate(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
 
 
 def list_exploded(client, current_file=None, name=None):
@@ -63,11 +62,8 @@ def list_exploded(client, current_file=None, name=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["viewlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["viewlist"]
 
 
 def list_(client, current_file=None, name=None):
@@ -99,11 +95,8 @@ def list_(client, current_file=None, name=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if not status:
-        return data["viewlist"]
-    else:
-        raise Warning(data)
+
+    return client.creoson_post(request)["viewlist"]
     # TODO: group with list_exploded?
 
 
@@ -135,6 +128,5 @@ def save(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = client.creoson_post(request)
-    if status:
-        raise Warning(data)
+
+    return client.creoson_post(request)
