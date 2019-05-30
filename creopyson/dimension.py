@@ -1,7 +1,5 @@
 """Dimension module."""
 
-from .core import creoson_post
-
 
 def copy(client, name, to_name, file_=None, to_file=None):
     """Copy dimension to another in the same model or another model.
@@ -18,29 +16,19 @@ def copy(client, name, to_name, file_=None, to_file=None):
         to_file (str, optional):
             Destination model. Defaults is the source model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "copy",
-        "data": {
-            "name": name,
-            "to_name": to_name
-        }
+    data = {
+        "name": name,
+        "to_name": to_name
     }
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if to_file:
-        request["data"]["to_file"] = to_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["to_file"] = to_file
+    return client.creoson_post("dimension", "copy", data)
 
 
 def list_(
@@ -70,9 +58,6 @@ def list_(
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict): List of dimension information.
             name (str):
@@ -84,27 +69,19 @@ def list_(
                 Whether the returned value is Base64-encoded.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "list",
-        "data": {}
-    }
+    data = {}
+
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if dim_type:
-        request["data"]["dim_type"] = dim_type
+        data["dim_type"] = dim_type
     if encoded:
-        request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+        data["encoded"] = encoded
+    return client.creoson_post("dimension", "list", data)["dimlist"]
     # TODO only 1 entry for name/names
 
 
@@ -134,9 +111,6 @@ def list_detail(
             Valid values: linear, radial, diameter, angular.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict): List of dimension information.
@@ -171,27 +145,18 @@ def list_detail(
                 if tolerance_type not specified not returned.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "list_detail",
-        "data": {}
-    }
+    data = {}
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if dim_type:
-        request["data"]["dim_type"] = dim_type
+        data["dim_type"] = dim_type
     if encoded:
-        request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+        data["encoded"] = encoded
+    return client.creoson_post("dimension", "list_detail", data)["dimlist"]
 
 
 def set_(client, file_, name, value, encoded=None):
@@ -218,21 +183,14 @@ def set_(client, file_, name, value, encoded=None):
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "set",
-        "data": {
-            "file": file_,
-            "name": name,
-            "value": value,
-        }
+    data = {
+        "file": file_,
+        "name": name,
+        "value": value,
     }
     if encoded:
-        request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["encoded"] = encoded
+    return client.creoson_post("dimension", "set", data)
 
 
 def show(client, name, file_=None, assembly=None, path=None):
@@ -253,30 +211,19 @@ def show(client, name, file_=None, assembly=None, path=None):
             the dimension will only be shown for that occurrence.
             Defaults: all occurrences of the component are affected.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "show",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
+
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if assembly:
-        request["data"]["assembly"] = assembly
+        data["assembly"] = assembly
     if path:
-        request["data"]["path"] = path
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["path"] = path
+    return client.creoson_post("dimension", "show", data)
 
 
 def user_select(client, file_=None, maxi=None):
@@ -308,17 +255,9 @@ def user_select(client, file_=None, maxi=None):
                 Relation ID number.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "dimension",
-        "function": "user_select",
-    }
+    data = {"max": 1}
     if file_:
-        request["data"]["file"] = file_
+        data["file"] = file_
     if maxi:
-        request["data"]["max"] = maxi
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["dimlist"]
-    else:
-        raise Warning(data)
+        data["max"] = maxi
+    return client.creoson_post("dimension", "user_select", data)["dimlist"]

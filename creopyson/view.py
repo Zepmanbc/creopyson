@@ -1,7 +1,5 @@
 """View module."""
 
-from .core import creoson_post
-
 
 def activate(client, name, current_file=None):
     """Activate a model view.
@@ -14,26 +12,14 @@ def activate(client, name, current_file=None):
         current_file (str, optional):
             Model name. Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "view",
-        "function": "activate",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("view", "activate", data)
 
 
 def list_exploded(client, current_file=None, name=None):
@@ -48,28 +34,14 @@ def list_exploded(client, current_file=None, name=None):
             View name (wildcards allowed: True).
             Defaults is None: all views are listed.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): List of view names.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "view",
-        "function": "list_exploded",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["viewlist"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("view", "list_exploded", data)["viewlist"]
 
 
 def list_(client, current_file=None, name=None):
@@ -84,28 +56,14 @@ def list_(client, current_file=None, name=None):
             View name (wildcards allowed: True).
             Defaults is None: all views are listed.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): List of view names.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "view",
-        "function": "list",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["viewlist"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("view", "list", data)["viewlist"]
     # TODO: group with list_exploded?
 
 
@@ -120,23 +78,11 @@ def save(client, name, current_file=None):
         current_file (str, optional):
             Model name. Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "view",
-        "function": "save",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("view", "save", data)

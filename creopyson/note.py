@@ -1,7 +1,5 @@
 """Note module."""
 
-from .core import creoson_post
-
 
 def copy(client, name, to_name=None, current_file=None, to_file=None):
     """Copy note to another in the same model or another model.
@@ -21,30 +19,18 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
             Destination model.
             Defaults is the source model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "copy",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if to_name:
-        request["data"]["to_name"] = to_name
+        data["to_name"] = to_name
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if to_file:
-        request["data"]["to_file"] = to_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["to_file"] = to_file
+    return client.creoson_post("note", "copy", data)
 
 
 def delete(client, name, current_file=None):
@@ -59,26 +45,14 @@ def delete(client, name, current_file=None):
             Model name (wildcards allowed: True).
             Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "delete",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("note", "delete", data)
 
 
 def exists(client, current_file=None, name=None, names=None):
@@ -96,30 +70,18 @@ def exists(client, current_file=None, name=None, names=None):
             Defaults to None. The name parameter is used;
             if both are empty, then it checks for any note's existence.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the note exists on the model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+        data["names"] = names
+    return client.creoson_post("note", "exists", data)["exists"]
     # TODO: group name/names
 
 
@@ -135,9 +97,6 @@ def get(client, name, current_file=None):
             Model name.
             Defaults is current active model or drawing.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             file (str): File name.
@@ -146,21 +105,10 @@ def get(client, name, current_file=None):
             url (str): "Note URL, if there is one.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "get",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("note", "get", data)
 
 
 def list_(
@@ -192,9 +140,6 @@ def list_(
             Whether to return text with parameter values replaced.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict):
             name (str): Note name.
@@ -203,27 +148,18 @@ def list_(
             encoded (boolean): Value is Base64-encoded.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "list",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if get_expanded:
-        request["data"]["get_expanded"] = get_expanded
+        data["get_expanded"] = get_expanded
     if value:
-        request["data"]["value"] = value
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["itemlist"]
-    else:
-        raise Warning(data)
+        data["value"] = value
+    return client.creoson_post("note", "list", data)["itemlist"]
     # TODO: group name/names
 
 
@@ -244,27 +180,15 @@ def set_(client, name, current_file=None, encoded=None, value=None):
             Defaults to None: clears the note if missing;
             embed newlines for line breaks
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "note",
-        "function": "set",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if encoded:
-        request["data"]["encoded"] = encoded
+        data["encoded"] = encoded
     if value:
-        request["data"]["value"] = value
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["value"] = value
+    return client.creoson_post("note", "set", data)

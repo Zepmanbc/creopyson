@@ -1,7 +1,5 @@
 """Geometry module."""
 
-from .core import creoson_post
-
 
 def bound_box(client, current_file=None):
     """Get the bounding box for a model.
@@ -13,9 +11,6 @@ def bound_box(client, current_file=None):
             File name.
             Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             xmin (float): Minimum X-coordinate of model.
@@ -26,19 +21,10 @@ def bound_box(client, current_file=None):
             zmax (float): Maximum Z-coordinate of model
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "geometry",
-        "function": "bound_box",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("geometry", "bound_box", data)
 
 
 def get_edges(client, surface_ids, current_file=None):
@@ -52,9 +38,6 @@ def get_edges(client, surface_ids, current_file=None):
         current_file (str, optional):
             File name.
             Defaults is current active model
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict):
@@ -86,21 +69,10 @@ def get_edges(client, surface_ids, current_file=None):
                                 Z-coordinate.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "geometry",
-        "function": "get_edges",
-        "data": {
-            "surface_ids": surface_ids
-        }
-    }
+    data = {"surface_ids": surface_ids}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["contourlist"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("geometry", "get_edges", data)["contourlist"]
 
 
 def get_surfaces(client, current_file=None):
@@ -112,9 +84,6 @@ def get_surfaces(client, current_file=None):
         current_file (str, optional):
             File name.
             Defaults is current active model
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict):
@@ -140,16 +109,7 @@ def get_surfaces(client, current_file=None):
                         Z-coordinate.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "geometry",
-        "function": "get_surfaces",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["contourlist"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("geometry", "get_surfaces", data)["contourlist"]

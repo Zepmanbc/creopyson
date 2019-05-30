@@ -1,7 +1,5 @@
 """Familytable module."""
 
-from .core import creoson_post
-
 
 def add_inst(client, instance, current_file=None):
     """Add a new instance to a family table.
@@ -16,26 +14,14 @@ def add_inst(client, instance, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "add_inst",
-        "data": {
-            "instance": instance
-        }
-    }
+    data = {"instance": instance}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "add_inst", data)
 
 
 def create_inst(client, instance, current_file=None):
@@ -49,28 +35,14 @@ def create_inst(client, instance, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (str): New model name.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "create_inst",
-        "data": {
-            "instance": instance
-        }
-    }
+    data = {"instance": instance}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["name"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "create_inst", data)["name"]
 
 
 def delete_inst(client, instance, current_file=None):
@@ -84,26 +56,14 @@ def delete_inst(client, instance, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "delete_inst",
-        "data": {
-            "instance": instance
-        }
-    }
+    data = {"instance": instance}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "delete_inst", data)
 
 
 def delete(client, current_file=None):
@@ -116,24 +76,14 @@ def delete(client, current_file=None):
             File name (wildcards allowed: True).
             Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "delete",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "delete", data)
 
 
 def exists(client, instance, current_file=None):
@@ -147,30 +97,16 @@ def exists(client, instance, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean):
             Whether the instance exists in the model's family table;
             returns false if there is no family table in the model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "exists",
-        "data": {
-            "instance": instance
-        }
-    }
+    data = {"instance": instance}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "exists", data)["exists"]
 
 
 def get_cell(client, instance, colid, current_file=None):
@@ -186,9 +122,6 @@ def get_cell(client, instance, colid, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             instance (str):
@@ -203,22 +136,13 @@ def get_cell(client, instance, colid, current_file=None):
                 Column Type; a string corresponding to the Creo column type.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "get_cell",
-        "data": {
-            "instance": instance,
-            "colid": colid
-        }
+    data = {
+        "instance": instance,
+        "colid": colid
     }
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "get_cell", data)
 
 
 def get_header(client, current_file=None):
@@ -230,9 +154,6 @@ def get_header(client, current_file=None):
         current_file (str, optional):
             File name.
             Defaults is currently active model.
-
-    Raises:
-        Warning: error message from creoson.
 
     Returns:
         (list:dict):
@@ -246,19 +167,10 @@ def get_header(client, current_file=None):
                 Column Type; a string corresponding to the Creo column type.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "get_header",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["columns"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "get_header", data)["columns"]
 
 
 def get_parents(client, current_file=None):
@@ -271,28 +183,16 @@ def get_parents(client, current_file=None):
             File name.
             Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str):
             List of parent instance names, starting with
             the immediate parent and working back.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "get_parents",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["parents"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "get_parents", data)["parents"]
 
 
 def get_row(client, instance, current_file=None):
@@ -306,9 +206,6 @@ def get_row(client, instance, current_file=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (dict):
             colid (str):
@@ -321,21 +218,10 @@ def get_row(client, instance, current_file=None):
                 Column Type; a string corresponding to the Creo column type.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "get_row",
-        "data": {
-            "instance": instance
-        }
-    }
+    data = {"instance": instance}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["columns"]
-    else:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "get_row", data)["columns"]
 
 
 def list_(client, current_file=None, instance=None):
@@ -350,28 +236,16 @@ def list_(client, current_file=None, instance=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str): List of matching instance names
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "list",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if instance:
-        request["data"]["instance"] = instance
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["instances"]
-    else:
-        raise Warning(data)
+        data["instance"] = instance
+    return client.creoson_post("familytable", "list", data)["instances"]
 
 
 def list_tree(client, current_file=None, erase=None):
@@ -386,35 +260,27 @@ def list_tree(client, current_file=None, erase=None):
         current_file (str, optional):
             File name. Defaults is currently active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:str):
             List of child instances
                 total (int):
                     Count of all child instances including their decendants.
                 children (list:dict):
-                    name (str): Name of the family table instance.
-                    total (int): Count of all child instances including their decendants.
-                    children (list:dict): List of child instances.
+                    name (str):
+                        Name of the family table instance.
+                    total (int):
+                        Count of all child instances including their
+                        decendants.
+                    children (list:dict):
+                        List of child instances.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "list_tree",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if erase:
-        request["data"]["erase"] = erase
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["instances"]
-    else:
-        raise Warning(data)
+        data["erase"] = erase
+    return client.creoson_post("familytable", "list_tree", data)["instances"]
 
 
 def replace(
@@ -444,31 +310,21 @@ def replace(
         path (list:int, optional):
             Path to component to replace. Defaults to None.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "replace",
-        "data": {
-            "cur_model": cur_model,
-            "new_inst": new_inst,
-        }
+    data = {
+        "cur_model": cur_model,
+        "new_inst": new_inst,
     }
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if cur_inst:
-        request["data"]["cur_inst"] = cur_inst
+        data["cur_inst"] = cur_inst
     if path:
-        request["data"]["path"] = path
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["path"] = path
+    return client.creoson_post("familytable", "replace", data)
     # TODO: path/cur_inst
 
 
@@ -488,26 +344,15 @@ def set_cell(client, instance, colid, value, current_file=None):
             File name (usually an assembly).
             Defaults is currently active model.
 
-
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "familytable",
-        "function": "set_cell",
-        "data": {
-            "instance": instance,
-            "colid": colid,
-            "value": value,
-        }
+    data = {
+        "instance": instance,
+        "colid": colid,
+        "value": value,
     }
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("familytable", "set_cell", data)

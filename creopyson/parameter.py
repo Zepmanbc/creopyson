@@ -1,7 +1,5 @@
 """Parameter module."""
 
-from .core import creoson_post
-
 
 def copy(
     client,
@@ -29,33 +27,21 @@ def copy(
             Set copied parameter to be designated/not designated,
             blank=do not set. Defaults is `blank`.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "copy",
-        "data": {
-            "name": name,
-            "to_name": to_name,
-        }
+    data = {
+        "name": name,
+        "to_name": to_name,
     }
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if to_file:
-        request["data"]["to_file"] = to_file
+        data["to_file"] = to_file
     if designate:
-        request["data"]["designate"] = designate
-    status, data = creoson_post(client, request)
-    if not status:
-        return data
-    else:
-        raise Warning(data)
+        data["designate"] = designate
+    return client.creoson_post("parameter", "copy", data)
 
 
 def delete(client, name, current_file=None):
@@ -69,26 +55,14 @@ def delete(client, name, current_file=None):
         current_file (str, optional):
             Model name. Defaults is current active model.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "delete",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["file"] = current_file
+    return client.creoson_post("parameter", "delete", data)
 
 
 def exists(client, current_file=None, name=None, names=None):
@@ -106,30 +80,18 @@ def exists(client, current_file=None, name=None, names=None):
             Defaults to None. The name parameter is used;
             if both are empty, then it checks for any parameter's existence.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (boolean): Whether the parameter exists on the model.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "exists",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["exists"]
-    else:
-        raise Warning(data)
+        data["names"] = names
+    return client.creoson_post("parameter", "exists", data)["exists"]
     # TODO: group name/names
 
 
@@ -159,9 +121,6 @@ def list_(
         value (str, optional):
             Parameter value filter. Defaults is `no filter`.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         (list:dict):
             name (str): Parameter name.
@@ -172,27 +131,18 @@ def list_(
             owner_name (str): File name.
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "list",
-        "data": {}
-    }
+    data = {}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if name:
-        request["data"]["name"] = name
+        data["name"] = name
     if names:
-        request["data"]["names"] = names
+        data["names"] = names
     if encoded:
-        request["data"]["encoded"] = encoded
+        data["encoded"] = encoded
     if value:
-        request["data"]["value"] = value
-    status, data = creoson_post(client, request)
-    if not status:
-        return data["paramlist"]
-    else:
-        raise Warning(data)
+        data["value"] = value
+    return client.creoson_post("parameter", "list", data)["paramlist"]
 
 
 def set_(
@@ -229,33 +179,21 @@ def set_(
             If parameter does not already exist, do not create it.
             Defaults is False.
 
-    Raises:
-        Warning: error message from creoson.
-
     Returns:
         None
 
     """
-    request = {
-        "sessionId": client.sessionId,
-        "command": "parameter",
-        "function": "lisetst",
-        "data": {
-            "name": name
-        }
-    }
+    data = {"name": name}
     if current_file:
-        request["data"]["file"] = current_file
+        data["file"] = current_file
     if type_:
-        request["data"]["type"] = type_
+        data["type"] = type_
     if encoded:
-        request["data"]["encoded"] = encoded
+        data["encoded"] = encoded
     if value:
-        request["data"]["value"] = value
+        data["value"] = value
     if designate:
-        request["data"]["designate"] = designate
+        data["designate"] = designate
     if no_create:
-        request["data"]["no_create"] = no_create
-    status, data = creoson_post(client, request)
-    if status:
-        raise Warning(data)
+        data["no_create"] = no_create
+    return client.creoson_post("parameter", "set", data)

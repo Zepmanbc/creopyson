@@ -20,14 +20,6 @@ creopyson.connection module
     :undoc-members:
     :show-inheritance:
 
-creopyson.core module
----------------------
-
-.. automodule:: creopyson.core
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 creopyson.creo module
 ---------------------
 
