@@ -33,9 +33,8 @@ def copy(client, name, to_name, file_=None, to_file=None):
 
 def list_(
     client,
-    file_=None,
     name=None,
-    names=None,
+    file_=None,
     dim_type=None,
     encoded=None
 ):
@@ -44,14 +43,11 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
+        name (str|list:str, optional):
+            Dimension name;
+            if empty then all dimensions are listed.
         `file_` (str, optional):
             Model name. Defaults is current active model.
-        name (str, optional):
-            Dimension name; only used if names is not given.
-            Defaults: The name parameter is used; if both are empty,
-            then all dimensions are listed.
-        names (list:str, optional):
-            List of dimension names. Defaults to None.
         dim_type (str, optional):
             Dimension type filter. Defaults is `no filter`.
             Valid values: linear, radial, diameter, angular.
@@ -70,26 +66,24 @@ def list_(
 
     """
     data = {}
-
     if file_:
         data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if dim_type:
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
     return client.creoson_post("dimension", "list", data)["dimlist"]
-    # TODO only 1 entry for name/names
 
 
 def list_detail(
     client,
-    file_=None,
     name=None,
-    names=None,
+    file_=None,
     dim_type=None,
     encoded=None
 ):
@@ -98,14 +92,11 @@ def list_detail(
     Args:
         client (obj):
             creopyson Client.
+        name (str|list:str, optional):
+            Dimension name;
+            if empty then all dimensions are listed.
         `file_` (str, optional):
             Model name. Defaults is current active model.
-        name (str, optional):
-            Dimension name; only used if names is not given.
-            Defaults: The name parameter is used; if both are empty,
-            then all dimensions are listed.
-        names (list:str, optional):
-            List of dimension names. Defaults to None.
         dim_type (str, optional):
             Dimension type filter. Defaults is `no filter`.
             Valid values: linear, radial, diameter, angular.
@@ -149,9 +140,10 @@ def list_detail(
     if file_:
         data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if dim_type:
         data["dim_type"] = dim_type
     if encoded:
@@ -216,7 +208,6 @@ def show(client, name, file_=None, assembly=None, path=None):
 
     """
     data = {"name": name}
-
     if file_:
         data["file"] = file_
     if assembly:

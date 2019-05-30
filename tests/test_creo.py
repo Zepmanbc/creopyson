@@ -1,6 +1,5 @@
 """Creo testing."""
 import creopyson
-import pytest
 from .fixtures import mk_creoson_post_dict, mk_creoson_post_None
 
 

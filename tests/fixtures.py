@@ -4,14 +4,6 @@ import pytest
 
 
 @pytest.fixture
-def mk_creoson_post_boolean(monkeypatch):
-    """Mock creoson_postreturn dict."""
-    def fake_func(client, command, function, data=None):
-        return True
-    monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
-
-
-@pytest.fixture
 def mk_creoson_post_dict(monkeypatch):
     """Mock creoson_postreturn dict."""
     def fake_func(client, command, function, data=None):
@@ -19,6 +11,7 @@ def mk_creoson_post_dict(monkeypatch):
             "running": True,
             "checked_out": True,
             "dirname": "dirname",
+            "dimlist": [],
             "dirlist": [],
             "exists": True,
             "filelist": [],
@@ -26,22 +19,6 @@ def mk_creoson_post_dict(monkeypatch):
             "workspace": "",
             "workspaces": [],
         }
-    monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
-
-
-@pytest.fixture
-def mk_creoson_post_list(monkeypatch):
-    """Mock creoson_postreturn dict."""
-    def fake_func(client, command, function, data=None):
-        return []
-    monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
-
-
-@pytest.fixture
-def mk_creoson_post_str(monkeypatch):
-    """Mock creoson_postreturn dict."""
-    def fake_func(client, command, function, data=None):
-        return ""
     monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
 
 
