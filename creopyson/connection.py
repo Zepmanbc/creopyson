@@ -3,8 +3,6 @@ import requests
 import json
 import sys
 
-from creopyson.core import creoson_post
-
 
 class Client(object):
     """Creates Client object."""
@@ -13,6 +11,33 @@ class Client(object):
         """Create Cleint objet. Define server and sessionID vars."""
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
         self.sessionId = ''
+
+    def creoson_post(self, request):
+        """Send a POST request to creoson server.
+
+        Args:
+            request (dict): Command for creoson.
+
+        Returns:
+            (dict):
+                status (boolean):
+                    'True' if creoson return an error
+                    'False" if creoson is ok
+                data (dict):
+                    creoson return (it depend the request)
+
+        """
+        r = requests.post(self.server, data=json.dumps(request))
+        json_result = json.loads(r.content)
+        status = json_result["status"]["error"]
+        if status:
+            data = json_result["status"]["message"]
+        else:
+            if "data" in json_result.keys():
+                data = json_result["data"]
+            else:
+                data = None
+        return status, data
 
     def connect(self):
         """Connect to CREOSON.
@@ -40,7 +65,7 @@ class Client(object):
             "command": "connection",
             "function": "disconnect"
         }
-        status, data = creoson_post(self, request)
+        status, data = self.creoson_post(request)
         self.sessionId = ''
 
     def is_creo_running(self):
@@ -62,7 +87,7 @@ class Client(object):
             "command": "connection",
             "function": "is_creo_running"
         }
-        status, data = creoson_post(self, request)
+        status, data = self.creoson_post(request)
         if not status:
             return data["running"]
         else:
@@ -85,7 +110,7 @@ class Client(object):
             "command": "connection",
             "function": "kill_creo"
         }
-        status, data = creoson_post(self, request)
+        status, data = self.creoson_post(request)
         if status:
             raise Warning(data)
 
@@ -128,7 +153,7 @@ class Client(object):
                 "retries": retries
             }
         }
-        status, data = creoson_post(self, request)
+        status, data = self.creoson_post(request)
         if status:
             raise Warning(data)
 
@@ -151,7 +176,7 @@ class Client(object):
             "command": "connection",
             "function": "stop_creo"
         }
-        status, data = creoson_post(self, request)
+        status, data = self.creoson_post(request)
         if status:
             raise Warning(data)
 

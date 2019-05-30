@@ -1,7 +1,5 @@
 """Note module."""
 
-from .core import creoson_post
-
 
 def copy(client, name, to_name=None, current_file=None, to_file=None):
     """Copy note to another in the same model or another model.
@@ -42,7 +40,7 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
         request["data"]["file"] = current_file
     if to_file:
         request["data"]["to_file"] = to_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -76,7 +74,7 @@ def delete(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -115,7 +113,7 @@ def exists(client, current_file=None, name=None, names=None):
         request["data"]["name"] = name
     if names:
         request["data"]["names"] = names
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -156,7 +154,7 @@ def get(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -219,7 +217,7 @@ def list_(
         request["data"]["get_expanded"] = get_expanded
     if value:
         request["data"]["value"] = value
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["itemlist"]
     else:
@@ -265,6 +263,6 @@ def set_(client, name, current_file=None, encoded=None, value=None):
         request["data"]["encoded"] = encoded
     if value:
         request["data"]["value"] = value
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)

@@ -1,7 +1,5 @@
 """Dimension module."""
 
-from .core import creoson_post
-
 
 def copy(client, name, to_name, file_=None, to_file=None):
     """Copy dimension to another in the same model or another model.
@@ -38,7 +36,7 @@ def copy(client, name, to_name, file_=None, to_file=None):
         request["data"]["file"] = file_
     if to_file:
         request["data"]["to_file"] = to_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -100,7 +98,7 @@ def list_(
         request["data"]["dim_type"] = dim_type
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dimlist"]
     else:
@@ -187,7 +185,7 @@ def list_detail(
         request["data"]["dim_type"] = dim_type
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dimlist"]
     else:
@@ -230,7 +228,7 @@ def set_(client, file_, name, value, encoded=None):
     }
     if encoded:
         request["data"]["encoded"] = encoded
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -274,7 +272,7 @@ def show(client, name, file_=None, assembly=None, path=None):
         request["data"]["assembly"] = assembly
     if path:
         request["data"]["path"] = path
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -317,7 +315,7 @@ def user_select(client, file_=None, maxi=None):
         request["data"]["file"] = file_
     if maxi:
         request["data"]["max"] = maxi
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dimlist"]
     else:

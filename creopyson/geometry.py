@@ -1,7 +1,5 @@
 """Geometry module."""
 
-from .core import creoson_post
-
 
 def bound_box(client, current_file=None):
     """Get the bounding box for a model.
@@ -34,7 +32,7 @@ def bound_box(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -96,7 +94,7 @@ def get_edges(client, surface_ids, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["contourlist"]
     else:
@@ -148,7 +146,7 @@ def get_surfaces(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["contourlist"]
     else:

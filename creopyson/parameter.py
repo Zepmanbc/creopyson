@@ -1,7 +1,5 @@
 """Parameter module."""
 
-from .core import creoson_post
-
 
 def copy(
     client,
@@ -51,7 +49,7 @@ def copy(
         request["data"]["to_file"] = to_file
     if designate:
         request["data"]["designate"] = designate
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -86,7 +84,7 @@ def delete(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -125,7 +123,7 @@ def exists(client, current_file=None, name=None, names=None):
         request["data"]["name"] = name
     if names:
         request["data"]["names"] = names
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -188,7 +186,7 @@ def list_(
         request["data"]["encoded"] = encoded
     if value:
         request["data"]["value"] = value
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["paramlist"]
     else:
@@ -256,6 +254,6 @@ def set_(
         request["data"]["designate"] = designate
     if no_create:
         request["data"]["no_create"] = no_create
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)

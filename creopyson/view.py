@@ -1,7 +1,5 @@
 """View module."""
 
-from .core import creoson_post
-
 
 def activate(client, name, current_file=None):
     """Activate a model view.
@@ -31,7 +29,7 @@ def activate(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -65,7 +63,7 @@ def list_exploded(client, current_file=None, name=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["viewlist"]
     else:
@@ -101,7 +99,7 @@ def list_(client, current_file=None, name=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["viewlist"]
     else:
@@ -137,6 +135,6 @@ def save(client, name, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)

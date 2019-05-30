@@ -1,7 +1,5 @@
 """Layer module."""
 
-from .core import creoson_post
-
 
 def delete(client, name=None, current_file=None):
     """Delete one or more layers.
@@ -35,7 +33,7 @@ def delete(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -70,7 +68,7 @@ def exists(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -113,7 +111,7 @@ def list_(client, name=None, current_file=None):
         request["data"]["file"] = current_file
     if name:
         request["data"]["name"] = name
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["layers"]
     else:
@@ -155,6 +153,6 @@ def show(client, name=None, current_file=None, show_=None):
         request["data"]["name"] = name
     if show_:
         request["data"]["show"] = show_
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)

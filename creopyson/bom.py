@@ -1,5 +1,4 @@
 """Bom module."""
-from .core import creoson_post
 
 
 def get_paths(
@@ -69,7 +68,7 @@ def get_paths(
         request["data"]["get_transforms"] = get_transforms
     if exclude_inactive:
         request["data"]["exclude_inactive"] = exclude_inactive
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:

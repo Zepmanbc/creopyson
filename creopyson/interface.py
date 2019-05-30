@@ -6,8 +6,6 @@ Import/Export program (pls, als)
 
 """
 
-from .core import creoson_post
-
 
 def export_3dpdf(
     client,
@@ -72,7 +70,7 @@ def export_3dpdf(
         request["data"]["dpi"] = dpi
     if use_drawing_settings:
         request["data"]["use_drawing_settings"] = use_drawing_settings
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -148,7 +146,7 @@ def export_file(
         request["data"]["geom_flags"] = geom_flags
     if advanced:
         request["data"]["advanced"] = advanced
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -218,7 +216,7 @@ def export_image(
         request["data"]["dpi"] = dpi
     if depth:
         request["data"]["depth"] = depth
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -291,7 +289,7 @@ def export_pdf(
         request["data"]["dpi"] = dpi
     if use_drawing_settings:
         request["data"]["use_drawing_settings"] = use_drawing_settings
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -324,7 +322,7 @@ def export_program(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -368,7 +366,7 @@ def import_program(client, current_file=None, filename=None, dirname=None):
         request["data"]["filename"] = filename
     if dirname:
         request["data"]["dirname"] = dirname
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["file"]
     else:
@@ -397,7 +395,7 @@ def mapkey(client, script):
             "script": script,
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -439,7 +437,7 @@ def plot(client, current_file=None, dirname=None, driver=None):
         request["data"]["dirname"] = dirname
     if driver:
         request["data"]["driver"] = driver
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:

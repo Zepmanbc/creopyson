@@ -1,6 +1,4 @@
-"""Name module."""
-
-from .core import creoson_post
+"""Creo module."""
 
 
 def cd(client, dirname):
@@ -29,7 +27,7 @@ def cd(client, dirname):
             "dirname": dirname
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dirname"]
     else:
@@ -69,7 +67,7 @@ def delete_files(client, filename=None, dirname=None):
             request["data"]["filename"] = str(filename)
     if dirname:
         request["data"]["dirname"] = dirname
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["filelist"]
     else:
@@ -99,7 +97,7 @@ def get_config(client, name):
             "name": name
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["values"]
     else:
@@ -137,7 +135,7 @@ def get_std_color(client, color_type):
             "color_type": color_type
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -171,7 +169,7 @@ def list_dirs(client, dirname=None):
     }
     if dirname:
         request["data"]["dirname"] = dirname
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dirlist"]
     else:
@@ -205,7 +203,7 @@ def list_files(client, filename=None):
     }
     if filename:
         request["data"]["filename"] = filename
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["filelist"]
     else:
@@ -234,7 +232,7 @@ def mkdir(client, dirname):
             "dirname": dirname
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dirname"]
     else:
@@ -259,7 +257,7 @@ def pwd(client):
         "command": "creo",
         "function": "pwd"
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["dirname"]
     else:
@@ -288,7 +286,7 @@ def rmdir(client, dirname):
             "dirname": dirname
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -326,7 +324,7 @@ def set_config(client, name, value, ignore_errors=None):
     }
     if ignore_errors:
         request["data"]["ignore_errors"] = ignore_errors
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -368,7 +366,7 @@ def set_std_color(client, color_type, red, green, blue):
             "blue": blue
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
     # TODO: convert RGB to a tuple or hexa color?

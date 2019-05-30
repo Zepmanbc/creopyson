@@ -43,11 +43,11 @@ while not c.file_open(current_file, display=True):
         exit("too long...")
 
 if c.file_exists(current_file):
-    c.dimension_set("diamm", value=180, current_file=current_file)
+    c.dimension_set(current_file, "diamm", 180)
     try:
         c.file_regenerate(current_file)
     except Warning:
-        c.dimension_set("diamm", value=50, current_file=current_file)
+        c.dimension_set(current_file, "diamm", 50)
         c.file_regenerate(current_file)
 
 # current_file = "toto.asm"

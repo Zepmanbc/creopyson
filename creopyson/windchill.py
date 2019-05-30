@@ -5,8 +5,6 @@ List files and checkout status.
 
 """
 
-from .core import creoson_post
-
 
 def authorize(client, user, password):
     """Set user's Windchill login/password.
@@ -29,7 +27,7 @@ def authorize(client, user, password):
             "password": password
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -56,7 +54,7 @@ def clear_workspace(client, workspace=None):
             "workspace": active_workspace
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if workspace:
         request["data"]["workspace"] = workspace
     if status:
@@ -84,7 +82,7 @@ def create_workspace(client, workspace, context_name):
             "context": context_name
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -108,7 +106,7 @@ def delete_workspace(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -140,7 +138,7 @@ def file_checked_out(client, filename, workspace=None):
     }
     if workspace:
         request["data"]["workspace"] = workspace
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["checked_out"]
     else:
@@ -163,7 +161,7 @@ def get_workspace(client):
         "function": "get_workspace",
         "data": {}
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["workspace"]
     else:
@@ -200,7 +198,7 @@ def list_workspace_files(client, workspace=None, filename=None):
         request["data"]["workspace"] = workspace
     if filename:
         request["data"]["filename"] = filename
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["filelist"]
     else:
@@ -223,7 +221,7 @@ def list_workspaces(client):
         "function": "list_workspaces",
         "data": {}
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["workspaces"]
     else:
@@ -249,7 +247,7 @@ def server_exists(client, server_url):
             "server_url": server_url
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -275,7 +273,7 @@ def set_server(client, server_url):
             "server_url": server_url
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -299,7 +297,7 @@ def set_workspace(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -323,7 +321,7 @@ def workspace_exists(client, workspace):
             "workspace": workspace
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:

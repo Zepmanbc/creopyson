@@ -1,7 +1,5 @@
 """File module."""
 
-from .core import creoson_post
-
 
 def assemble(
     client,
@@ -109,7 +107,7 @@ def assemble(
         request["data"]["assemble_to_root"] = assemble_to_root
     if suppress:
         request["data"]["suppress"] = suppress
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -144,7 +142,7 @@ def backup(client, target_dir, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -173,7 +171,7 @@ def close_window(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -206,7 +204,7 @@ def display(client, current_file, activate=None):
     }
     if activate:
         request["data"]["activate"] = activate
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -245,7 +243,7 @@ def erase(client, current_file=None, files=None, erase_children=None):
         request["data"]["files"] = files
     if erase_children:
         request["data"]["erase_children"] = erase_children
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -269,7 +267,7 @@ def erase_not_displayed(client):
         "function": "erase_not_displayed",
         "data": {}
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -296,7 +294,7 @@ def exists(client, current_file):
             "file": current_file
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -324,7 +322,7 @@ def get_active(client):
         "function": "get_active",
         "data": {}
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -358,7 +356,7 @@ def get_fileinfo(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -389,7 +387,7 @@ def get_length_units(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["units"]
     else:
@@ -420,7 +418,7 @@ def get_mass_units(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["units"]
     else:
@@ -462,7 +460,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         request["data"]["path"] = path
     if csys:
         request["data"]["csys"] = csys
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["transform"]
     else:
@@ -493,7 +491,7 @@ def has_instances(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -522,7 +520,7 @@ def is_active(client, current_file):
             "file": current_file
         }
     }
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["active"]
     else:
@@ -557,7 +555,7 @@ def list_(client, current_file=None, files=None):
         request["data"]["file"] = current_file
     if files:
         request["data"]["files"] = files
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["files"]
     else:
@@ -591,7 +589,7 @@ def list_instances(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -629,7 +627,7 @@ def list_simp_reps(client, current_file=None, rep=None):
         request["data"]["file"] = current_file
     if rep:
         request["data"]["rep"] = rep
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
         # TODO return only list between `rep` and `reps`
@@ -665,7 +663,7 @@ def massprops(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -742,7 +740,7 @@ def open_(
         request["data"]["new_window"] = new_window
     if regen_force:
         request["data"]["regen_force"] = regen_force
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -773,7 +771,7 @@ def open_errors(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["errors"]
     else:
@@ -804,7 +802,7 @@ def postregen_relations_get(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["relations"]
     else:
@@ -840,7 +838,7 @@ def postregen_relations_set(client, current_file=None, relations=None):
         request["data"]["file"] = current_file
     if relations:
         request["data"]["relations"] = relations
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -869,7 +867,7 @@ def refresh(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -906,7 +904,7 @@ def regenerate(client, current_file=None, files=None, display=None):
         request["data"]["files"] = files
     if display:
         request["data"]["display"] = display
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -935,7 +933,7 @@ def relations_get(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["relations"]
     else:
@@ -971,7 +969,7 @@ def relations_set(client, current_file=None, relations=None):
         request["data"]["file"] = current_file
     if relations:
         request["data"]["relations"] = relations
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -1008,7 +1006,7 @@ def rename(client, new_name, current_file=None, onlysession=None):
         request["data"]["file"] = current_file
     if onlysession:
         request["data"]["onlysession"] = onlysession
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["file"]
     else:
@@ -1039,7 +1037,7 @@ def repaint(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -1072,7 +1070,7 @@ def save(client, current_file=None, files=None):
         request["data"]["file"] = current_file
     if files:
         request["data"]["files"] = files
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
     # TODO only one entry
@@ -1115,7 +1113,7 @@ def set_length_units(client, units, current_file=None, convert=None):
         request["data"]["file"] = current_file
     if convert:
         request["data"]["convert"] = convert
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -1157,6 +1155,6 @@ def set_mass_units(client, units, current_file=None, convert=None):
         request["data"]["file"] = current_file
     if convert:
         request["data"]["convert"] = convert
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)

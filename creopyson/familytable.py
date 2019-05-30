@@ -1,7 +1,5 @@
 """Familytable module."""
 
-from .core import creoson_post
-
 
 def add_inst(client, instance, current_file=None):
     """Add a new instance to a family table.
@@ -33,7 +31,7 @@ def add_inst(client, instance, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -66,7 +64,7 @@ def create_inst(client, instance, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["name"]
     else:
@@ -101,7 +99,7 @@ def delete_inst(client, instance, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -131,7 +129,7 @@ def delete(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
 
@@ -166,7 +164,7 @@ def exists(client, instance, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["exists"]
     else:
@@ -214,7 +212,7 @@ def get_cell(client, instance, colid, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data
     else:
@@ -254,7 +252,7 @@ def get_header(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["columns"]
     else:
@@ -288,7 +286,7 @@ def get_parents(client, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["parents"]
     else:
@@ -331,7 +329,7 @@ def get_row(client, instance, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["columns"]
     else:
@@ -367,7 +365,7 @@ def list_(client, current_file=None, instance=None):
         request["data"]["file"] = current_file
     if instance:
         request["data"]["instance"] = instance
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["instances"]
     else:
@@ -410,7 +408,7 @@ def list_tree(client, current_file=None, erase=None):
         request["data"]["file"] = current_file
     if erase:
         request["data"]["erase"] = erase
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if not status:
         return data["instances"]
     else:
@@ -466,7 +464,7 @@ def replace(
         request["data"]["cur_inst"] = cur_inst
     if path:
         request["data"]["path"] = path
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
     # TODO: path/cur_inst
@@ -508,6 +506,6 @@ def set_cell(client, instance, colid, value, current_file=None):
     }
     if current_file:
         request["data"]["file"] = current_file
-    status, data = creoson_post(client, request)
+    status, data = client.creoson_post(request)
     if status:
         raise Warning(data)
