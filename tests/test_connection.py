@@ -151,33 +151,3 @@ def test_connection_stop_creo_error(mk_creoson_post_T):
     with pytest.raises(Warning) as pytest_wrapped_e:
         c.stop_creo()
     assert pytest_wrapped_e.value.args[0] == "error message"
-
-
-# TODO is it necessary?
-def test_connection_wrapper_ok():
-    from creopyson.connection import make_api_method
-
-    class fakeobj():
-        def __init__(self):
-            pass
-
-    def fakefunc():
-        pass
-
-    assert "fakefunc" not in dir(fakeobj)
-    fakeobj.fakefunc = make_api_method(fakefunc)
-    assert "fakefunc" in dir(fakeobj)
-
-    print("toto")
-
-
-def test_connection_wrapper_error():
-    from creopyson.connection import make_api_method
-    fakeobj = object()
-
-    def fakefunc():
-        pass
-    with pytest.raises(AttributeError) as pytest_wrapped_e:
-        fakeobj.add_fakefunc = make_api_method(fakefunc)
-    assert pytest_wrapped_e.value.args[0] == \
-        "'object' object has no attribute 'add_fakefunc'"

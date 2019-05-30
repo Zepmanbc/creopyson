@@ -1,7 +1,6 @@
 """Connection module."""
 import requests
 import json
-import functools
 import sys
 
 from creopyson.core import creoson_post
@@ -157,33 +156,11 @@ class Client(object):
             raise Warning(data)
 
 
-def make_api_method(func):
-    """Provide a single entry point for modifying all API methods.
-
-    For now this is limited to allowing the client object to be modified
-    with an `extra_params` keyword arg to each method, that is then used
-    as the params for each web service requtes.
-    Please note that this is an unsupported feature for advanced use only.
-    It's also currently incompatibile with multiple threads, see GH #160.
-
-    """
-    @functools.wraps(func)
-    def wrapper(*args, **kwargs):
-        args[0]._extra_params = kwargs.pop("extra_params", None)
-        result = func(*args, **kwargs)
-        try:
-            del args[0]._extra_params
-        except AttributeError:
-            pass
-        return result
-    return wrapper
-
-
 """Add API methods to CLient."""
 
 # Bom
 from creopyson.bom import get_paths as bom_get_paths
-Client.bom_get_paths = make_api_method(bom_get_paths)
+Client.bom_get_paths = bom_get_paths
 
 
 # Creo
@@ -198,17 +175,17 @@ from creopyson.creo import pwd as creo_pwd
 from creopyson.creo import rmdir as creo_rmdir
 from creopyson.creo import set_config as creo_set_config
 from creopyson.creo import set_std_color as creo_set_std_color
-Client.creo_cd = make_api_method(creo_cd)
-Client.creo_delete_files = make_api_method(creo_delete_files)
-Client.creo_get_config = make_api_method(creo_get_config)
-Client.creo_get_std_color = make_api_method(creo_get_std_color)
-Client.creo_list_dirs = make_api_method(creo_list_dirs)
-Client.creo_list_files = make_api_method(creo_list_files)
-Client.creo_mkdir = make_api_method(creo_mkdir)
-Client.creo_pwd = make_api_method(creo_pwd)
-Client.creo_rmdir = make_api_method(creo_rmdir)
-Client.creo_set_config = make_api_method(creo_set_config)
-Client.creo_set_std_color = make_api_method(creo_set_std_color)
+Client.creo_cd = creo_cd
+Client.creo_delete_files = creo_delete_files
+Client.creo_get_config = creo_get_config
+Client.creo_get_std_color = creo_get_std_color
+Client.creo_list_dirs = creo_list_dirs
+Client.creo_list_files = creo_list_files
+Client.creo_mkdir = creo_mkdir
+Client.creo_pwd = creo_pwd
+Client.creo_rmdir = creo_rmdir
+Client.creo_set_config = creo_set_config
+Client.creo_set_std_color = creo_set_std_color
 
 
 # Dimension
@@ -218,12 +195,12 @@ from creopyson.dimension import list_ as dimension_list
 from creopyson.dimension import set_ as dimension_set
 from creopyson.dimension import show as dimension_show
 from creopyson.dimension import user_select as dimension_user_select
-Client.dimension_copy = make_api_method(dimension_copy)
-Client.dimension_list_detail = make_api_method(dimension_list_detail)
-Client.dimension_list = make_api_method(dimension_list)
-Client.dimension_set = make_api_method(dimension_set)
-Client.dimension_show = make_api_method(dimension_show)
-Client.dimension_user_select = make_api_method(dimension_user_select)
+Client.dimension_copy = dimension_copy
+Client.dimension_list_detail = dimension_list_detail
+Client.dimension_list = dimension_list
+Client.dimension_set = dimension_set
+Client.dimension_show = dimension_show
+Client.dimension_user_select = dimension_user_select
 
 
 # Drawing
@@ -262,41 +239,40 @@ from creopyson.drawing import select_sheet as drawing_select_sheet
 from creopyson.drawing import set_cur_model as drawing_set_cur_model
 from creopyson.drawing import set_view_loc as drawing_set_view_loc
 from creopyson.drawing import view_bound_box as drawing_view_bound_box
-Client.drawing_add_model = make_api_method(drawing_add_model)
-Client.drawing_add_sheet = make_api_method(drawing_add_sheet)
-Client.drawing_create_gen_view = make_api_method(drawing_create_gen_view)
-Client.drawing_create = make_api_method(drawing_create)
-Client.drawing_create_proj_view = make_api_method(drawing_create_proj_view)
-Client.drawing_create_symbol = make_api_method(drawing_create_symbol)
-Client.drawing_delete_models = make_api_method(drawing_delete_models)
-Client.drawing_delete_sheet = make_api_method(drawing_delete_sheet)
-Client.drawing_delete_symbol_def = make_api_method(drawing_delete_symbol_def)
-Client.drawing_delete_symbol_inst = make_api_method(drawing_delete_symbol_inst)
-Client.drawing_delete_view = make_api_method(drawing_delete_view)
-Client.drawing_get_cur_model = make_api_method(drawing_get_cur_model)
-Client.drawing_get_cur_sheet = make_api_method(drawing_get_cur_sheet)
-Client.drawing_get_num_sheets = make_api_method(drawing_get_num_sheets)
-Client.drawing_get_sheet_scale = make_api_method(drawing_get_sheet_scale)
-Client.drawing_get_sheet_size = make_api_method(drawing_get_sheet_size)
-Client.drawing_get_view_loc = make_api_method(drawing_get_view_loc)
-Client.drawing_get_view_scale = make_api_method(drawing_get_view_scale)
-Client.drawing_get_view_sheet = make_api_method(drawing_get_view_sheet)
-Client.drawing_is_symbol_def_loaded = \
-    make_api_method(drawing_is_symbol_def_loaded)
-Client.drawing_list_models = make_api_method(drawing_list_models)
-Client.drawing_list_symbols = make_api_method(drawing_list_symbols)
-Client.drawing_list_view_details = make_api_method(drawing_list_view_details)
-Client.drawing_list_views = make_api_method(drawing_list_views)
-Client.drawing_load_symbol_def = make_api_method(drawing_load_symbol_def)
-Client.drawing_regenerate = make_api_method(drawing_regenerate)
-Client.drawing_regenerate_sheet = make_api_method(drawing_regenerate_sheet)
-Client.drawing_rename_view = make_api_method(drawing_rename_view)
-Client.drawing_scale_sheet = make_api_method(drawing_scale_sheet)
-Client.drawing_scale_view = make_api_method(drawing_scale_view)
-Client.drawing_select_sheet = make_api_method(drawing_select_sheet)
-Client.drawing_set_cur_model = make_api_method(drawing_set_cur_model)
-Client.drawing_set_view_loc = make_api_method(drawing_set_view_loc)
-Client.drawing_view_bound_box = make_api_method(drawing_view_bound_box)
+Client.drawing_add_model = drawing_add_model
+Client.drawing_add_sheet = drawing_add_sheet
+Client.drawing_create_gen_view = drawing_create_gen_view
+Client.drawing_create = drawing_create
+Client.drawing_create_proj_view = drawing_create_proj_view
+Client.drawing_create_symbol = drawing_create_symbol
+Client.drawing_delete_models = drawing_delete_models
+Client.drawing_delete_sheet = drawing_delete_sheet
+Client.drawing_delete_symbol_def = drawing_delete_symbol_def
+Client.drawing_delete_symbol_inst = drawing_delete_symbol_inst
+Client.drawing_delete_view = drawing_delete_view
+Client.drawing_get_cur_model = drawing_get_cur_model
+Client.drawing_get_cur_sheet = drawing_get_cur_sheet
+Client.drawing_get_num_sheets = drawing_get_num_sheets
+Client.drawing_get_sheet_scale = drawing_get_sheet_scale
+Client.drawing_get_sheet_size = drawing_get_sheet_size
+Client.drawing_get_view_loc = drawing_get_view_loc
+Client.drawing_get_view_scale = drawing_get_view_scale
+Client.drawing_get_view_sheet = drawing_get_view_sheet
+Client.drawing_is_symbol_def_loaded = drawing_is_symbol_def_loaded
+Client.drawing_list_models = drawing_list_models
+Client.drawing_list_symbols = drawing_list_symbols
+Client.drawing_list_view_details = drawing_list_view_details
+Client.drawing_list_views = drawing_list_views
+Client.drawing_load_symbol_def = drawing_load_symbol_def
+Client.drawing_regenerate = drawing_regenerate
+Client.drawing_regenerate_sheet = drawing_regenerate_sheet
+Client.drawing_rename_view = drawing_rename_view
+Client.drawing_scale_sheet = drawing_scale_sheet
+Client.drawing_scale_view = drawing_scale_view
+Client.drawing_select_sheet = drawing_select_sheet
+Client.drawing_set_cur_model = drawing_set_cur_model
+Client.drawing_set_view_loc = drawing_set_view_loc
+Client.drawing_view_bound_box = drawing_view_bound_box
 
 
 # Familytable
@@ -313,19 +289,19 @@ from creopyson.familytable import list_ as familytable_list
 from creopyson.familytable import list_tree as familytable_list_tree
 from creopyson.familytable import replace as familytable_replace
 from creopyson.familytable import set_cell as familytable_set_cell
-Client.familytable_add_inst = make_api_method(familytable_add_inst)
-Client.familytable_create_inst = make_api_method(familytable_create_inst)
-Client.familytable_delete_inst = make_api_method(familytable_delete_inst)
-Client.familytable_delete = make_api_method(familytable_delete)
-Client.familytable_exists = make_api_method(familytable_exists)
-Client.familytable_get_cell = make_api_method(familytable_get_cell)
-Client.familytable_get_header = make_api_method(familytable_get_header)
-Client.familytable_get_parents = make_api_method(familytable_get_parents)
-Client.familytable_get_row = make_api_method(familytable_get_row)
-Client.familytable_list = make_api_method(familytable_list)
-Client.familytable_list_tree = make_api_method(familytable_list_tree)
-Client.familytable_replace = make_api_method(familytable_replace)
-Client.familytable_set_cell = make_api_method(familytable_set_cell)
+Client.familytable_add_inst = familytable_add_inst
+Client.familytable_create_inst = familytable_create_inst
+Client.familytable_delete_inst = familytable_delete_inst
+Client.familytable_delete = familytable_delete
+Client.familytable_exists = familytable_exists
+Client.familytable_get_cell = familytable_get_cell
+Client.familytable_get_header = familytable_get_header
+Client.familytable_get_parents = familytable_get_parents
+Client.familytable_get_row = familytable_get_row
+Client.familytable_list = familytable_list
+Client.familytable_list_tree = familytable_list_tree
+Client.familytable_replace = familytable_replace
+Client.familytable_set_cell = familytable_set_cell
 
 
 # Feature
@@ -338,15 +314,15 @@ from creopyson.feature import resume as feature_resume
 from creopyson.feature import set_param as feature_set_param
 from creopyson.feature import suppress as feature_suppress
 from creopyson.feature import user_select_csys as feature_user_select_csys
-Client.feature_delete = make_api_method(feature_delete)
-Client.feature_delete_param = make_api_method(feature_delete_param)
-Client.feature_list = make_api_method(feature_list)
-Client.feature_param_exists = make_api_method(feature_param_exists)
-Client.feature_rename = make_api_method(feature_rename)
-Client.feature_resume = make_api_method(feature_resume)
-Client.feature_set_param = make_api_method(feature_set_param)
-Client.feature_suppress = make_api_method(feature_suppress)
-Client.feature_user_select_csys = make_api_method(feature_user_select_csys)
+Client.feature_delete = feature_delete
+Client.feature_delete_param = feature_delete_param
+Client.feature_list = feature_list
+Client.feature_param_exists = feature_param_exists
+Client.feature_rename = feature_rename
+Client.feature_resume = feature_resume
+Client.feature_set_param = feature_set_param
+Client.feature_suppress = feature_suppress
+Client.feature_user_select_csys = feature_user_select_csys
 
 
 # File
@@ -383,49 +359,46 @@ from creopyson.file import repaint as file_repaint
 from creopyson.file import save as file_save
 from creopyson.file import set_length_units as file_set_length_units
 from creopyson.file import set_mass_units as file_set_mass_units
-Client.file_assemble = make_api_method(file_assemble)
-Client.file_backup = make_api_method(file_backup)
-Client.file_close_window = make_api_method(file_close_window)
-Client.file_display = make_api_method(file_display)
-Client.file_erase = make_api_method(file_erase)
-Client.file_erase_not_displayed = make_api_method(file_erase_not_displayed)
-Client.file_exists = make_api_method(file_exists)
-Client.file_get_active = make_api_method(file_get_active)
-Client.file_get_fileinfo = \
-    make_api_method(file_get_fileinfo)
-Client.file_get_length_units = make_api_method(file_get_length_units)
-Client.file_get_mass_units = make_api_method(file_get_mass_units)
-Client.file_get_transform = make_api_method(file_get_transform)
-Client.file_has_instances = make_api_method(file_has_instances)
-Client.file_is_active = make_api_method(file_is_active)
-Client.file_list_instances = make_api_method(file_list_instances)
-Client.file_list = make_api_method(file_list)
-Client.file_list_simp_reps = make_api_method(file_list_simp_reps)
-Client.file_massprops = make_api_method(file_massprops)
-Client.file_open_errors = make_api_method(file_open_errors)
-Client.file_open = make_api_method(file_open)
-Client.file_postregen_relations_get = \
-    make_api_method(file_postregen_relations_get)
-Client.file_postregen_relations_set = \
-    make_api_method(file_postregen_relations_set)
-Client.file_refresh = make_api_method(file_refresh)
-Client.file_regenerate = make_api_method(file_regenerate)
-Client.file_relations_get = make_api_method(file_relations_get)
-Client.file_relations_set = make_api_method(file_relations_set)
-Client.file_rename = make_api_method(file_rename)
-Client.file_repaint = make_api_method(file_repaint)
-Client.file_save = make_api_method(file_save)
-Client.file_set_length_units = make_api_method(file_set_length_units)
-Client.file_set_mass_units = make_api_method(file_set_mass_units)
+Client.file_assemble = file_assemble
+Client.file_backup = file_backup
+Client.file_close_window = file_close_window
+Client.file_display = file_display
+Client.file_erase = file_erase
+Client.file_erase_not_displayed = file_erase_not_displayed
+Client.file_exists = file_exists
+Client.file_get_active = file_get_active
+Client.file_get_fileinfo = file_get_fileinfo
+Client.file_get_length_units = file_get_length_units
+Client.file_get_mass_units = file_get_mass_units
+Client.file_get_transform = file_get_transform
+Client.file_has_instances = file_has_instances
+Client.file_is_active = file_is_active
+Client.file_list_instances = file_list_instances
+Client.file_list = file_list
+Client.file_list_simp_reps = file_list_simp_reps
+Client.file_massprops = file_massprops
+Client.file_open_errors = file_open_errors
+Client.file_open = file_open
+Client.file_postregen_relations_get = file_postregen_relations_get
+Client.file_postregen_relations_set = file_postregen_relations_set
+Client.file_refresh = file_refresh
+Client.file_regenerate = file_regenerate
+Client.file_relations_get = file_relations_get
+Client.file_relations_set = file_relations_set
+Client.file_rename = file_rename
+Client.file_repaint = file_repaint
+Client.file_save = file_save
+Client.file_set_length_units = file_set_length_units
+Client.file_set_mass_units = file_set_mass_units
 
 
 # Geometry
 from creopyson.geometry import bound_box as geometry_bound_box
 from creopyson.geometry import get_edges as geometry_get_edges
 from creopyson.geometry import get_surfaces as geometry_get_surfaces
-Client.geometry_bound_box = make_api_method(geometry_bound_box)
-Client.geometry_get_edges = make_api_method(geometry_get_edges)
-Client.geometry_get_surfaces = make_api_method(geometry_get_surfaces)
+Client.geometry_bound_box = geometry_bound_box
+Client.geometry_get_edges = geometry_get_edges
+Client.geometry_get_surfaces = geometry_get_surfaces
 
 
 # Interface
@@ -437,14 +410,14 @@ from creopyson.interface import export_program as interface_export_program
 from creopyson.interface import import_program as interface_import_program
 from creopyson.interface import mapkey as interface_mapkey
 from creopyson.interface import plot as interface_plot
-Client.interface_export_3dpdf = make_api_method(interface_export_3dpdf)
-Client.interface_export_file = make_api_method(interface_export_file)
-Client.interface_export_image = make_api_method(interface_export_image)
-Client.interface_export_pdf = make_api_method(interface_export_pdf)
-Client.interface_export_program = make_api_method(interface_export_program)
-Client.interface_import_program = make_api_method(interface_import_program)
-Client.interface_mapkey = make_api_method(interface_mapkey)
-Client.interface_plot = make_api_method(interface_plot)
+Client.interface_export_3dpdf = interface_export_3dpdf
+Client.interface_export_file = interface_export_file
+Client.interface_export_image = interface_export_image
+Client.interface_export_pdf = interface_export_pdf
+Client.interface_export_program = interface_export_program
+Client.interface_import_program = interface_import_program
+Client.interface_mapkey = interface_mapkey
+Client.interface_plot = interface_plot
 
 
 # Layer
@@ -452,10 +425,10 @@ from creopyson.layer import delete as layer_delete
 from creopyson.layer import exists as layer_exists
 from creopyson.layer import list_ as layer_list
 from creopyson.layer import show as layer_show
-Client.layer_delete = make_api_method(layer_delete)
-Client.layer_exists = make_api_method(layer_exists)
-Client.layer_list = make_api_method(layer_list)
-Client.layer_show = make_api_method(layer_show)
+Client.layer_delete = layer_delete
+Client.layer_exists = layer_exists
+Client.layer_list = layer_list
+Client.layer_show = layer_show
 
 
 # Note
@@ -465,12 +438,12 @@ from creopyson.note import exists as note_exists
 from creopyson.note import get as note_get
 from creopyson.note import list_ as note_list
 from creopyson.note import set_ as note_set
-Client.note_copy = make_api_method(note_copy)
-Client.note_delete = make_api_method(note_delete)
-Client.note_exists = make_api_method(note_exists)
-Client.note_get = make_api_method(note_get)
-Client.note_list = make_api_method(note_list)
-Client.note_set = make_api_method(note_set)
+Client.note_copy = note_copy
+Client.note_delete = note_delete
+Client.note_exists = note_exists
+Client.note_get = note_get
+Client.note_list = note_list
+Client.note_set = note_set
 
 
 # Parameter
@@ -479,16 +452,16 @@ from creopyson.parameter import delete as parameter_delete
 from creopyson.parameter import exists as parameter_exists
 from creopyson.parameter import list_ as parameter_list
 from creopyson.parameter import set_ as parameter_set
-Client.parameter_copy = make_api_method(parameter_copy)
-Client.parameter_delete = make_api_method(parameter_delete)
-Client.parameter_exists = make_api_method(parameter_exists)
-Client.parameter_list = make_api_method(parameter_list)
-Client.parameter_set = make_api_method(parameter_set)
+Client.parameter_copy = parameter_copy
+Client.parameter_delete = parameter_delete
+Client.parameter_exists = parameter_exists
+Client.parameter_list = parameter_list
+Client.parameter_set = parameter_set
 
 
 # Server
 from creopyson.server import pwd as server_pwd
-Client.server_pwd = make_api_method(server_pwd)
+Client.server_pwd = server_pwd
 
 
 # View
@@ -496,10 +469,10 @@ from creopyson.view import activate as view_activate
 from creopyson.view import list_exploded as view_list_exploded
 from creopyson.view import list_ as view_list
 from creopyson.view import save as view_save
-Client.view_activate = make_api_method(view_activate)
-Client.view_list_exploded = make_api_method(view_list_exploded)
-Client.view_list = make_api_method(view_list)
-Client.view_save = make_api_method(view_save)
+Client.view_activate = view_activate
+Client.view_list_exploded = view_list_exploded
+Client.view_list = view_list
+Client.view_save = view_save
 
 
 # Windchill
@@ -516,16 +489,15 @@ from creopyson.windchill import server_exists as windchill_server_exists
 from creopyson.windchill import set_server as windchill_set_server
 from creopyson.windchill import set_workspace as windchill_set_workspace
 from creopyson.windchill import workspace_exists as windchill_workspace_exists
-Client.windchill_authorize = make_api_method(windchill_authorize)
-Client.windchill_clear_workspace = make_api_method(windchill_clear_workspace)
-Client.windchill_create_workspace = make_api_method(windchill_create_workspace)
-Client.windchill_delete_workspace = make_api_method(windchill_delete_workspace)
-Client.windchill_file_checked_out = make_api_method(windchill_file_checked_out)
-Client.windchill_get_workspace = make_api_method(windchill_get_workspace)
-Client.windchill_list_workspace_files = \
-    make_api_method(windchill_list_workspace_files)
-Client.windchill_list_workspaces = make_api_method(windchill_list_workspaces)
-Client.windchill_server_exists = make_api_method(windchill_server_exists)
-Client.windchill_set_server = make_api_method(windchill_set_server)
-Client.windchill_set_workspace = make_api_method(windchill_set_workspace)
-Client.windchill_workspace_exists = make_api_method(windchill_workspace_exists)
+Client.windchill_authorize = windchill_authorize
+Client.windchill_clear_workspace = windchill_clear_workspace
+Client.windchill_create_workspace = windchill_create_workspace
+Client.windchill_delete_workspace = windchill_delete_workspace
+Client.windchill_file_checked_out = windchill_file_checked_out
+Client.windchill_get_workspace = windchill_get_workspace
+Client.windchill_list_workspace_files = windchill_list_workspace_files
+Client.windchill_list_workspaces = windchill_list_workspaces
+Client.windchill_server_exists = windchill_server_exists
+Client.windchill_set_server = windchill_set_server
+Client.windchill_set_workspace = windchill_set_workspace
+Client.windchill_workspace_exists = windchill_workspace_exists
