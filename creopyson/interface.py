@@ -11,7 +11,7 @@ Import/Export program (pls, als)
 
 def export_3dpdf(
     client,
-    current_file=None,
+    file_=None,
     filename=None,
     dirname=None,
     height=None,
@@ -24,7 +24,7 @@ def export_3dpdf(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         filename (str, optional):
             Destination file name. May also contain a path to the file.
@@ -50,8 +50,8 @@ def export_3dpdf(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if filename:
         data["filename"] = filename
     if dirname:
@@ -70,7 +70,7 @@ def export_3dpdf(
 def export_file(
     client,
     file_type,
-    current_file=None,
+    file_=None,
     filename=None,
     dirname=None,
     geom_flags=None,
@@ -91,7 +91,7 @@ def export_file(
             creopyson Client.
         file_type (str):
             File type. Valid values: DXF, IGES, PV, STEP, VRML.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         filename (str, optional):
             Destination file name. May also contain a path to the file.
@@ -116,8 +116,8 @@ def export_file(
 
     """
     data = {"type": file_type}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if filename:
         data["filename"] = filename
     if dirname:
@@ -132,7 +132,7 @@ def export_file(
 def export_image(
     client,
     file_type,
-    current_file=None,
+    file_=None,
     filename=None,
     height=None,
     width=None,
@@ -146,7 +146,7 @@ def export_image(
             creopyson Client.
         file_type (str):
             Image Type. Valid values: BMP, EPS, JPEG, TIFF.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         filename (str, optional):
             Destination file name. May also contain a path to the file.
@@ -168,8 +168,8 @@ def export_image(
 
     """
     data = {"type": file_type}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if filename:
         data["filename"] = filename
     # if dirname:
@@ -187,7 +187,7 @@ def export_image(
 
 def export_pdf(
     client,
-    current_file=None,
+    file_=None,
     filename=None,
     dirname=None,
     height=None,
@@ -203,7 +203,7 @@ def export_pdf(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         filename (str, optional):
             Destination file name. May also contain a path to the file.
@@ -229,8 +229,8 @@ def export_pdf(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if filename:
         data["filename"] = filename
     if dirname:
@@ -246,13 +246,13 @@ def export_pdf(
     return client.creoson_post("interface", "export_pdf", data)
 
 
-def export_program(client, current_file=None):
+def export_program(client, file_=None):
     """Export a model's program to a file.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
 
     Returns:
@@ -262,12 +262,12 @@ def export_program(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("interface", "export_program", data)
 
 
-def import_program(client, current_file=None, filename=None, dirname=None):
+def import_program(client, file_=None, filename=None, dirname=None):
     """Import a program file for a model.
 
     Cannot specify both file and filename parameters.
@@ -275,7 +275,7 @@ def import_program(client, current_file=None, filename=None, dirname=None):
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Destination Model name.
             Defaults is currently active model, or the model for
             the filename parameter if given.
@@ -290,8 +290,8 @@ def import_program(client, current_file=None, filename=None, dirname=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if filename:
         data["filename"] = filename
     if dirname:
@@ -317,13 +317,13 @@ def mapkey(client, script):
     return client.creoson_post("interface", "mapkey", data)
 
 
-def plot(client, current_file=None, dirname=None, driver=None):
+def plot(client, file_=None, dirname=None, driver=None):
     """Export a model plot.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is currently active model.
         dirname (str, optional):
             Destination directory.
@@ -340,8 +340,8 @@ def plot(client, current_file=None, dirname=None, driver=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if dirname:
         data["dirname"] = dirname
     if driver:
