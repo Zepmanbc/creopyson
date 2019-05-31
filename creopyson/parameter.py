@@ -5,7 +5,7 @@ def copy(
     client,
     name,
     to_name,
-    current_file=None,
+    file_=None,
     to_file=None,
     designate=None
 ):
@@ -18,7 +18,7 @@ def copy(
             Parameter name to copy (wildcards allowed: True).
         to_name (str):
             Destination parameter.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         to_file (str, optional):
             Destination model (wildcards allowed: True).
@@ -35,8 +35,8 @@ def copy(
         "name": name,
         "to_name": to_name,
     }
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if to_file:
         data["to_file"] = to_file
     if designate:
@@ -44,7 +44,7 @@ def copy(
     return client.creoson_post("parameter", "copy", data)
 
 
-def delete(client, name, current_file=None):
+def delete(client, name, file_=None):
     """Delete a parameter.
 
     Args:
@@ -52,7 +52,7 @@ def delete(client, name, current_file=None):
             creopyson Client.
         name (str):
             Parameter name (wildcards allowed: True).
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
 
     Returns:
@@ -60,46 +60,43 @@ def delete(client, name, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("parameter", "delete", data)
 
 
-def exists(client, current_file=None, name=None, names=None):
+def exists(client, name=None, file_=None):
     """Check whether parameter(s) exists on a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        name (str|list:str, optional):
+            Parameter name; List of parameter names.
+            if empty it checks for any parameter's existence.
+        `file_` (str, optional):
             Model name. Defaults is current active model.
-        name (str, optional):
-            Parameter name; only used if names is not given. Defaults to None.
-        names (list:str, optional):
-            List of parameter names.
-            Defaults to None. The name parameter is used;
-            if both are empty, then it checks for any parameter's existence.
 
     Returns:
         (boolean): Whether the parameter exists on the model.
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     return client.creoson_post("parameter", "exists", data)["exists"]
     # TODO: group name/names
 
 
 def list_(
     client,
-    current_file=None,
     name=None,
-    names=None,
+    file_=None,
     encoded=None,
     value=None
 ):
@@ -108,14 +105,11 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        name (str|list:str, optional):
+            Parameter name; List of parameter names.
+            if empty it checks for any parameter's existence.
+        `file_` (str, optional):
             Model name. Defaults is current active model.
-        name (str, optional):
-            Parameter name; only used if names is not given. Defaults to None.
-        names (list:str, optional):
-            List of parameter names.
-            Defaults to None. The name parameter is used;
-            if both are empty, then it checks for any parameter's existence.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
         value (str, optional):
@@ -132,12 +126,13 @@ def list_(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if encoded:
         data["encoded"] = encoded
     if value:
@@ -149,7 +144,7 @@ def set_(
     client,
     name,
     value=None,
-    current_file=None,
+    file_=None,
     type_=None,
     encoded=None,
     designate=None,
@@ -165,7 +160,7 @@ def set_(
         value (depends on data type, optional):
             Parameter value. Defaults to None.
             Clears the parameter value if missing.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
         `type_` (str, optional):
             Data type. Defaults is `STRING`.
@@ -184,8 +179,8 @@ def set_(
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if type_:
         data["type"] = type_
     if encoded:

@@ -18,6 +18,7 @@ def mk_creoson_post_dict(monkeypatch):
             "file": "file",
             "filelist": [],
             "files": [],
+            "paramlist": [],
             "relations": [],
             "running": True,
             "transform": {"fake obj": 123},
