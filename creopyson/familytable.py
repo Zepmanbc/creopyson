@@ -1,7 +1,7 @@
 """Familytable module."""
 
 
-def add_inst(client, instance, current_file=None):
+def add_inst(client, instance, file_=None):
     """Add a new instance to a family table.
 
     Creates a family table if one does not exist.
@@ -11,7 +11,7 @@ def add_inst(client, instance, current_file=None):
             creopyson Client.
         instance (str):
             New instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -19,12 +19,12 @@ def add_inst(client, instance, current_file=None):
 
     """
     data = {"instance": instance}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "add_inst", data)
 
 
-def create_inst(client, instance, current_file=None):
+def create_inst(client, instance, file_=None):
     """Create a new model from a family table row.
 
     Args:
@@ -32,7 +32,7 @@ def create_inst(client, instance, current_file=None):
             creopyson Client.
         instance (str):
             Instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -40,12 +40,12 @@ def create_inst(client, instance, current_file=None):
 
     """
     data = {"instance": instance}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "create_inst", data)["name"]
 
 
-def delete_inst(client, instance, current_file=None):
+def delete_inst(client, instance, file_=None):
     """Delete an instance from a family table.
 
     Args:
@@ -53,7 +53,7 @@ def delete_inst(client, instance, current_file=None):
             creopyson Client.
         instance (str):
             Instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -61,18 +61,18 @@ def delete_inst(client, instance, current_file=None):
 
     """
     data = {"instance": instance}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "delete_inst", data)
 
 
-def delete(client, current_file=None):
+def delete(client, file_=None):
     """Delete an entire family table.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is currently active model.
 
@@ -81,12 +81,12 @@ def delete(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "delete", data)
 
 
-def exists(client, instance, current_file=None):
+def exists(client, instance, file_=None):
     """Check whether an instance exists in a family table.
 
     Args:
@@ -94,7 +94,7 @@ def exists(client, instance, current_file=None):
             creopyson Client.
         instance (str):
             Instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -104,12 +104,12 @@ def exists(client, instance, current_file=None):
 
     """
     data = {"instance": instance}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "exists", data)["exists"]
 
 
-def get_cell(client, instance, colid, current_file=None):
+def get_cell(client, instance, colid, file_=None):
     """Get one cell of a family table.
 
     Args:
@@ -119,7 +119,7 @@ def get_cell(client, instance, colid, current_file=None):
             Instance name.
         colid (str):
             Colimn ID.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -140,18 +140,18 @@ def get_cell(client, instance, colid, current_file=None):
         "instance": instance,
         "colid": colid
     }
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "get_cell", data)
 
 
-def get_header(client, current_file=None):
+def get_header(client, file_=None):
     """Get the header of a family table.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is currently active model.
 
@@ -168,18 +168,18 @@ def get_header(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "get_header", data)["columns"]
 
 
-def get_parents(client, current_file=None):
+def get_parents(client, file_=None):
     """Get the parent instances of a model in a nested family table.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is currently active model.
 
@@ -190,12 +190,12 @@ def get_parents(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "get_parents", data)["parents"]
 
 
-def get_row(client, instance, current_file=None):
+def get_row(client, instance, file_=None):
     """Get one row of a family table.
 
     Args:
@@ -203,7 +203,7 @@ def get_row(client, instance, current_file=None):
             creopyson Client.
         instance (str):
             Instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -219,12 +219,12 @@ def get_row(client, instance, current_file=None):
 
     """
     data = {"instance": instance}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "get_row", data)["columns"]
 
 
-def list_(client, current_file=None, instance=None):
+def list_(client, file_=None, instance=None):
     """List the instance names in a family table.
 
     Args:
@@ -233,7 +233,7 @@ def list_(client, current_file=None, instance=None):
         instance (str, optional):
             Instance name filter (wildcards allowed: True).
             Defaults is all instances.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
 
     Returns:
@@ -241,24 +241,24 @@ def list_(client, current_file=None, instance=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if instance:
         data["instance"] = instance
     return client.creoson_post("familytable", "list", data)["instances"]
 
 
-def list_tree(client, current_file=None, erase=None):
+def list_tree(client, file_=None, erase=None):
     """Get a hierarchical structure of a nested family table.
 
     Args:
         client (obj):
             creopyson Client.
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
         erase (boolean, optional):
             Erase model and non-displayed models afterwards.
             Defaults is `False`.
-        current_file (str, optional):
-            File name. Defaults is currently active model.
 
     Returns:
         (list:str):
@@ -276,8 +276,8 @@ def list_tree(client, current_file=None, erase=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if erase:
         data["erase"] = erase
     return client.creoson_post("familytable", "list_tree", data)["instances"]
@@ -287,7 +287,7 @@ def replace(
     client,
     cur_model,
     new_inst,
-    current_file=None,
+    file_=None,
     cur_inst=None,
     path=None
 ):
@@ -302,7 +302,7 @@ def replace(
             Generic model containing the instances.
         new_inst (str):
             New instance name.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (usually an assembly).
             Defaults is currently active model.
         cur_inst (str):
@@ -318,8 +318,8 @@ def replace(
         "cur_model": cur_model,
         "new_inst": new_inst,
     }
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if cur_inst:
         data["cur_inst"] = cur_inst
     if path:
@@ -328,7 +328,7 @@ def replace(
     # TODO: path/cur_inst
 
 
-def set_cell(client, instance, colid, value, current_file=None):
+def set_cell(client, instance, colid, value, file_=None):
     """Set the value of one cell of a family table.
 
     Args:
@@ -340,7 +340,7 @@ def set_cell(client, instance, colid, value, current_file=None):
             Column ID.
         value (depends on data type):
             Cell value.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (usually an assembly).
             Defaults is currently active model.
 
@@ -353,6 +353,6 @@ def set_cell(client, instance, colid, value, current_file=None):
         "colid": colid,
         "value": value,
     }
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("familytable", "set_cell", data)
