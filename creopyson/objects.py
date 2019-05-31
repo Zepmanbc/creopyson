@@ -18,8 +18,8 @@ def jlpoint(x, y, z):
     """
     try:
         x, y, z = float(x), float(y), float(z)
-    except TypeError:
-        Warning("Coordonates must be numbers")
+    except ValueError:
+        raise Warning("Coordonates must be numbers")
     return {
         "x": x,
         "y": y,
