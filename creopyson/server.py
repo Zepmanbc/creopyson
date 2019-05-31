@@ -23,7 +23,7 @@ def pwd(client):
         "command": "server",
         "function": "pwd",
     }
-    # asking `http://localhost:9056/server` instead `http://localhost:9056/creoson`
+    # ask `http://localhost:9056/server` vs `http://localhost:9056/creoson`
     list_adress = client.server.split('/')[:-1]
     list_adress.append('server')
     server_adress = "/".join(list_adress)
