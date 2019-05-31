@@ -1,13 +1,13 @@
 """Geometry module."""
 
 
-def bound_box(client, current_file=None):
+def bound_box(client, file_=None):
     """Get the bounding box for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is current active model.
 
@@ -22,12 +22,12 @@ def bound_box(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("geometry", "bound_box", data)
 
 
-def get_edges(client, surface_ids, current_file=None):
+def get_edges(client, surface_ids, file_=None):
     """Get the list of edges for a model for given surfaces.
 
     Args:
@@ -35,7 +35,7 @@ def get_edges(client, surface_ids, current_file=None):
             creopyson Client.
         surface_ids (list:int):
             List of surface IDs.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is current active model
 
@@ -70,18 +70,18 @@ def get_edges(client, surface_ids, current_file=None):
 
     """
     data = {"surface_ids": surface_ids}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("geometry", "get_edges", data)["contourlist"]
 
 
-def get_surfaces(client, current_file=None):
+def get_surfaces(client, file_=None):
     """Get the list of surfaces for a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is current active model
 
@@ -110,6 +110,6 @@ def get_surfaces(client, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("geometry", "get_surfaces", data)["contourlist"]

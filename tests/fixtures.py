@@ -10,6 +10,7 @@ def mk_creoson_post_dict(monkeypatch):
         return {
             "active": True,
             "checked_out": True,
+            "contourlist": [],
             "dirname": "dirname",
             "dimlist": [],
             "dirlist": [],
