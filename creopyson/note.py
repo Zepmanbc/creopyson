@@ -1,7 +1,7 @@
 """Note module."""
 
 
-def copy(client, name, to_name=None, current_file=None, to_file=None):
+def copy(client, name, to_name=None, file_=None, to_file=None):
     """Copy note to another in the same model or another model.
 
     Args:
@@ -12,7 +12,7 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
         to_name (str):
             Destination note.
             Defaults is the source note name
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name (wildcards allowed: True).
             Defaults is current active model.
         to_file (str, optional):
@@ -26,14 +26,14 @@ def copy(client, name, to_name=None, current_file=None, to_file=None):
     data = {"name": name}
     if to_name:
         data["to_name"] = to_name
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if to_file:
         data["to_file"] = to_file
     return client.creoson_post("note", "copy", data)
 
 
-def delete(client, name, current_file=None):
+def delete(client, name, file_=None):
     """Delete a model or drawing note.
 
     Args:
@@ -41,7 +41,7 @@ def delete(client, name, current_file=None):
             creopyson Client.
         name (str):
             Note name (wildcards allowed: True).
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name (wildcards allowed: True).
             Defaults is current active model.
 
@@ -50,42 +50,39 @@ def delete(client, name, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("note", "delete", data)
 
 
-def exists(client, current_file=None, name=None, names=None):
+def exists(client, file_=None, name=None):
     """Check whether note(s) exists on a model.
 
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model.
-        name (str, optional):
-            Note name; only used if names is not given. Defaults to None.
-        names (list:str, optional):
-            List of note names.
-            Defaults to None. The name parameter is used;
-            if both are empty, then it checks for any note's existence.
+        name (str|list:str, optional):
+            Note name; List of note names.
+            if empty it checks for any note's existence.
 
     Returns:
         (boolean): Whether the note exists on the model.
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     return client.creoson_post("note", "exists", data)["exists"]
-    # TODO: group name/names
 
 
-def get(client, name, current_file=None):
+def get(client, name, file_=None):
     """Get the text of a model or drawing note.
 
     Args:
@@ -93,7 +90,7 @@ def get(client, name, current_file=None):
             creopyson Client.
         name (str):
             Note name.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name.
             Defaults is current active model or drawing.
 
@@ -106,16 +103,15 @@ def get(client, name, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     return client.creoson_post("note", "get", data)
 
 
 def list_(
     client,
-    current_file=None,
+    file_=None,
     name=None,
-    names=None,
     value=None,
     get_expanded=None
 ):
@@ -124,15 +120,12 @@ def list_(
     Args:
         client (obj):
             creopyson Client.
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name (wildcards allows: True).
             Defaults is current active model.
-        name (str, optional):
-            Note name; only used if names is not given. Defaults to None.
-        names (list:str, optional):
-            List of notes names.
-            Defaults to None. The name parameter is used;
-            if both are empty, then all notes are listed.
+        name (str|list:str, optional):
+            Note name; List of note names.
+            if empty all notes are listed.
         value (str, optional):
             Parameter value filter (wildcards allows: True).
             Defaults is `no filter`.
@@ -149,21 +142,21 @@ def list_(
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
-        data["name"] = name
-    if names:
-        data["names"] = names
+        if isinstance(name, (str)):
+            data["name"] = name
+        elif isinstance(name, (list)):
+            data["names"] = name
     if get_expanded:
         data["get_expanded"] = get_expanded
     if value:
         data["value"] = value
     return client.creoson_post("note", "list", data)["itemlist"]
-    # TODO: group name/names
 
 
-def set_(client, name, current_file=None, encoded=None, value=None):
+def set_(client, name, file_=None, encoded=None, value=None):
     """Set the text of a model or drawing note.
 
     Args:
@@ -171,7 +164,7 @@ def set_(client, name, current_file=None, encoded=None, value=None):
             creopyson Client.
         name (str):
             Note name (wildcards allowed: True).
-        current_file (str, optional):
+        `file_` (str, optional):
             Model name. Defaults is current active model or drawing.
         encoded (boolean, optional):
             Whether the value is Base64-encoded. Defaults is False.
@@ -185,8 +178,8 @@ def set_(client, name, current_file=None, encoded=None, value=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if encoded:
         data["encoded"] = encoded
     if value:

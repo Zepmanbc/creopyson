@@ -22,6 +22,7 @@ def mk_creoson_post_dict(monkeypatch):
             "filelist": [],
             "files": [],
             "instances": [],
+            "itemlist": [],
             "layers": [],
             "loaded": True,
             "name": "name",
