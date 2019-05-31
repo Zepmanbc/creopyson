@@ -1,7 +1,7 @@
 """Layer module."""
 
 
-def delete(client, name=None, current_file=None):
+def delete(client, name=None, file_=None):
     """Delete one or more layers.
 
     Args:
@@ -10,7 +10,7 @@ def delete(client, name=None, current_file=None):
         name (str, optional):
             Layer name (wildcards allowed: True).
             Defaults: All layers will be deleted.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (wildcards alloawed: True).
             Defaults is current active model.
 
@@ -19,14 +19,14 @@ def delete(client, name=None, current_file=None):
 
     """
     data = {"name": name}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     return client.creoson_post("layer", "delete", data)
 
 
-def exists(client, name=None, current_file=None):
+def exists(client, name=None, file_=None):
     """Check whether layer(s) exists on a model.
 
     Args:
@@ -35,7 +35,7 @@ def exists(client, name=None, current_file=None):
         name (str, optional):
             Layer name (wildcards allowed: True).
             Defaults: All layers are listed.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is current active model.
 
@@ -44,14 +44,14 @@ def exists(client, name=None, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     return client.creoson_post("layer", "exists", data)["exists"]
 
 
-def list_(client, name=None, current_file=None):
+def list_(client, name=None, file_=None):
     """List layers that match criteria.
 
     Args:
@@ -60,7 +60,7 @@ def list_(client, name=None, current_file=None):
         name (str, optional):
             Layer name (wildcards allowed: True).
             Defaults: All layers are listed.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name.
             Defaults is current active model.
 
@@ -75,14 +75,14 @@ def list_(client, name=None, current_file=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     return client.creoson_post("layer", "list", data)["layers"]
 
 
-def show(client, name=None, current_file=None, show_=None):
+def show(client, name=None, file_=None, show_=None):
     """how/Hide one or more layers.
 
     Args:
@@ -91,7 +91,7 @@ def show(client, name=None, current_file=None, show_=None):
         name (str, optional):
             Layer name (wildcards allowed: True).
             Defaults: All layers are listed.
-        current_file (str, optional):
+        `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is current active model.
         `show_` (boolean, optional):
@@ -103,8 +103,8 @@ def show(client, name=None, current_file=None, show_=None):
 
     """
     data = {}
-    if current_file:
-        data["file"] = current_file
+    if file_:
+        data["file"] = file_
     if name:
         data["name"] = name
     if show_:
