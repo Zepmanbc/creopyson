@@ -362,10 +362,6 @@ def list_(client, file_=None):
     Args:
         client (obj):
             creopyson Client.
-        `file_` (str, optional):
-            File name; only used if files is not given. Defaults to None.
-        files (list:str, optional):
-            List of file names. Defaults to None.
         `file_` (str|list:str, optional):
             File name or List of file names;
 

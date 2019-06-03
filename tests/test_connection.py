@@ -82,7 +82,7 @@ def test_connection_creoson_post_return_data(monkeypatch):
 
 
 def test_connection_creoson_post_return_None(monkeypatch):
-    """Test creoson_post returning None"""
+    """Test creoson_post returning None."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass

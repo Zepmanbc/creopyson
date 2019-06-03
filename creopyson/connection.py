@@ -47,11 +47,15 @@ class Client(object):
             "function": function,
             "data": data
         }
+        # TODO test sur la connection
         r = requests.post(self.server, data=json.dumps(request))
-        json_result = json.loads(r.content)
+        # json_result = json.loads(r.content)
+        # TODO tester le json
+        json_result = r.json()
         status = json_result["status"]["error"]
         if status:
             error_msg = json_result["status"]["message"]
+            # TODO Runtime error
             raise Warning(error_msg)
         else:
             if "data" in json_result.keys():
@@ -59,6 +63,8 @@ class Client(object):
             else:
                 data = None
         return data
+        # get sur dictionnaire pour renvoyer la valeur ou None par defaut
+        # TODO ajouter un raise de chaque keyvalue error de tous les modules
 
     def disconnect(self):
         """Disconnect from CREOSON.

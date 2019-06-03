@@ -22,7 +22,7 @@ Creopyson is a python library that aim to control `PTC's CREO Parametric`_ via J
 
 CREOSON uses JSON Requests to send commands/functions to CREO, JSON Responses are used to communicate the results of your requests.
 
-Creopyson creates a Client to send JSON Requets to CREOSON server.
+Creopyson creates a Client to send JSON Requests to CREOSON server.
 
 * Free software: MIT license
 * Documentation: https://creopyson.readthedocs.io.
