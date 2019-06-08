@@ -64,3 +64,11 @@ def mk_creoson_post_list(monkeypatch):
     def fake_func(client, command, function, data=None):
         return ['information']
     monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
+
+
+@pytest.fixture
+def mk_creoson_post_sessionId(monkeypatch):
+    """Mock creoson_post return dict."""
+    def fake_func(client, command, function, data=None, key_data=None):
+        return "123456"
+    monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)

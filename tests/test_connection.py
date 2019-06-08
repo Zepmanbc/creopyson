@@ -5,7 +5,8 @@ import json
 import pytest
 import creopyson
 
-from .fixtures import mk_creoson_post_None, mk_creoson_post_dict
+from .fixtures import mk_creoson_post_None, mk_creoson_post_dict, \
+    mk_creoson_post_sessionId
 
 # @pytest.fixture(autouse=True)
 # def no_requests(monkeypatch):
@@ -22,27 +23,12 @@ def test_connection_wether_params_exists():
     assert c.server == "http://here:1234/creoson"
 
 
-def test_connection_connect_succed(monkeypatch):
+def test_connection_connect_succed(mk_creoson_post_sessionId):
     """Test when connection is ok.
 
     sessionId is created and retruened by creoson.
 
     """
-    class Mk_post():
-        def __init__(self, *args, **kwargs):
-            pass
-
-        def json(self):
-            results = {
-                "sessionId": "123456",
-            }
-            return results
-
-        @property
-        def status_code(self):
-            return 200
-
-    monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
     c.connect()
     assert c.sessionId == "123456"

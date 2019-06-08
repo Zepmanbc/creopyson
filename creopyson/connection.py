@@ -12,35 +12,14 @@ class Client(object):
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
         self.sessionId = ''
 
-################################################
     def connect(self):
         """Connect to CREOSON.
 
         Define 'sessionId'.
         Exit if server not found.
         """
-        request = {
-            "command": "connection",
-            "function": "connect"
-        }
-        try:
-            r = requests.post(self.server, data=json.dumps(request))
-        except requests.exceptions.RequestException as e:
-            sys.exit(e)
-        if r.status_code == 200:
-            try:
-                json_result = r.json()
-            except AttributeError:
-                print("No JSON result.")
-            if 'sessionId' in json_result.keys():
-                self.sessionId = json_result['sessionId']
-            else:
-                raise KeyError("No sessionID available.")
-        else:
-            raise ConnectionError()
+        self.sessionId = self.creoson_post("connection", "connect")
 
-############################################################
-# TODO refactoriser connect qui ressemble bcp à creoson_post
 # TODO docstring
     def creoson_post(self, command, function, data=None, key_data=None):
         """Send a POST request to creoson server.
@@ -83,9 +62,10 @@ class Client(object):
                             return json_result["data"][key_data]
                         else:
                             raise KeyError("`{}` not in creoson result".format(key_data))
+                    elif "sessionId" in json_result.keys():
+                        return json_result["sessionId"]
                     return json_result.get("data", None)
                 # TODO tester la présence de data
-                # TODO ajouter un raise de chaque keyvalue error de tous les modules
         else:
             raise ConnectionError()
 

@@ -8,7 +8,7 @@ import creopyson
 import time
 
 IP_CREO = "192.168.56.101"
-# IP_CREO = "192.168.0.38"
+IP_CREO = "192.168.0.38"
 start_command = "C:/Users/Public/Documents/nitro_proe_remote.bat"
 c = creopyson.Client(ip_adress=IP_CREO)
 current_file = "toto.prt"
