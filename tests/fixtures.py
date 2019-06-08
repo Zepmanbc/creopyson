@@ -6,43 +6,47 @@ import pytest
 @pytest.fixture
 def mk_creoson_post_dict(monkeypatch):
     """Mock creoson_post return dict."""
-    def fake_func(client, command, function, data=None):
-        return {
-            "active": True,
-            "checked_out": True,
-            "columns": [],
-            "contourlist": [],
-            "dirname": "dirname",
-            "dimlist": [],
-            "dirlist": [],
-            "drawing": "drawing",
-            "exists": True,
-            "errors": True,
-            "file": "file",
-            "filelist": [],
-            "files": [],
-            "instances": [],
-            "itemlist": [],
-            "layers": [],
-            "loaded": True,
-            "name": "name",
-            "num_sheets": 4,
-            "paramlist": [],
-            "parents": [],
-            "relations": [],
-            "running": True,
-            "scale": 1.5,
-            "size": "size",
-            "sheet": 4,
-            "symbols": [],
-            "transform": {"fake obj": 123},
-            "units": "units",
-            "values": [],
-            "viewlist": [],
-            "views": [],
-            "workspace": "workspace",
-            "workspaces": [],
-        }
+    def fake_func(client, command, function, data=None, key_data=None):
+        if key_data:
+            result = {
+                "active": True,
+                "checked_out": True,
+                "columns": [],
+                "contourlist": [],
+                "dirname": "dirname",
+                "dimlist": [],
+                "dirlist": [],
+                "drawing": "drawing",
+                "exists": True,
+                "errors": True,
+                "file": "file",
+                "filelist": [],
+                "files": [],
+                "instances": [],
+                "itemlist": [],
+                "layers": [],
+                "loaded": True,
+                "name": "name",
+                "num_sheets": 4,
+                "paramlist": [],
+                "parents": [],
+                "relations": [],
+                "running": True,
+                "scale": 1.5,
+                "size": "size",
+                "sheet": 4,
+                "symbols": [],
+                "transform": {"fake obj": 123},
+                "units": "units",
+                "values": [],
+                "viewlist": [],
+                "views": [],
+                "workspace": "workspace",
+                "workspaces": [],
+            }
+            return result[key_data]
+        else:
+            return {}
     monkeypatch.setattr(creopyson.connection.Client, 'creoson_post', fake_func)
 
 

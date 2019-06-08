@@ -8,19 +8,19 @@ import creopyson
 import time
 
 IP_CREO = "192.168.56.101"
-IP_CREO = "192.168.0.38"
+# IP_CREO = "192.168.0.38"
 start_command = "C:/Users/Public/Documents/nitro_proe_remote.bat"
 c = creopyson.Client(ip_adress=IP_CREO)
 current_file = "toto.prt"
 drawing_file = "toto.drw"
 
 c.connect()
+# c.is_creo_running()
+# c.creo_cd("D:/CAO/")
 
-c.creo_cd("D:/CAO/")
-
-listfiles = c.creo_list_files()
-listdirs = c.creo_list_dirs()
-
+# listfiles = c.creo_list_files()
+# listdirs = c.creo_list_dirs()
+c.is_creo_running()
 if not c.is_creo_running():
     c.start_creo(start_command)
     # running = c.is_creo_running()

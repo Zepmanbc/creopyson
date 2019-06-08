@@ -12,6 +12,7 @@ class Client(object):
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
         self.sessionId = ''
 
+################################################
     def connect(self):
         """Connect to CREOSON.
 
@@ -24,18 +25,33 @@ class Client(object):
         }
         try:
             r = requests.post(self.server, data=json.dumps(request))
-            self.sessionId = json.loads(r.content)['sessionId']
         except requests.exceptions.RequestException as e:
             sys.exit(e)
+        if r.status_code == 200:
+            try:
+                json_result = r.json()
+            except AttributeError:
+                print("No JSON result.")
+            if 'sessionId' in json_result.keys():
+                self.sessionId = json_result['sessionId']
+            else:
+                raise KeyError("No sessionID available.")
+        else:
+            raise ConnectionError()
 
-    def creoson_post(self, command, function, data=None):
+############################################################
+# TODO refactoriser connect qui ressemble bcp à creoson_post
+# TODO docstring
+    def creoson_post(self, command, function, data=None, key_data=None):
         """Send a POST request to creoson server.
 
         Args:
             request (dict): Command for creoson.
 
         Raises:
-            Warning: error message from creoson.
+            RuntimeError: error message from creoson.
+            ConnectionError: creoson not reachable.
+            AttributeError: bad creoson return.
 
         Returns:
             (depends request): creoson return.
@@ -47,24 +63,31 @@ class Client(object):
             "function": function,
             "data": data
         }
-        # TODO test sur la connection
-        r = requests.post(self.server, data=json.dumps(request))
-        # json_result = json.loads(r.content)
-        # TODO tester le json
-        json_result = r.json()
-        status = json_result["status"]["error"]
-        if status:
-            error_msg = json_result["status"]["message"]
-            # TODO Runtime error
-            raise Warning(error_msg)
+        try:
+            r = requests.post(self.server, data=json.dumps(request))
+        except requests.exceptions.RequestException as e:
+            sys.exit(e)
+        if r.status_code == 200:
+            try:
+                json_result = r.json()
+            except AttributeError:
+                print("No JSON result.")
+            if "status" in json_result.keys():
+                status = json_result["status"]["error"]
+                if status:
+                    error_msg = json_result["status"]["message"]
+                    raise RuntimeError(error_msg)
+                else:
+                    if key_data:
+                        if key_data in json_result["data"].keys():
+                            return json_result["data"][key_data]
+                        else:
+                            raise KeyError("`{}` not in creoson result".format(key_data))
+                    return json_result.get("data", None)
+                # TODO tester la présence de data
+                # TODO ajouter un raise de chaque keyvalue error de tous les modules
         else:
-            if "data" in json_result.keys():
-                data = json_result["data"]
-            else:
-                data = None
-        return data
-        # get sur dictionnaire pour renvoyer la valeur ou None par defaut
-        # TODO ajouter un raise de chaque keyvalue error de tous les modules
+            raise ConnectionError()
 
     def disconnect(self):
         """Disconnect from CREOSON.
@@ -89,7 +112,12 @@ class Client(object):
             (boolean): True if Creo is running, False instead.
 
         """
-        return self.creoson_post("connection", "is_creo_running")["running"]
+        # return self.creoson_post("connection", "is_creo_running")["running"]
+        return self.creoson_post(
+            "connection",
+            "is_creo_running",
+            key_data="running"
+        )
 
     def kill_creo(self):
         """Kill primary Creo processes.

@@ -32,12 +32,15 @@ def test_connection_connect_succed(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
-                "sessionId": "123456"
+                "sessionId": "123456",
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
@@ -64,8 +67,7 @@ def test_connection_creoson_post_return_data(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": False,
@@ -73,7 +75,11 @@ def test_connection_creoson_post_return_data(monkeypatch):
                 },
                 "data": "creoson result"
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
@@ -87,15 +93,18 @@ def test_connection_creoson_post_return_None(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": False,
                     "message": "error message"
                 }
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
@@ -109,19 +118,22 @@ def test_connection_creoson_post_raise_Warning(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": True,
                     "message": "error message"
                 }
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    with pytest.raises(Warning) as pytest_wrapped_e:
+    with pytest.raises(RuntimeError) as pytest_wrapped_e:
         c.creoson_post("function", "method", {})
     assert pytest_wrapped_e.value.args[0] == "error message"
 

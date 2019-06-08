@@ -17,7 +17,16 @@ def cd(client, dirname):
 
     """
     data = {"dirname": dirname}
-    return client.creoson_post("creo", "cd", data)["dirname"]
+
+    # result = client.creoson_post("creo", "cd", data)
+    # if "dirname" in result.keys():
+    #     return result["dirname"]
+    # else:
+    #     raise KeyError("`dirname` not in result.")
+
+    # return client.creoson_post("creo", "cd", data)["dirname"]
+
+    return client.creoson_post("creo", "cd", data, "dirname")
 
 
 def delete_files(client, filename=None, dirname=None):
