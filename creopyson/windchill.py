@@ -102,7 +102,7 @@ def file_checked_out(client, filename, workspace=None):
     if workspace:
         data["workspace"] = workspace
     return client.creoson_post(
-        "windchill", "file_checked_out", data)["checked_out"]
+        "windchill", "file_checked_out", data, "checked_out")
 
 
 def get_workspace(client):
@@ -115,7 +115,8 @@ def get_workspace(client):
         str: Active Workspace name.
 
     """
-    return client.creoson_post("windchill", "get_workspace")["workspace"]
+    return client.creoson_post(
+        "windchill", "get_workspace", key_data="workspace")
 
 
 def list_workspace_files(client, workspace=None, filename=None):
@@ -144,7 +145,7 @@ def list_workspace_files(client, workspace=None, filename=None):
     if filename:
         data["filename"] = filename
     return client.creoson_post(
-        "windchill", "list_workspace_files", data)["filelist"]
+        "windchill", "list_workspace_files", data, "filelist")
 
 
 def list_workspaces(client):
@@ -157,7 +158,8 @@ def list_workspaces(client):
         list: List of workspaces
 
     """
-    return client.creoson_post("windchill", "list_workspaces")["workspaces"]
+    return client.creoson_post(
+        "windchill", "list_workspaces", key_data="workspaces")
 
 
 def server_exists(client, server_url):
@@ -172,7 +174,7 @@ def server_exists(client, server_url):
 
     """
     data = {"server_url": server_url}
-    return client.creoson_post("windchill", "server_exists", data)["exists"]
+    return client.creoson_post("windchill", "server_exists", data, "exists")
 
 
 def set_server(client, server_url):
@@ -217,4 +219,4 @@ def workspace_exists(client, workspace):
 
     """
     data = {"workspace": workspace}
-    return client.creoson_post("windchill", "workspace_exists", data)["exists"]
+    return client.creoson_post("windchill", "workspace_exists", data, "exists")

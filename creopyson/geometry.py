@@ -72,7 +72,7 @@ def get_edges(client, surface_ids, file_=None):
     data = {"surface_ids": surface_ids}
     if file_:
         data["file"] = file_
-    return client.creoson_post("geometry", "get_edges", data)["contourlist"]
+    return client.creoson_post("geometry", "get_edges", data, "contourlist")
 
 
 def get_surfaces(client, file_=None):
@@ -112,4 +112,4 @@ def get_surfaces(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("geometry", "get_surfaces", data)["contourlist"]
+    return client.creoson_post("geometry", "get_surfaces", data, "contourlist")

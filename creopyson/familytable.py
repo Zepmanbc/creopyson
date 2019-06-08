@@ -42,7 +42,7 @@ def create_inst(client, instance, file_=None):
     data = {"instance": instance}
     if file_:
         data["file"] = file_
-    return client.creoson_post("familytable", "create_inst", data)["name"]
+    return client.creoson_post("familytable", "create_inst", data, "name")
 
 
 def delete_inst(client, instance, file_=None):
@@ -106,7 +106,7 @@ def exists(client, instance, file_=None):
     data = {"instance": instance}
     if file_:
         data["file"] = file_
-    return client.creoson_post("familytable", "exists", data)["exists"]
+    return client.creoson_post("familytable", "exists", data, "exists")
 
 
 def get_cell(client, instance, colid, file_=None):
@@ -170,7 +170,7 @@ def get_header(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("familytable", "get_header", data)["columns"]
+    return client.creoson_post("familytable", "get_header", data, "columns")
 
 
 def get_parents(client, file_=None):
@@ -192,7 +192,7 @@ def get_parents(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("familytable", "get_parents", data)["parents"]
+    return client.creoson_post("familytable", "get_parents", data, "parents")
 
 
 def get_row(client, instance, file_=None):
@@ -221,7 +221,7 @@ def get_row(client, instance, file_=None):
     data = {"instance": instance}
     if file_:
         data["file"] = file_
-    return client.creoson_post("familytable", "get_row", data)["columns"]
+    return client.creoson_post("familytable", "get_row", data, "columns")
 
 
 def list_(client, file_=None, instance=None):
@@ -245,7 +245,7 @@ def list_(client, file_=None, instance=None):
         data["file"] = file_
     if instance:
         data["instance"] = instance
-    return client.creoson_post("familytable", "list", data)["instances"]
+    return client.creoson_post("familytable", "list", data, "instances")
 
 
 def list_tree(client, file_=None, erase=None):
@@ -280,7 +280,7 @@ def list_tree(client, file_=None, erase=None):
         data["file"] = file_
     if erase:
         data["erase"] = erase
-    return client.creoson_post("familytable", "list_tree", data)["instances"]
+    return client.creoson_post("familytable", "list_tree", data, "instances")
 
 
 def replace(

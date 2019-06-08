@@ -17,15 +17,6 @@ def cd(client, dirname):
 
     """
     data = {"dirname": dirname}
-
-    # result = client.creoson_post("creo", "cd", data)
-    # if "dirname" in result.keys():
-    #     return result["dirname"]
-    # else:
-    #     raise KeyError("`dirname` not in result.")
-
-    # return client.creoson_post("creo", "cd", data)["dirname"]
-
     return client.creoson_post("creo", "cd", data, "dirname")
 
 
@@ -54,7 +45,7 @@ def delete_files(client, filename=None, dirname=None):
             data["filename"] = str(filename)
     if dirname:
         data["dirname"] = dirname
-    return client.creoson_post("creo", "delete_files", data)["filelist"]
+    return client.creoson_post("creo", "delete_files", data, "filelist")
 
 
 def get_config(client, name):
@@ -73,7 +64,7 @@ def get_config(client, name):
 
     """
     data = {"name": name}
-    return client.creoson_post("creo", "get_config", data)["values"]
+    return client.creoson_post("creo", "get_config", data, "values")
 
 
 def get_std_color(client, color_type):
@@ -117,7 +108,7 @@ def list_dirs(client, dirname=None):
     data = {"dirname": "*"}
     if dirname:
         data["dirname"] = dirname
-    return client.creoson_post("creo", "list_dirs", data)["dirlist"]
+    return client.creoson_post("creo", "list_dirs", data, "dirlist")
 
 
 def list_files(client, filename=None):
@@ -137,7 +128,7 @@ def list_files(client, filename=None):
     data = {"filename": "*"}
     if filename:
         data["filename"] = filename
-    return client.creoson_post("creo", "list_files", data)["filelist"]
+    return client.creoson_post("creo", "list_files", data, "filelist")
 
 
 def mkdir(client, dirname):
@@ -152,7 +143,7 @@ def mkdir(client, dirname):
 
     """
     data = {"dirname": dirname}
-    return client.creoson_post("creo", "mkdir", data)["dirname"]
+    return client.creoson_post("creo", "mkdir", data, "dirname")
 
 
 def pwd(client):
@@ -165,7 +156,7 @@ def pwd(client):
         (str): Full name of working directory.
 
     """
-    return client.creoson_post("creo", "pwd")["dirname"]
+    return client.creoson_post("creo", "pwd", key_data="dirname")
 
 
 def rmdir(client, dirname):

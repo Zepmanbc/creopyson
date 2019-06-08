@@ -48,7 +48,7 @@ def exists(client, name=None, file_=None):
         data["file"] = file_
     if name:
         data["name"] = name
-    return client.creoson_post("layer", "exists", data)["exists"]
+    return client.creoson_post("layer", "exists", data, "exists")
 
 
 def list_(client, name=None, file_=None):
@@ -79,7 +79,7 @@ def list_(client, name=None, file_=None):
         data["file"] = file_
     if name:
         data["name"] = name
-    return client.creoson_post("layer", "list", data)["layers"]
+    return client.creoson_post("layer", "list", data, "layers")
 
 
 def show(client, name=None, file_=None, show_=None):

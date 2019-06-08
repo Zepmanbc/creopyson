@@ -296,7 +296,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
         data["filename"] = filename
     if dirname:
         data["dirname"] = dirname
-    return client.creoson_post("interface", "import_program", data)["file"]
+    return client.creoson_post("interface", "import_program", data, "file")
 
 
 def mapkey(client, script):

@@ -79,7 +79,7 @@ def exists(client, file_=None, name=None):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    return client.creoson_post("note", "exists", data)["exists"]
+    return client.creoson_post("note", "exists", data, "exists")
 
 
 def get(client, name, file_=None):
@@ -153,7 +153,7 @@ def list_(
         data["get_expanded"] = get_expanded
     if value:
         data["value"] = value
-    return client.creoson_post("note", "list", data)["itemlist"]
+    return client.creoson_post("note", "list", data, "itemlist")
 
 
 def set_(client, name, file_=None, encoded=None, value=None):

@@ -200,7 +200,7 @@ def param_exists(client, file_=None, param=None):
             data["param"] = param
         elif isinstance(param, (list)):
             data["params"] = param
-    return client.creoson_post("feature", "param_exists", data)["exists"]
+    return client.creoson_post("feature", "param_exists", data, "exists")
 
 
 def rename(client, name, new_name, file_=None):

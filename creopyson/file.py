@@ -214,7 +214,7 @@ def exists(client, file_):
 
     """
     data = {"file": file_}
-    return client.creoson_post("file", "exists", data)["exists"]
+    return client.creoson_post("file", "exists", data, "exists")
 
 
 def get_active(client):
@@ -270,7 +270,7 @@ def get_length_units(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "get_length_units", data)["units"]
+    return client.creoson_post("file", "get_length_units", data, "units")
 
 
 def get_mass_units(client, file_=None):
@@ -289,7 +289,7 @@ def get_mass_units(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "get_mass_units", data)["units"]
+    return client.creoson_post("file", "get_mass_units", data, "units")
 
 
 def get_transform(client, asm=None, path=None, csys=None):
@@ -319,7 +319,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         data["path"] = path
     if csys:
         data["csys"] = csys
-    return client.creoson_post("file", "get_transform", data)["transform"]
+    return client.creoson_post("file", "get_transform", data, "transform")
 
 
 def has_instances(client, file_=None):
@@ -338,7 +338,7 @@ def has_instances(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "has_instances", data)["exists"]
+    return client.creoson_post("file", "has_instances", data, "exists")
 
 
 def is_active(client, file_):
@@ -353,7 +353,7 @@ def is_active(client, file_):
 
     """
     data = {"file": file_}
-    return client.creoson_post("file", "is_active", data)["active"]
+    return client.creoson_post("file", "is_active", data, "active")
 
 
 def list_(client, file_=None):
@@ -375,7 +375,7 @@ def list_(client, file_=None):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
-    return client.creoson_post("file", "is_active", data)["files"]
+    return client.creoson_post("file", "is_active", data, "files")
 
 
 def list_instances(client, file_=None):
@@ -529,7 +529,7 @@ def open_errors(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "open_errors", data)["errors"]
+    return client.creoson_post("file", "open_errors", data, "errors")
 
 
 def postregen_relations_get(client, file_=None):
@@ -549,7 +549,7 @@ def postregen_relations_get(client, file_=None):
     if file_:
         data["file"] = file_
     return client.creoson_post(
-        "file", "postregen_relations_get", data)["relations"]
+        "file", "postregen_relations_get", data, "relations")
 
 
 def postregen_relations_set(client, file_=None, relations=None):
@@ -638,7 +638,7 @@ def relations_get(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "relations_get", data)["relations"]
+    return client.creoson_post("file", "relations_get", data, "relations")
 
 
 def relations_set(client, file_=None, relations=None):
@@ -687,7 +687,7 @@ def rename(client, new_name, file_=None, onlysession=None):
         data["file"] = file_
     if onlysession:
         data["onlysession"] = onlysession
-    return client.creoson_post("file", "rename", data)["file"]
+    return client.creoson_post("file", "rename", data, "file")
 
 
 def repaint(client, file_=None):

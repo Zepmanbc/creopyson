@@ -89,7 +89,7 @@ def exists(client, name=None, file_=None):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    return client.creoson_post("parameter", "exists", data)["exists"]
+    return client.creoson_post("parameter", "exists", data, "exists")
     # TODO: group name/names
 
 
@@ -137,7 +137,7 @@ def list_(
         data["encoded"] = encoded
     if value:
         data["value"] = value
-    return client.creoson_post("parameter", "list", data)["paramlist"]
+    return client.creoson_post("parameter", "list", data, "paramlist")
 
 
 def set_(
