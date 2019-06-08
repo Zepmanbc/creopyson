@@ -46,28 +46,38 @@ class Client(object):
             r = requests.post(self.server, data=json.dumps(request))
         except requests.exceptions.RequestException as e:
             sys.exit(e)
-        if r.status_code == 200:
-            try:
-                json_result = r.json()
-            except AttributeError:
-                print("No JSON result.")
-            if "status" in json_result.keys():
-                status = json_result["status"]["error"]
-                if status:
-                    error_msg = json_result["status"]["message"]
-                    raise RuntimeError(error_msg)
-                else:
-                    if key_data:
-                        if key_data in json_result["data"].keys():
-                            return json_result["data"][key_data]
-                        else:
-                            raise KeyError("`{}` not in creoson result".format(key_data))
-                    elif "sessionId" in json_result.keys():
-                        return json_result["sessionId"]
-                    return json_result.get("data", None)
-                # TODO tester la présence de data
-        else:
+
+        if r.status_code != 200:
             raise ConnectionError()
+
+        try:
+            json_result = r.json()
+        except AttributeError:
+            print("No JSON result.")
+
+        if "status" not in json_result.keys():
+            raise KeyError("No `status` in request return.")
+
+        if "error" not in json_result["status"].keys():
+            raise KeyError("No `error` in status return.")
+
+        status = json_result["status"]["error"]
+        if status:
+            error_msg = json_result["status"]["message"]
+            raise RuntimeError(error_msg)
+
+        if key_data:
+            if "data" not in json_result.keys():
+                raise KeyError("no `data` key in creoson return")
+            if key_data not in json_result["data"].keys():
+                raise KeyError("`{}` not in creoson result".format(key_data))
+
+            return json_result["data"][key_data]
+
+        elif "sessionId" in json_result.keys():
+            return json_result["sessionId"]
+
+        return json_result.get("data", None)
 
     def disconnect(self):
         """Disconnect from CREOSON.
