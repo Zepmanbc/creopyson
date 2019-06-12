@@ -45,7 +45,7 @@ class Client(object):
         try:
             r = requests.post(self.server, data=json.dumps(request))
         except requests.exceptions.RequestException as e:
-            sys.exit(e)
+            raise ConnectionError(e)
 
         if r.status_code != 200:
             raise ConnectionError()
@@ -54,12 +54,18 @@ class Client(object):
             json_result = r.json()
         except AttributeError:
             print("No JSON result.")
+            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
+            # voir pour faire un héritage de requests.exceptions
+            # https://www.python.org/dev/peps/pep-0352/
+            # https://www.python.org/dev/peps/pep-0344/
 
         if "status" not in json_result.keys():
             raise KeyError("No `status` in request return.")
+            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
 
         if "error" not in json_result["status"].keys():
             raise KeyError("No `error` in status return.")
+            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
 
         status = json_result["status"]["error"]
         if status:
@@ -69,15 +75,21 @@ class Client(object):
         if key_data:
             if "data" not in json_result.keys():
                 raise KeyError("no `data` key in creoson return")
+                # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
             if key_data not in json_result["data"].keys():
                 raise KeyError("`{}` not in creoson result".format(key_data))
+                # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
 
             return json_result["data"][key_data]
 
         elif "sessionId" in json_result.keys():
             return json_result["sessionId"]
+        # renvoyer si connection/connect
+        # tester si "sessionId" existe
 
         return json_result.get("data", None)
+
+        # scinder la fonction en 2 la fonction pour avoir le request et l'extraction de résultat
 
     def disconnect(self):
         """Disconnect from CREOSON.
