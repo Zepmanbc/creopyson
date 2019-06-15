@@ -2,6 +2,7 @@
 import requests
 import json
 import sys
+from .exceptions import MissingKey
 
 
 class Client(object):
@@ -52,40 +53,34 @@ class Client(object):
 
         try:
             json_result = r.json()
-        except AttributeError:
-            print("No JSON result.")
-            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
-            # voir pour faire un héritage de requests.exceptions
-            # https://www.python.org/dev/peps/pep-0352/
-            # https://www.python.org/dev/peps/pep-0344/
+        except TypeError:
+            print("Cannot decode JSON, creoson result invalid.")
 
         if "status" not in json_result.keys():
-            raise KeyError("No `status` in request return.")
-            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
+            raise MissingKey("Missing `status` in creoson result.")
 
         if "error" not in json_result["status"].keys():
-            raise KeyError("No `error` in status return.")
-            # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
+            raise MissingKey("Missing `error` in status' creoson's result.")
 
         status = json_result["status"]["error"]
         if status:
             error_msg = json_result["status"]["message"]
             raise RuntimeError(error_msg)
 
-        if key_data:
+        if request["command"] == "connection" and\
+           request["function"] == "connect":
+            if "sessionId" not in json_result.keys():
+                raise MissingKey("Missing `sessionId` in creoson result.")
+            else:
+                return json_result["sessionId"]
+
+        if key_data is not None:
             if "data" not in json_result.keys():
-                raise KeyError("no `data` key in creoson return")
-                # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
+                raise MissingKey("Missing `data` in creoson return")
             if key_data not in json_result["data"].keys():
-                raise KeyError("`{}` not in creoson result".format(key_data))
-                # TODO faire une exception creopyson qui dit que creoson renvoi de la merde
-
+                raise MissingKey(
+                    "Missing `{}` in creoson result".format(key_data))
             return json_result["data"][key_data]
-
-        elif "sessionId" in json_result.keys():
-            return json_result["sessionId"]
-        # renvoyer si connection/connect
-        # tester si "sessionId" existe
 
         return json_result.get("data", None)
 
