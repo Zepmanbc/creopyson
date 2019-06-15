@@ -23,7 +23,7 @@ def test_connection_wether_params_exists():
     assert c.server == "http://here:1234/creoson"
 
 
-def test_connection_connect_succed(mk__creoson_post_sessionId):
+def test_connection_connect_succed(mk_creoson_post_sessionId):
     """Test when connection is ok.
 
     sessionId is created and retruened by creoson.
@@ -42,9 +42,9 @@ def test_connection_connect_fails(monkeypatch):
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    with pytest.raises(SystemExit) as pytest_wrapped_e:
+    with pytest.raises(ConnectionError) as pytest_wrapped_e:
         c.connect()
-    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.type == ConnectionError
 
 
 def test_connection__creoson_post_return_data(monkeypatch):
@@ -124,7 +124,7 @@ def test_connection__creoson_post_raise_Warning(monkeypatch):
     assert pytest_wrapped_e.value.args[0] == "error message"
 
 
-def test_connection_disconnect_ok(mk__creoson_post_None):
+def test_connection_disconnect_ok(mk_creoson_post_None):
     """Test wether client is disconnected (empty sessionId)."""
     c = creopyson.Client()
     c.sessionId = "12345"
@@ -132,28 +132,28 @@ def test_connection_disconnect_ok(mk__creoson_post_None):
     assert c.sessionId == ""
 
 
-def test_connection_is_creo_running_yes(mk__creoson_post_dict):
+def test_connection_is_creo_running_yes(mk_creoson_post_dict):
     """Test wether creo is running OK."""
     c = creopyson.Client()
     result = c.is_creo_running()
     assert result
 
 
-def test_connection_kill_creo_ok(mk__creoson_post_None):
+def test_connection_kill_creo_ok(mk_creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.kill_creo()
     assert result is None
 
 
-def test_connection_start_creo_ok(mk__creoson_post_None):
+def test_connection_start_creo_ok(mk_creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.start_creo("C:/folder/nitro_proe_remote.bat")
     assert result is None
 
 
-def test_connection_stop_creo_ok(mk__creoson_post_None):
+def test_connection_stop_creo_ok(mk_creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.stop_creo()
