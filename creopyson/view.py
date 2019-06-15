@@ -19,7 +19,7 @@ def activate(client, name, file_=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("view", "activate", data)
+    return client._creoson_post("view", "activate", data)
 
 
 def list_exploded(client, file_=None, name=None):
@@ -41,7 +41,7 @@ def list_exploded(client, file_=None, name=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("view", "list_exploded", data, "viewlist")
+    return client._creoson_post("view", "list_exploded", data, "viewlist")
 
 
 def list_(client, file_=None, name=None):
@@ -63,7 +63,7 @@ def list_(client, file_=None, name=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("view", "list", data, "viewlist")
+    return client._creoson_post("view", "list", data, "viewlist")
     # TODO: group with list_exploded?
 
 
@@ -85,4 +85,4 @@ def save(client, name, file_=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("view", "save", data)
+    return client._creoson_post("view", "save", data)

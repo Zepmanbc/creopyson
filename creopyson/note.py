@@ -30,7 +30,7 @@ def copy(client, name, to_name=None, file_=None, to_file=None):
         data["file"] = file_
     if to_file:
         data["to_file"] = to_file
-    return client.creoson_post("note", "copy", data)
+    return client._creoson_post("note", "copy", data)
 
 
 def delete(client, name, file_=None):
@@ -52,7 +52,7 @@ def delete(client, name, file_=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("note", "delete", data)
+    return client._creoson_post("note", "delete", data)
 
 
 def exists(client, file_=None, name=None):
@@ -79,7 +79,7 @@ def exists(client, file_=None, name=None):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    return client.creoson_post("note", "exists", data, "exists")
+    return client._creoson_post("note", "exists", data, "exists")
 
 
 def get(client, name, file_=None):
@@ -105,7 +105,7 @@ def get(client, name, file_=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("note", "get", data)
+    return client._creoson_post("note", "get", data)
 
 
 def list_(
@@ -153,7 +153,7 @@ def list_(
         data["get_expanded"] = get_expanded
     if value:
         data["value"] = value
-    return client.creoson_post("note", "list", data, "itemlist")
+    return client._creoson_post("note", "list", data, "itemlist")
 
 
 def set_(client, name, file_=None, encoded=None, value=None):
@@ -184,4 +184,4 @@ def set_(client, name, file_=None, encoded=None, value=None):
         data["encoded"] = encoded
     if value:
         data["value"] = value
-    return client.creoson_post("note", "set", data)
+    return client._creoson_post("note", "set", data)

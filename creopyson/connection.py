@@ -19,10 +19,10 @@ class Client(object):
         Define 'sessionId'.
         Exit if server not found.
         """
-        self.sessionId = self.creoson_post("connection", "connect")
+        self.sessionId = self._creoson_post("connection", "connect")
 
 # TODO docstring
-    def creoson_post(self, command, function, data=None, key_data=None):
+    def _creoson_post(self, command, function, data=None, key_data=None):
         """Send a POST request to creoson server.
 
         Args:
@@ -91,7 +91,7 @@ class Client(object):
 
         Empty sessionId.
         """
-        self.creoson_post("connection", "disconnect")
+        self._creoson_post("connection", "disconnect")
         self.sessionId = ''
 
     def is_creo_running(self):
@@ -109,8 +109,8 @@ class Client(object):
             (boolean): True if Creo is running, False instead.
 
         """
-        # return self.creoson_post("connection", "is_creo_running")["running"]
-        return self.creoson_post(
+        # return self._creoson_post("connection", "is_creo_running")["running"]
+        return self._creoson_post(
             "connection",
             "is_creo_running",
             key_data="running"
@@ -129,7 +129,7 @@ class Client(object):
             None
 
         """
-        return self.creoson_post("connection", "kill_creo")
+        return self._creoson_post("connection", "kill_creo")
 
     def start_creo(self, path, retries=0):
         """Execute an external .bat file to start Creo.
@@ -166,7 +166,7 @@ class Client(object):
             "start_command": start_command,
             "retries": retries
         }
-        return self.creoson_post("connection", "start_creo", data)
+        return self._creoson_post("connection", "start_creo", data)
 
     def stop_creo(self):
         """Disconnect current session from Creo and cause Creo to exit.
@@ -182,4 +182,4 @@ class Client(object):
             None
 
         """
-        return self.creoson_post("connection", "stop_creo")
+        return self._creoson_post("connection", "stop_creo")

@@ -23,7 +23,7 @@ def test_connection_wether_params_exists():
     assert c.server == "http://here:1234/creoson"
 
 
-def test_connection_connect_succed(mk_creoson_post_sessionId):
+def test_connection_connect_succed(mk__creoson_post_sessionId):
     """Test when connection is ok.
 
     sessionId is created and retruened by creoson.
@@ -47,8 +47,8 @@ def test_connection_connect_fails(monkeypatch):
     assert pytest_wrapped_e.type == SystemExit
 
 
-def test_connection_creoson_post_return_data(monkeypatch):
-    """Test creoson_post returning data."""
+def test_connection__creoson_post_return_data(monkeypatch):
+    """Test _creoson_post returning data."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
@@ -69,12 +69,12 @@ def test_connection_creoson_post_return_data(monkeypatch):
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    result = c.creoson_post("function", "method", {})
+    result = c._creoson_post("function", "method", {})
     assert result == "creoson result"
 
 
-def test_connection_creoson_post_return_None(monkeypatch):
-    """Test creoson_post returning None."""
+def test_connection__creoson_post_return_None(monkeypatch):
+    """Test _creoson_post returning None."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
@@ -94,12 +94,12 @@ def test_connection_creoson_post_return_None(monkeypatch):
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    result = c.creoson_post("function", "method", {})
+    result = c._creoson_post("function", "method", {})
     assert result is None
 
 
-def test_connection_creoson_post_raise_Warning(monkeypatch):
-    """Test creoson_post raise Warning."""
+def test_connection__creoson_post_raise_Warning(monkeypatch):
+    """Test _creoson_post raise Warning."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
@@ -120,11 +120,11 @@ def test_connection_creoson_post_raise_Warning(monkeypatch):
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
     with pytest.raises(RuntimeError) as pytest_wrapped_e:
-        c.creoson_post("function", "method", {})
+        c._creoson_post("function", "method", {})
     assert pytest_wrapped_e.value.args[0] == "error message"
 
 
-def test_connection_disconnect_ok(mk_creoson_post_None):
+def test_connection_disconnect_ok(mk__creoson_post_None):
     """Test wether client is disconnected (empty sessionId)."""
     c = creopyson.Client()
     c.sessionId = "12345"
@@ -132,28 +132,28 @@ def test_connection_disconnect_ok(mk_creoson_post_None):
     assert c.sessionId == ""
 
 
-def test_connection_is_creo_running_yes(mk_creoson_post_dict):
+def test_connection_is_creo_running_yes(mk__creoson_post_dict):
     """Test wether creo is running OK."""
     c = creopyson.Client()
     result = c.is_creo_running()
     assert result
 
 
-def test_connection_kill_creo_ok(mk_creoson_post_None):
+def test_connection_kill_creo_ok(mk__creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.kill_creo()
     assert result is None
 
 
-def test_connection_start_creo_ok(mk_creoson_post_None):
+def test_connection_start_creo_ok(mk__creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.start_creo("C:/folder/nitro_proe_remote.bat")
     assert result is None
 
 
-def test_connection_stop_creo_ok(mk_creoson_post_None):
+def test_connection_stop_creo_ok(mk__creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
     result = c.stop_creo()

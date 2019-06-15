@@ -63,4 +63,4 @@ def get_paths(
         data["get_transforms"] = get_transforms
     if exclude_inactive:
         data["exclude_inactive"] = exclude_inactive
-    return client.creoson_post("bom", "get_paths", data)
+    return client._creoson_post("bom", "get_paths", data)

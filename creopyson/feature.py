@@ -51,7 +51,7 @@ def delete(
         data["type"] = type_
     if clip:
         data["clip"] = clip
-    return client.creoson_post("feature", "delete", data)
+    return client._creoson_post("feature", "delete", data)
 
 
 def delete_param(client, name=None, file_=None, param=None):
@@ -80,7 +80,7 @@ def delete_param(client, name=None, file_=None, param=None):
         data["name"] = name
     if param:
         data["param"] = param
-    return client.creoson_post("feature", "delete_param", data)
+    return client._creoson_post("feature", "delete_param", data)
 
 
 def list_(
@@ -173,7 +173,7 @@ def list_(
         data["value"] = value
     if encoded:
         data["encoded"] = encoded
-    return client.creoson_post("feature", "list", data)
+    return client._creoson_post("feature", "list", data)
 
 
 def param_exists(client, file_=None, param=None):
@@ -200,7 +200,7 @@ def param_exists(client, file_=None, param=None):
             data["param"] = param
         elif isinstance(param, (list)):
             data["params"] = param
-    return client.creoson_post("feature", "param_exists", data, "exists")
+    return client._creoson_post("feature", "param_exists", data, "exists")
 
 
 def rename(client, name, new_name, file_=None):
@@ -230,7 +230,7 @@ def rename(client, name, new_name, file_=None):
         data["feat_id"] = name
     else:
         raise TypeError("name must be str or int")
-    return client.creoson_post("feature", "rename", data)
+    return client._creoson_post("feature", "rename", data)
     # TODO: feat_id/name
 
 
@@ -284,7 +284,7 @@ def resume(
         data["type"] = type_
     if with_children:
         data["with_children"] = with_children
-    return client.creoson_post("feature", "resume", data)
+    return client._creoson_post("feature", "resume", data)
 
 
 def set_param(
@@ -347,7 +347,7 @@ def set_param(
         data["designate"] = designate
     if no_create:
         data["no_create"] = no_create
-    return client.creoson_post("feature", "set_param", data)
+    return client._creoson_post("feature", "set_param", data)
 
 
 def suppress(
@@ -409,7 +409,7 @@ def suppress(
         data["clip"] = False
     if with_children is False:
         data["with_children"] = False
-    return client.creoson_post("feature", "suppress", data)
+    return client._creoson_post("feature", "suppress", data)
 
 
 def user_select_csys(client, file_=None, max_=None):
@@ -452,4 +452,4 @@ def user_select_csys(client, file_=None, max_=None):
         data["file"] = file_
     if max_:
         data["max"] = max_
-    return client.creoson_post("feature", "user_select_csys", data)
+    return client._creoson_post("feature", "user_select_csys", data)

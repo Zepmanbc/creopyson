@@ -64,7 +64,7 @@ def export_3dpdf(
         data["dpi"] = dpi
     if use_drawing_settings:
         data["use_drawing_settings"] = use_drawing_settings
-    return client.creoson_post("interface", "export_3dpdf", data)
+    return client._creoson_post("interface", "export_3dpdf", data)
 
 
 def export_file(
@@ -126,7 +126,7 @@ def export_file(
         data["geom_flags"] = geom_flags
     if advanced:
         data["advanced"] = advanced
-    return client.creoson_post("interface", "export_file", data)
+    return client._creoson_post("interface", "export_file", data)
 
 
 def export_image(
@@ -182,7 +182,7 @@ def export_image(
         data["dpi"] = dpi
     if depth:
         data["depth"] = depth
-    return client.creoson_post("interface", "export_image", data)
+    return client._creoson_post("interface", "export_image", data)
 
 
 def export_pdf(
@@ -243,7 +243,7 @@ def export_pdf(
         data["dpi"] = dpi
     if use_drawing_settings:
         data["use_drawing_settings"] = use_drawing_settings
-    return client.creoson_post("interface", "export_pdf", data)
+    return client._creoson_post("interface", "export_pdf", data)
 
 
 def export_program(client, file_=None):
@@ -264,7 +264,7 @@ def export_program(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("interface", "export_program", data)
+    return client._creoson_post("interface", "export_program", data)
 
 
 def import_program(client, file_=None, filename=None, dirname=None):
@@ -296,7 +296,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
         data["filename"] = filename
     if dirname:
         data["dirname"] = dirname
-    return client.creoson_post("interface", "import_program", data, "file")
+    return client._creoson_post("interface", "import_program", data, "file")
 
 
 def mapkey(client, script):
@@ -314,7 +314,7 @@ def mapkey(client, script):
 
     """
     data = {"script": script}
-    return client.creoson_post("interface", "mapkey", data)
+    return client._creoson_post("interface", "mapkey", data)
 
 
 def plot(client, file_=None, dirname=None, driver=None):
@@ -346,4 +346,4 @@ def plot(client, file_=None, dirname=None, driver=None):
         data["dirname"] = dirname
     if driver:
         data["driver"] = driver
-    return client.creoson_post("interface", "plot", data)
+    return client._creoson_post("interface", "plot", data)
