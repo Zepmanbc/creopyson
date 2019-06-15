@@ -47,7 +47,8 @@ def mk_creoson_post_dict(monkeypatch):
             return result[key_data]
         else:
             return {}
-    monkeypatch.setattr(creopyson.connection.Client, '_creoson_post', fake_func)
+    monkeypatch.setattr(
+        creopyson.connection.Client, '_creoson_post', fake_func)
 
 
 @pytest.fixture
@@ -55,7 +56,8 @@ def mk_creoson_post_None(monkeypatch):
     """Mock _creoson_post return None."""
     def fake_func(client, command, function, data=None):
         return None
-    monkeypatch.setattr(creopyson.connection.Client, '_creoson_post', fake_func)
+    monkeypatch.setattr(
+        creopyson.connection.Client, '_creoson_post', fake_func)
 
 
 @pytest.fixture
@@ -63,7 +65,8 @@ def mk_creoson_post_list(monkeypatch):
     """Mock _creoson_post return list."""
     def fake_func(client, command, function, data=None):
         return ['information']
-    monkeypatch.setattr(creopyson.connection.Client, '_creoson_post', fake_func)
+    monkeypatch.setattr(
+        creopyson.connection.Client, '_creoson_post', fake_func)
 
 
 @pytest.fixture
@@ -71,4 +74,5 @@ def mk_creoson_post_sessionId(monkeypatch):
     """Mock _creoson_post return dict."""
     def fake_func(client, command, function, data=None, key_data=None):
         return "123456"
-    monkeypatch.setattr(creopyson.connection.Client, '_creoson_post', fake_func)
+    monkeypatch.setattr(
+        creopyson.connection.Client, '_creoson_post', fake_func)

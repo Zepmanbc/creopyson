@@ -23,15 +23,18 @@ class Client(object):
 
 # TODO docstring
     def _creoson_post(self, command, function, data=None, key_data=None):
-        """Send a POST request to creoson server.
+        """Send a POST request to creoson server and return waited data.
 
         Args:
-            request (dict): Command for creoson.
+            command (str): Command param for creoson.
+            function (str): Function param for creoson.
+            data (dict), optionnal: data params for creson request.
+            key_data (str): param name waited in result.
 
         Raises:
             RuntimeError: error message from creoson.
             ConnectionError: creoson not reachable.
-            AttributeError: bad creoson return.
+            MissingKey: Missing arg in creoson return.
 
         Returns:
             (depends request): creoson return.
@@ -49,7 +52,7 @@ class Client(object):
             raise ConnectionError(e)
 
         if r.status_code != 200:
-            raise ConnectionError()
+            raise ConnectionError("Status code :".format(r.status_code))
 
         try:
             json_result = r.json()
@@ -84,7 +87,8 @@ class Client(object):
 
         return json_result.get("data", None)
 
-        # scinder la fonction en 2 la fonction pour avoir le request et l'extraction de résultat
+        # scinder la fonction en 2 la fonction pour avoir le request
+        # et l'extraction de résultat: où mettre `sessionId`?
 
     def disconnect(self):
         """Disconnect from CREOSON.
