@@ -2,7 +2,7 @@
 import requests
 import json
 import sys
-from .exceptions import MissingKey
+from .exceptions import MissingKey, ErrorJsonDecode
 
 
 class Client(object):
@@ -28,8 +28,8 @@ class Client(object):
         Args:
             command (str): Command param for creoson.
             function (str): Function param for creoson.
-            data (dict), optionnal: data params for creson request.
-            key_data (str): param name waited in result.
+            data (dict, optionnal): data params for creson request.
+            key_data (str, optionnal): param name waited in result.
 
         Raises:
             RuntimeError: error message from creoson.
@@ -52,12 +52,13 @@ class Client(object):
             raise ConnectionError(e)
 
         if r.status_code != 200:
-            raise ConnectionError("Status code :".format(r.status_code))
+            raise ConnectionError("Status code : {}".format(r.status_code))
 
         try:
             json_result = r.json()
         except TypeError:
-            print("Cannot decode JSON, creoson result invalid.")
+            raise ErrorJsonDecode(
+                "Cannot decode JSON, creoson result invalid.")
 
         if "status" not in json_result.keys():
             raise MissingKey("Missing `status` in creoson result.")
