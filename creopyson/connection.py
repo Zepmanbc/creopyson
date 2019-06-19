@@ -21,7 +21,6 @@ class Client(object):
         """
         self.sessionId = self._creoson_post("connection", "connect")
 
-# TODO docstring
     def _creoson_post(self, command, function, data=None, key_data=None):
         """Send a POST request to creoson server and return waited data.
 
@@ -87,9 +86,6 @@ class Client(object):
             return json_result["data"][key_data]
 
         return json_result.get("data", None)
-
-        # scinder la fonction en 2 la fonction pour avoir le request
-        # et l'extraction de résultat: où mettre `sessionId`?
 
     def disconnect(self):
         """Disconnect from CREOSON.

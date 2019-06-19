@@ -44,6 +44,14 @@ creopyson.drawing module
     :undoc-members:
     :show-inheritance:
 
+creopyson.exceptions module
+---------------------------
+
+.. automodule:: creopyson.exceptions
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 creopyson.familytable module
 ----------------------------
 
