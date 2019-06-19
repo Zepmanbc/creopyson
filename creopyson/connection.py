@@ -2,6 +2,7 @@
 import requests
 import json
 import sys
+from .exceptions import MissingKey, ErrorJsonDecode
 
 
 class Client(object):
@@ -18,24 +19,21 @@ class Client(object):
         Define 'sessionId'.
         Exit if server not found.
         """
-        request = {
-            "command": "connection",
-            "function": "connect"
-        }
-        try:
-            r = requests.post(self.server, data=json.dumps(request))
-            self.sessionId = json.loads(r.content)['sessionId']
-        except requests.exceptions.RequestException as e:
-            sys.exit(e)
+        self.sessionId = self._creoson_post("connection", "connect")
 
-    def creoson_post(self, command, function, data=None):
-        """Send a POST request to creoson server.
+    def _creoson_post(self, command, function, data=None, key_data=None):
+        """Send a POST request to creoson server and return waited data.
 
         Args:
-            request (dict): Command for creoson.
+            command (str): Command param for creoson.
+            function (str): Function param for creoson.
+            data (dict, optionnal): data params for creson request.
+            key_data (str, optionnal): param name waited in result.
 
         Raises:
-            Warning: error message from creoson.
+            RuntimeError: error message from creoson.
+            ConnectionError: creoson not reachable.
+            MissingKey: Missing arg in creoson return.
 
         Returns:
             (depends request): creoson return.
@@ -47,31 +45,54 @@ class Client(object):
             "function": function,
             "data": data
         }
-        # TODO test sur la connection
-        r = requests.post(self.server, data=json.dumps(request))
-        # json_result = json.loads(r.content)
-        # TODO tester le json
-        json_result = r.json()
+        try:
+            r = requests.post(self.server, data=json.dumps(request))
+        except requests.exceptions.RequestException as e:
+            raise ConnectionError(e)
+
+        if r.status_code != 200:
+            raise ConnectionError("Status code : {}".format(r.status_code))
+
+        try:
+            json_result = r.json()
+        except TypeError:
+            raise ErrorJsonDecode(
+                "Cannot decode JSON, creoson result invalid.")
+
+        if "status" not in json_result.keys():
+            raise MissingKey("Missing `status` in creoson result.")
+
+        if "error" not in json_result["status"].keys():
+            raise MissingKey("Missing `error` in status' creoson's result.")
+
         status = json_result["status"]["error"]
         if status:
             error_msg = json_result["status"]["message"]
-            # TODO Runtime error
-            raise Warning(error_msg)
-        else:
-            if "data" in json_result.keys():
-                data = json_result["data"]
+            raise RuntimeError(error_msg)
+
+        if request["command"] == "connection" and\
+           request["function"] == "connect":
+            if "sessionId" not in json_result.keys():
+                raise MissingKey("Missing `sessionId` in creoson result.")
             else:
-                data = None
-        return data
-        # get sur dictionnaire pour renvoyer la valeur ou None par defaut
-        # TODO ajouter un raise de chaque keyvalue error de tous les modules
+                return json_result["sessionId"]
+
+        if key_data is not None:
+            if "data" not in json_result.keys():
+                raise MissingKey("Missing `data` in creoson return")
+            if key_data not in json_result["data"].keys():
+                raise MissingKey(
+                    "Missing `{}` in creoson result".format(key_data))
+            return json_result["data"][key_data]
+
+        return json_result.get("data", None)
 
     def disconnect(self):
         """Disconnect from CREOSON.
 
         Empty sessionId.
         """
-        self.creoson_post("connection", "disconnect")
+        self._creoson_post("connection", "disconnect")
         self.sessionId = ''
 
     def is_creo_running(self):
@@ -89,7 +110,12 @@ class Client(object):
             (boolean): True if Creo is running, False instead.
 
         """
-        return self.creoson_post("connection", "is_creo_running")["running"]
+        # return self._creoson_post("connection", "is_creo_running")["running"]
+        return self._creoson_post(
+            "connection",
+            "is_creo_running",
+            key_data="running"
+        )
 
     def kill_creo(self):
         """Kill primary Creo processes.
@@ -104,7 +130,7 @@ class Client(object):
             None
 
         """
-        return self.creoson_post("connection", "kill_creo")
+        return self._creoson_post("connection", "kill_creo")
 
     def start_creo(self, path, retries=0):
         """Execute an external .bat file to start Creo.
@@ -141,7 +167,7 @@ class Client(object):
             "start_command": start_command,
             "retries": retries
         }
-        return self.creoson_post("connection", "start_creo", data)
+        return self._creoson_post("connection", "start_creo", data)
 
     def stop_creo(self):
         """Disconnect current session from Creo and cause Creo to exit.
@@ -157,4 +183,4 @@ class Client(object):
             None
 
         """
-        return self.creoson_post("connection", "stop_creo")
+        return self._creoson_post("connection", "stop_creo")

@@ -19,7 +19,7 @@ def add_model(client, model, drawing=None):
     data = {"model": model}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "add_model", data)
+    return client._creoson_post("drawing", "add_model", data)
 
 
 def add_sheet(client, position=None, drawing=None):
@@ -43,7 +43,7 @@ def add_sheet(client, position=None, drawing=None):
         data["position"] = position
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "add_sheet", data)
+    return client._creoson_post("drawing", "add_sheet", data)
 
 
 def create(
@@ -94,7 +94,7 @@ def create(
         data["activate"] = activate
     if new_window:
         data["new_window"] = new_window
-    return client.creoson_post("drawing", "create", data)["drawing"]
+    return client._creoson_post("drawing", "create", data, "drawing")
 
 
 def create_gen_view(
@@ -156,7 +156,7 @@ def create_gen_view(
         data["display_data"] = display_data
     if exploded:
         data["exploded"] = exploded
-    return client.creoson_post("drawing", "create_gen_view", data)
+    return client._creoson_post("drawing", "create_gen_view", data)
     # TODO: JLpoint Method for point
     # TODO: ViewDisplayData method for display_data
 
@@ -215,7 +215,7 @@ def create_proj_view(
         data["display_data"] = display_data
     if exploded:
         data["exploded"] = exploded
-    return client.creoson_post("drawing", "create_proj_view", data)
+    return client._creoson_post("drawing", "create_proj_view", data)
 
 
 def create_symbol(
@@ -258,7 +258,7 @@ def create_symbol(
         data["replace_values"] = replace_values
     if sheet:
         data["sheet"] = sheet
-    return client.creoson_post("drawing", "create_symbol", data)
+    return client._creoson_post("drawing", "create_symbol", data)
 
 
 def delete_models(
@@ -292,7 +292,7 @@ def delete_models(
         data["model"] = model
     if delete_views:
         data["delete_views"] = delete_views
-    return client.creoson_post("drawing", "delete_models", data)
+    return client._creoson_post("drawing", "delete_models", data)
 
 
 def delete_sheet(client, sheet, drawing=None):
@@ -315,7 +315,7 @@ def delete_sheet(client, sheet, drawing=None):
     data = {"sheet": sheet}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "delete_sheet", data)
+    return client._creoson_post("drawing", "delete_sheet", data)
 
 
 def delete_symbol_def(client, symbol_file, drawing=None):
@@ -336,7 +336,7 @@ def delete_symbol_def(client, symbol_file, drawing=None):
     data = {"symbol_file": symbol_file}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "delete_symbol_def", data)
+    return client._creoson_post("drawing", "delete_symbol_def", data)
 
 
 def delete_symbol_inst(client, symbol_id, drawing=None):
@@ -357,7 +357,7 @@ def delete_symbol_inst(client, symbol_id, drawing=None):
     data = {"symbol_id": symbol_id}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "delete_symbol_inst", data)
+    return client._creoson_post("drawing", "delete_symbol_inst", data)
 
 
 def delete_view(
@@ -393,7 +393,7 @@ def delete_view(
         data["sheet"] = sheet
     if del_children:
         data["del_children"] = del_children
-    return client.creoson_post("drawing", "delete_view", data)
+    return client._creoson_post("drawing", "delete_view", data)
 
 
 def get_cur_model(client, drawing=None):
@@ -412,7 +412,7 @@ def get_cur_model(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_cur_model", data)["drawing"]
+    return client._creoson_post("drawing", "get_cur_model", data, "drawing")
 
 
 def get_cur_sheet(client, drawing=None):
@@ -431,7 +431,7 @@ def get_cur_sheet(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_cur_sheet", data)["sheet"]
+    return client._creoson_post("drawing", "get_cur_sheet", data, "sheet")
 
 
 def get_num_sheets(client, drawing=None):
@@ -450,7 +450,7 @@ def get_num_sheets(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_num_sheets", data)["num_sheets"]
+    return client._creoson_post("drawing", "get_num_sheets", data, "num_sheets")
 
 
 def get_sheet_scale(client, sheet, drawing=None, model=None):
@@ -476,7 +476,7 @@ def get_sheet_scale(client, sheet, drawing=None, model=None):
         data["drawing"] = drawing
     if model:
         data["model"] = model
-    return client.creoson_post("drawing", "get_sheet_scale", data)["scale"]
+    return client._creoson_post("drawing", "get_sheet_scale", data, "scale")
 
 
 def get_sheet_size(client, sheet, drawing=None):
@@ -497,7 +497,7 @@ def get_sheet_size(client, sheet, drawing=None):
     data = {"sheet": sheet}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_sheet_size", data)["size"]
+    return client._creoson_post("drawing", "get_sheet_size", data, "size")
 
 
 def get_view_loc(client, view, drawing=None):
@@ -521,8 +521,8 @@ def get_view_loc(client, view, drawing=None):
     data = {"view": view}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_view_loc", data)
-    # TODO: retrun a tuple (x,y,z)?
+    return client._creoson_post("drawing", "get_view_loc", data)
+    # TODO: return a tuple (x,y,z)?
 
 
 def get_view_scale(client, view, drawing=None):
@@ -546,7 +546,7 @@ def get_view_scale(client, view, drawing=None):
     data = {"view": view}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_view_scale", data)["scale"]
+    return client._creoson_post("drawing", "get_view_scale", data, "scale")
 
 
 def get_view_sheet(client, view, drawing=None):
@@ -567,7 +567,7 @@ def get_view_sheet(client, view, drawing=None):
     data = {"view": view}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "get_view_sheet", data)["sheet"]
+    return client._creoson_post("drawing", "get_view_sheet", data, "sheet")
 
 
 def is_symbol_def_loaded(client, symbol_file, drawing=None):
@@ -588,8 +588,8 @@ def is_symbol_def_loaded(client, symbol_file, drawing=None):
     data = {"symbol_file": symbol_file}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post(
-        "drawing", "is_symbol_def_loaded", data)["loaded"]
+    return client._creoson_post(
+        "drawing", "is_symbol_def_loaded", data, "loaded")
 
 
 def list_models(client, model=None, drawing=None):
@@ -613,7 +613,7 @@ def list_models(client, model=None, drawing=None):
         data["drawing"] = drawing
     if model:
         data["model"] = model
-    return client.creoson_post("drawing", "list_models", data)["files"]
+    return client._creoson_post("drawing", "list_models", data, "files")
 
 
 def list_symbols(
@@ -650,7 +650,7 @@ def list_symbols(
         data["symbol_file"] = symbol_file
     if sheet:
         data["sheet"] = sheet
-    return client.creoson_post("drawing", "list_symbols", data)["symbols"]
+    return client._creoson_post("drawing", "list_symbols", data, "symbols")
 
 
 def list_view_details(client, view=None, drawing=None):
@@ -683,7 +683,7 @@ def list_view_details(client, view=None, drawing=None):
         data["drawing"] = drawing
     if view:
         data["view"] = view
-    return client.creoson_post("drawing", "list_view_details", data)["views"]
+    return client._creoson_post("drawing", "list_view_details", data, "views")
 
 
 def list_views(client, view=None, drawing=None):
@@ -706,7 +706,7 @@ def list_views(client, view=None, drawing=None):
         data["drawing"] = drawing
     if view:
         data["view"] = view
-    return client.creoson_post("drawing", "list_views", data)["views"]
+    return client._creoson_post("drawing", "list_views", data, "views")
 
 
 def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
@@ -735,7 +735,7 @@ def load_symbol_def(client, symbol_file, symbol_dir=None, drawing=None):
         data["drawing"] = drawing
     if symbol_dir:
         data["symbol_dir"] = symbol_dir
-    return client.creoson_post("drawing", "load_symbol_def", data)
+    return client._creoson_post("drawing", "load_symbol_def", data)
 
 
 def regenerate(client, drawing=None):
@@ -754,7 +754,7 @@ def regenerate(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "regenerate", data)
+    return client._creoson_post("drawing", "regenerate", data)
 
 
 def regenerate_sheet(client, sheet=None, drawing=None):
@@ -778,7 +778,7 @@ def regenerate_sheet(client, sheet=None, drawing=None):
         data["sheet"] = sheet
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "regenerate_sheet", data)
+    return client._creoson_post("drawing", "regenerate_sheet", data)
 
 
 def rename_view(client, view, new_view, drawing=None):
@@ -804,7 +804,7 @@ def rename_view(client, view, new_view, drawing=None):
     }
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "rename_view", data)
+    return client._creoson_post("drawing", "rename_view", data)
 
 
 def scale_sheet(client, sheet, scale, drawing=None, model=None):
@@ -834,7 +834,7 @@ def scale_sheet(client, sheet, scale, drawing=None, model=None):
         data["drawing"] = drawing
     if model:
         data["model"] = model
-    return client.creoson_post("drawing", "scale_sheet", data)
+    return client._creoson_post("drawing", "scale_sheet", data)
 
 
 def scale_view(client, scale, view=None, drawing=None):
@@ -864,7 +864,7 @@ def scale_view(client, scale, view=None, drawing=None):
         data["drawing"] = drawing
     if view:
         data["view"] = view
-    return client.creoson_post("drawing", "scale_view", data)
+    return client._creoson_post("drawing", "scale_view", data)
 
 
 def select_sheet(client, sheet, drawing=None):
@@ -885,7 +885,7 @@ def select_sheet(client, sheet, drawing=None):
     data = {"sheet": sheet}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "select_sheet", data)
+    return client._creoson_post("drawing", "select_sheet", data)
 
 
 def set_cur_model(client, model, drawing=None):
@@ -906,7 +906,7 @@ def set_cur_model(client, model, drawing=None):
     data = {"model": model}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "set_cur_model", data)
+    return client._creoson_post("drawing", "set_cur_model", data)
 
 
 def set_view_loc(client, view, point, drawing=None):
@@ -932,7 +932,7 @@ def set_view_loc(client, view, point, drawing=None):
     }
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "set_cur_model", data)
+    return client._creoson_post("drawing", "set_cur_model", data)
 
 
 def view_bound_box(client, view, drawing=None):
@@ -957,4 +957,4 @@ def view_bound_box(client, view, drawing=None):
     data = {"view": view}
     if drawing:
         data["drawing"] = drawing
-    return client.creoson_post("drawing", "view_bound_box", data)
+    return client._creoson_post("drawing", "view_bound_box", data)

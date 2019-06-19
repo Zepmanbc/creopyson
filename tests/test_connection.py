@@ -4,8 +4,10 @@ import requests
 import json
 import pytest
 import creopyson
+from creopyson.exceptions import MissingKey, ErrorJsonDecode
 
-from .fixtures import mk_creoson_post_None, mk_creoson_post_dict
+from .fixtures import mk_creoson_post_None, mk_creoson_post_dict, \
+    mk_creoson_post_sessionId
 
 # @pytest.fixture(autouse=True)
 # def no_requests(monkeypatch):
@@ -22,24 +24,12 @@ def test_connection_wether_params_exists():
     assert c.server == "http://here:1234/creoson"
 
 
-def test_connection_connect_succed(monkeypatch):
+def test_connection_connect_succed(mk_creoson_post_sessionId):
     """Test when connection is ok.
 
     sessionId is created and retruened by creoson.
 
     """
-    class Mk_post():
-        def __init__(self, *args, **kwargs):
-            pass
-
-        @property
-        def content(self):
-            results = {
-                "sessionId": "123456"
-            }
-            return json.dumps(results).encode()
-
-    monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
     c.connect()
     assert c.sessionId == "123456"
@@ -53,19 +43,82 @@ def test_connection_connect_fails(monkeypatch):
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    with pytest.raises(SystemExit) as pytest_wrapped_e:
+    with pytest.raises(ConnectionError) as pytest_wrapped_e:
         c.connect()
-    assert pytest_wrapped_e.type == SystemExit
+    assert pytest_wrapped_e.type == ConnectionError
 
 
-def test_connection_creoson_post_return_data(monkeypatch):
-    """Test creoson_post returning data."""
+
+def test_connection_creoson_post_error_connection(monkeypatch):
+    """Test _creoson_post connection server error."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
 
         @property
-        def content(self):
+        def status_code(self):
+            return 500
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(ConnectionError) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {})
+    assert pytest_wrapped_e.value.args[0] == "Status code : 500"
+
+
+def test_connection_creoson_post_json_error(monkeypatch):
+    """Test _creoson_post whether result can't be decoded with json."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            raise TypeError
+
+        @property
+        def status_code(self):
+            return 200
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(ErrorJsonDecode) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {})
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Cannot decode JSON, creoson result invalid."
+
+
+def test_connection_creoson_post_raise_RuntimeError(monkeypatch):
+    """Test _creoson_post raise RuntimeError."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": True,
+                    "message": "error message"
+                }
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(RuntimeError) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {})
+    assert pytest_wrapped_e.value.args[0] == "error message"
+
+
+def test_connection_creoson_post_return_data(monkeypatch):
+    """Test _creoson_post returning data."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
             results = {
                 "status": {
                     "error": False,
@@ -73,57 +126,216 @@ def test_connection_creoson_post_return_data(monkeypatch):
                 },
                 "data": "creoson result"
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    result = c.creoson_post("function", "method", {})
+    result = c._creoson_post("function", "method", {})
     assert result == "creoson result"
 
 
 def test_connection_creoson_post_return_None(monkeypatch):
-    """Test creoson_post returning None."""
+    """Test _creoson_post returning None."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": False,
                     "message": "error message"
                 }
             }
-            return json.dumps(results).encode()
+            return results
+
+        @property
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    result = c.creoson_post("function", "method", {})
+    result = c._creoson_post("function", "method", {})
     assert result is None
 
 
-def test_connection_creoson_post_raise_Warning(monkeypatch):
-    """Test creoson_post raise Warning."""
+def test_connection_creoson_post_no_status(monkeypatch):
+    """Test _creoson_post raise error if no `status` in return."""
     class Mk_post():
         def __init__(self, *args, **kwargs):
             pass
 
+        def json(self):
+            results = {"status": {}}
+            return results
+
         @property
-        def content(self):
-            results = {
-                "status": {
-                    "error": True,
-                    "message": "error message"
-                }
-            }
-            return json.dumps(results).encode()
+        def status_code(self):
+            return 200
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
-    with pytest.raises(Warning) as pytest_wrapped_e:
-        c.creoson_post("function", "method", {})
-    assert pytest_wrapped_e.value.args[0] == "error message"
+    with pytest.raises(MissingKey) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {})
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Missing `error` in status' creoson's result."
+
+
+def test_connection_creoson_post_no_error(monkeypatch):
+    """Test _creoson_post raise error if no `error` in return."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {}
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(MissingKey) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {})
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Missing `status` in creoson result."
+
+
+def test_connection_creoson_post_no_sessionId(monkeypatch):
+    """Test _creoson_post raise error if no `sessionId` in return."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": False
+                }
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(MissingKey) as pytest_wrapped_e:
+        c._creoson_post("connection", "connect", {})
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Missing `sessionId` in creoson result."
+
+
+def test_connection_creoson_post_sessionId(monkeypatch):
+    """Test _creoson_post return sessionId."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": False
+                },
+                "sessionId": 12345
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    result = c._creoson_post("connection", "connect", {})
+    assert result == 12345
+
+
+def test_connection_creoson_post_no_data(monkeypatch):
+    """Test _creoson_post raise error if no data in return."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": False
+                }
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(MissingKey) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {}, key_data="fakedata")
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Missing `data` in creoson return"
+
+
+def test_connection_creoson_post_no_datakey(monkeypatch):
+    """Test _creoson_post raise error if no datakey in return."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": False
+                },
+                "data": {}
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    with pytest.raises(MissingKey) as pytest_wrapped_e:
+        c._creoson_post("function", "method", {}, key_data="fakedata")
+    assert pytest_wrapped_e.value.args[0] ==\
+        "Missing `fakedata` in creoson result"
+
+
+def test_connection_creoson_post_datakey(monkeypatch):
+    """Test _creoson_post raise error if no datakey in return."""
+    class Mk_post():
+        def __init__(self, *args, **kwargs):
+            pass
+
+        def json(self):
+            results = {
+                "status": {
+                    "error": False
+                },
+                "data": {
+                    "fakedata": "fakevalue"
+                }
+            }
+            return results
+
+        @property
+        def status_code(self):
+            return 200
+
+    monkeypatch.setattr(requests, 'post', Mk_post)
+    c = creopyson.Client()
+    result = c._creoson_post("function", "method", {}, key_data="fakedata")
+    assert result == "fakevalue"
 
 
 def test_connection_disconnect_ok(mk_creoson_post_None):

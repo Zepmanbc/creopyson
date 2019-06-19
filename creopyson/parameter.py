@@ -41,7 +41,7 @@ def copy(
         data["to_file"] = to_file
     if designate:
         data["designate"] = designate
-    return client.creoson_post("parameter", "copy", data)
+    return client._creoson_post("parameter", "copy", data)
 
 
 def delete(client, name, file_=None):
@@ -62,7 +62,7 @@ def delete(client, name, file_=None):
     data = {"name": name}
     if file_:
         data["file"] = file_
-    return client.creoson_post("parameter", "delete", data)
+    return client._creoson_post("parameter", "delete", data)
 
 
 def exists(client, name=None, file_=None):
@@ -89,7 +89,7 @@ def exists(client, name=None, file_=None):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    return client.creoson_post("parameter", "exists", data)["exists"]
+    return client._creoson_post("parameter", "exists", data, "exists")
     # TODO: group name/names
 
 
@@ -137,7 +137,7 @@ def list_(
         data["encoded"] = encoded
     if value:
         data["value"] = value
-    return client.creoson_post("parameter", "list", data)["paramlist"]
+    return client._creoson_post("parameter", "list", data, "paramlist")
 
 
 def set_(
@@ -191,4 +191,4 @@ def set_(
         data["designate"] = designate
     if no_create:
         data["no_create"] = no_create
-    return client.creoson_post("parameter", "set", data)
+    return client._creoson_post("parameter", "set", data)

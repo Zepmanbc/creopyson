@@ -18,7 +18,7 @@ def test_server_pwd_ok(monkeypatch):
                 "status": {
                     "error": False,
                 },
-                "data":{
+                "data": {
                     "dirname": "C:/CreosonServer-2.3.0-win64"
                 }
             }

@@ -37,7 +37,7 @@ Creopyson can be used to automate actions in CREO:
 * Get BOM
 * Manage files, Working directories
 * Support Familytables
-* Export 3D/2D: pdf3d, pdf, STEP, IGES, STL, JPEG...
+* Export 3D/2D: pdf3d, pdf, STEP, IGES, JPEG...
 * Interact with layers, views
 * Read/Write parameters, dimensions
 * Support Windchill

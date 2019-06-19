@@ -28,7 +28,7 @@ def copy(client, name, to_name, file_=None, to_file=None):
         data["file"] = file_
     if to_file:
         data["to_file"] = to_file
-    return client.creoson_post("dimension", "copy", data)
+    return client._creoson_post("dimension", "copy", data)
 
 
 def list_(
@@ -77,7 +77,7 @@ def list_(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
-    return client.creoson_post("dimension", "list", data)["dimlist"]
+    return client._creoson_post("dimension", "list", data, "dimlist")
 
 
 def list_detail(
@@ -148,7 +148,7 @@ def list_detail(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
-    return client.creoson_post("dimension", "list_detail", data)["dimlist"]
+    return client._creoson_post("dimension", "list_detail", data, "dimlist")
 
 
 def set_(client, file_, name, value, encoded=None):
@@ -182,7 +182,7 @@ def set_(client, file_, name, value, encoded=None):
     }
     if encoded:
         data["encoded"] = encoded
-    return client.creoson_post("dimension", "set", data)
+    return client._creoson_post("dimension", "set", data)
 
 
 def show(client, name, file_=None, assembly=None, path=None):
@@ -214,7 +214,7 @@ def show(client, name, file_=None, assembly=None, path=None):
         data["assembly"] = assembly
     if path:
         data["path"] = path
-    return client.creoson_post("dimension", "show", data)
+    return client._creoson_post("dimension", "show", data)
 
 
 def user_select(client, file_=None, maxi=None):
@@ -251,4 +251,4 @@ def user_select(client, file_=None, maxi=None):
         data["file"] = file_
     if maxi:
         data["max"] = maxi
-    return client.creoson_post("dimension", "user_select", data)["dimlist"]
+    return client._creoson_post("dimension", "user_select", data, "dimlist")

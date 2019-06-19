@@ -97,7 +97,7 @@ def assemble(
         data["assemble_to_root"] = assemble_to_root
     if suppress:
         data["suppress"] = suppress
-    return client.creoson_post("file", "assemble", data)
+    return client._creoson_post("file", "assemble", data)
 
 
 def backup(client, target_dir, file_=None):
@@ -118,7 +118,7 @@ def backup(client, target_dir, file_=None):
     data = {"target_dir": target_dir}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "backup", data)
+    return client._creoson_post("file", "backup", data)
 
 
 def close_window(client, file_=None):
@@ -137,7 +137,7 @@ def close_window(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "close_window", data)
+    return client._creoson_post("file", "close_window", data)
 
 
 def display(client, file_, activate=None):
@@ -158,7 +158,7 @@ def display(client, file_, activate=None):
     data = {"file": file_}
     if activate:
         data["activate"] = activate
-    return client.creoson_post("file", "display", data)
+    return client._creoson_post("file", "display", data)
 
 
 def erase(client, file_=None, erase_children=None):
@@ -186,7 +186,7 @@ def erase(client, file_=None, erase_children=None):
             data["files"] = file_
     if erase_children:
         data["erase_children"] = erase_children
-    return client.creoson_post("file", "erase", data)
+    return client._creoson_post("file", "erase", data)
 
 
 def erase_not_displayed(client):
@@ -199,7 +199,7 @@ def erase_not_displayed(client):
         None
 
     """
-    return client.creoson_post("file", "erase_not_displayed")
+    return client._creoson_post("file", "erase_not_displayed")
 
 
 def exists(client, file_):
@@ -214,7 +214,7 @@ def exists(client, file_):
 
     """
     data = {"file": file_}
-    return client.creoson_post("file", "exists", data)["exists"]
+    return client._creoson_post("file", "exists", data, "exists")
 
 
 def get_active(client):
@@ -229,7 +229,7 @@ def get_active(client):
             file (str): File name of current model.
 
     """
-    return client.creoson_post("file", "get_active")
+    return client._creoson_post("file", "get_active")
 
 
 def get_fileinfo(client, file_=None):
@@ -251,7 +251,7 @@ def get_fileinfo(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "get_fileinfo", data)
+    return client._creoson_post("file", "get_fileinfo", data)
 
 
 def get_length_units(client, file_=None):
@@ -270,7 +270,7 @@ def get_length_units(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "get_length_units", data)["units"]
+    return client._creoson_post("file", "get_length_units", data, "units")
 
 
 def get_mass_units(client, file_=None):
@@ -289,7 +289,7 @@ def get_mass_units(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "get_mass_units", data)["units"]
+    return client._creoson_post("file", "get_mass_units", data, "units")
 
 
 def get_transform(client, asm=None, path=None, csys=None):
@@ -319,7 +319,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         data["path"] = path
     if csys:
         data["csys"] = csys
-    return client.creoson_post("file", "get_transform", data)["transform"]
+    return client._creoson_post("file", "get_transform", data, "transform")
 
 
 def has_instances(client, file_=None):
@@ -338,7 +338,7 @@ def has_instances(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "has_instances", data)["exists"]
+    return client._creoson_post("file", "has_instances", data, "exists")
 
 
 def is_active(client, file_):
@@ -353,7 +353,7 @@ def is_active(client, file_):
 
     """
     data = {"file": file_}
-    return client.creoson_post("file", "is_active", data)["active"]
+    return client._creoson_post("file", "is_active", data, "active")
 
 
 def list_(client, file_=None):
@@ -375,7 +375,7 @@ def list_(client, file_=None):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
-    return client.creoson_post("file", "is_active", data)["files"]
+    return client._creoson_post("file", "is_active", data, "files")
 
 
 def list_instances(client, file_=None):
@@ -397,7 +397,7 @@ def list_instances(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "list_instances", data)
+    return client._creoson_post("file", "list_instances", data)
 
 
 def list_simp_reps(client, file_=None, rep=None):
@@ -423,7 +423,7 @@ def list_simp_reps(client, file_=None, rep=None):
         data["file"] = file_
     if rep:
         data["rep"] = rep
-    return client.creoson_post("file", "list_simp_reps", data)
+    return client._creoson_post("file", "list_simp_reps", data)
 
 
 def massprops(client, file_=None):
@@ -446,7 +446,7 @@ def massprops(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "massprops", data)
+    return client._creoson_post("file", "massprops", data)
 
 
 def open_(
@@ -509,7 +509,7 @@ def open_(
         data["new_window"] = new_window
     if regen_force:
         data["regen_force"] = regen_force
-    return client.creoson_post("file", "open", data)
+    return client._creoson_post("file", "open", data)
     # TODO
 
 
@@ -529,7 +529,7 @@ def open_errors(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "open_errors", data)["errors"]
+    return client._creoson_post("file", "open_errors", data, "errors")
 
 
 def postregen_relations_get(client, file_=None):
@@ -548,8 +548,8 @@ def postregen_relations_get(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post(
-        "file", "postregen_relations_get", data)["relations"]
+    return client._creoson_post(
+        "file", "postregen_relations_get", data, "relations")
 
 
 def postregen_relations_set(client, file_=None, relations=None):
@@ -573,7 +573,7 @@ def postregen_relations_set(client, file_=None, relations=None):
         data["file"] = file_
     if relations:
         data["relations"] = relations
-    return client.creoson_post("file", "postregen_relations_set", data)
+    return client._creoson_post("file", "postregen_relations_set", data)
 
 
 def refresh(client, file_=None):
@@ -592,7 +592,7 @@ def refresh(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "refresh", data)
+    return client._creoson_post("file", "refresh", data)
 
 
 def regenerate(client, file_=None, display=None):
@@ -619,7 +619,7 @@ def regenerate(client, file_=None, display=None):
             data["files"] = file_
     if display:
         data["display"] = display
-    return client.creoson_post("file", "regenerate", data)
+    return client._creoson_post("file", "regenerate", data)
 
 
 def relations_get(client, file_=None):
@@ -638,7 +638,7 @@ def relations_get(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "relations_get", data)["relations"]
+    return client._creoson_post("file", "relations_get", data, "relations")
 
 
 def relations_set(client, file_=None, relations=None):
@@ -662,7 +662,7 @@ def relations_set(client, file_=None, relations=None):
         data["file"] = file_
     if relations:
         data["relations"] = relations
-    return client.creoson_post("file", "relations_set", data)
+    return client._creoson_post("file", "relations_set", data)
 
 
 def rename(client, new_name, file_=None, onlysession=None):
@@ -687,7 +687,7 @@ def rename(client, new_name, file_=None, onlysession=None):
         data["file"] = file_
     if onlysession:
         data["onlysession"] = onlysession
-    return client.creoson_post("file", "rename", data)["file"]
+    return client._creoson_post("file", "rename", data, "file")
 
 
 def repaint(client, file_=None):
@@ -706,7 +706,7 @@ def repaint(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client.creoson_post("file", "repaint", data)
+    return client._creoson_post("file", "repaint", data)
 
 
 def save(client, file_):
@@ -728,7 +728,7 @@ def save(client, file_):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
-    return client.creoson_post("file", "save", data)
+    return client._creoson_post("file", "save", data)
 
 
 def set_length_units(client, units, file_=None, convert=None):
@@ -758,7 +758,7 @@ def set_length_units(client, units, file_=None, convert=None):
         data["file"] = file_
     if convert:
         data["convert"] = convert
-    return client.creoson_post("file", "set_length_units", data)
+    return client._creoson_post("file", "set_length_units", data)
 
 
 def set_mass_units(client, units, file_=None, convert=None):
@@ -788,4 +788,4 @@ def set_mass_units(client, units, file_=None, convert=None):
         data["file"] = file_
     if convert:
         data["convert"] = convert
-    return client.creoson_post("file", "set_length_units", data)
+    return client._creoson_post("file", "set_length_units", data)

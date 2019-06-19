@@ -45,13 +45,11 @@ def test_creo_list_dirs(mk_creoson_post_dict):
     assert isinstance(result, (list))
 
 
-
 def test_creo_list_files(mk_creoson_post_dict):
     """Test creo_list_dirs."""
     c = creopyson.Client()
     result = c.creo_list_files("filter_*")
     assert isinstance(result, (list))
-
 
 
 def test_creo_mkdir(mk_creoson_post_dict):
