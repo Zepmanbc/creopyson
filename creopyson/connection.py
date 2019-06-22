@@ -1,7 +1,6 @@
 """Connection module."""
 import requests
 import json
-import sys
 from .exceptions import MissingKey, ErrorJsonDecode
 
 
