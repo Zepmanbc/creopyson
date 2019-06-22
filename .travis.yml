@@ -1,0 +1,20 @@
+language: python
+python:
+- 3.7
+- 3.6
+install: pip install -U tox-travis coveralls
+script: 
+  - tox
+  - coverage run --source=creopyson setup.py test
+after_success:
+  - coveralls
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: Zepmanbc
+  password:
+    secure: pB2UuekwmJ5KNMCFAVywpgHYx3/chSre8hpCyGUkTCHye/L9n7DVKlf7Ch7UKxYPP3gcKQbe6W9y4w2Y+hcQrow8LiIx3jYhteiaB0WsDrqJbN8NfVSsah1eDW6+d1TY8ahljmjW2jgTT8n7jsjPvMJWnwgOSrAqZPG+0te0sC1Slk9kUHcXeYrr6KERzygd44/nRCbBbogadQDEZ4qghuu9zKkoF4l7avqJwi/oIBQ6j9pUJRotzSC15XLUnx8rmHRqGVgrR2nA4BPNdg4vZS44D+tpcEDI9QyjXWWssEgdXbbr/HJBlrrKScUKJMh017fEhdl9ehYbGEwPZtOZ/Ll+AiSNfxoXljb5zjyZ2RMBjMI/THThOyzOyDxjFbcqgSg4Q4NAA8hcVv5ELprRAo0QZwTNrOnYM8bw+a65GGBoj8X0gcl7hjw8ZQv3t4ZDzrzb6fvBouTbEcm4T1md7O6ucOpxM4eSxYW/ntX7EOboRvu5fCitWi4eFiPTXnrc83cAfVSNY5GvYdEMOgE3oRlHBAUOGyoBUNjX8JcksyC3KRN9U1Y5BrzzQd4dem2zC+paSowDexHPlFyFDrv5p2oAZHOpjAKPZfbTtm1bEzFw4msEP/nTJntk3b2AP/jnmVkreQ8MaRFS8DRxtvPwr6IdzxaOYZpiIviw3FspQEg=
+  on:
+    tags: true
+    repo: Zepmanbc/creopyson
+    python: 3.6
