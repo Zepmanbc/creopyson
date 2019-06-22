@@ -112,4 +112,5 @@ def get_surfaces(client, file_=None):
     data = {}
     if file_:
         data["file"] = file_
-    return client._creoson_post("geometry", "get_surfaces", data, "contourlist")
+    return client._creoson_post(
+        "geometry", "get_surfaces", data, "contourlist")

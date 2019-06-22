@@ -450,7 +450,8 @@ def get_num_sheets(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client._creoson_post("drawing", "get_num_sheets", data, "num_sheets")
+    return client._creoson_post(
+        "drawing", "get_num_sheets", data, "num_sheets")
 
 
 def get_sheet_scale(client, sheet, drawing=None, model=None):

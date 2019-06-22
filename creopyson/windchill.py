@@ -219,4 +219,5 @@ def workspace_exists(client, workspace):
 
     """
     data = {"workspace": workspace}
-    return client._creoson_post("windchill", "workspace_exists", data, "exists")
+    return client._creoson_post(
+        "windchill", "workspace_exists", data, "exists")
