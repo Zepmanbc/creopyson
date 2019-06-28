@@ -264,6 +264,7 @@ def list_params(
         data["encoded"] = encoded
     return client._creoson_post("feature", "list_params", data, "paramlist")
 
+
 def list_group_features(client, group_name, type_=None, file_=None):
     """List features in a Creo Group.
 
