@@ -19,6 +19,7 @@ def mk_creoson_post_dict(monkeypatch):
                 "drawing": "drawing",
                 "exists": True,
                 "errors": True,
+                "featlist": [],
                 "file": "file",
                 "filelist": [],
                 "files": [],

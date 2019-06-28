@@ -32,7 +32,7 @@ def test_feature_delete_param(mk_creoson_post_None):
     assert result is None
 
 
-def test_feature_list(mk_creoson_post_list):
+def test_feature_list(mk_creoson_post_dict):
     """Test list."""
     c = creopyson.Client()
     result = c.feature_list(
@@ -49,6 +49,49 @@ def test_feature_list(mk_creoson_post_list):
     assert isinstance(result, (list))
     result = c.feature_list(
         param=["param", "other param"],
+    )
+    assert isinstance(result, (list))
+
+
+def test_feature_list_params(mk_creoson_post_dict):
+    """Test list."""
+    c = creopyson.Client()
+    result = c.feature_list_params(
+        file_="file",
+        name="name",
+        type_="type",
+        no_datum=True,
+        no_comp=True,
+        param="param",
+        value="param",
+        encoded=True,
+    )
+    assert isinstance(result, (list))
+    result = c.feature_list_params(
+        param=["param", "other param"],
+        name=12,
+    )
+    assert isinstance(result, (list))
+
+
+def test_feature_list_group_features(mk_creoson_post_dict):
+    """Test list_group_features."""
+    c = creopyson.Client()
+    result = c.feature_list_group_features(
+        "group_name",
+        file_="file",
+        type_="type",
+    )
+    assert isinstance(result, (list))
+
+
+def test_feature_list_pattern_features(mk_creoson_post_dict):
+    """Test list_group_features."""
+    c = creopyson.Client()
+    result = c.feature_list_pattern_features(
+        "pattern_name",
+        file_="file",
+        type_="type",
     )
     assert isinstance(result, (list))
 
