@@ -192,3 +192,27 @@ def set_(
     if no_create:
         data["no_create"] = no_create
     return client._creoson_post("parameter", "set", data)
+
+
+def set_designated(client, name, designate, file_=None,):
+    """Set the designated state of a parameter.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Parameter name (wildcards allowed: True).
+        designate (boolean):
+            Set parameter to be designated/not designated.
+        `file_` (str, optional):
+            Model name. Defaults is current active model.
+
+    Returns:
+        None
+
+    """
+    data = {
+        "name": name,
+        "designate": designate,
+    }
+    return client._creoson_post("parameter", "set_designated", data)

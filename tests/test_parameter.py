@@ -59,3 +59,13 @@ def test_parameter_set(mk_creoson_post_None):
         no_create=True,
     )
     assert result is None
+
+
+def test_parameter_set_designated(mk_creoson_post_None):
+    """Test set_designated."""
+    c = creopyson.Client()
+    result = c.parameter_set_designated(
+        "name",
+        True
+    )
+    assert result is None

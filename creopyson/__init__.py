@@ -4,7 +4,7 @@
 
 __author__ = """Benjamin C."""
 __email__ = 'zepman@gmail.com'
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 from creopyson.connection import Client
 from creopyson.objects import jlpoint
@@ -162,6 +162,11 @@ Client.familytable_set_cell = familytable_set_cell
 from creopyson.feature import delete as feature_delete
 from creopyson.feature import delete_param as feature_delete_param
 from creopyson.feature import list_ as feature_list
+from creopyson.feature import list_params as feature_list_params
+from creopyson.feature import list_group_features as \
+    feature_list_group_features
+from creopyson.feature import list_pattern_features as \
+    feature_list_pattern_features
 from creopyson.feature import param_exists as feature_param_exists
 from creopyson.feature import rename as feature_rename
 from creopyson.feature import resume as feature_resume
@@ -171,6 +176,9 @@ from creopyson.feature import user_select_csys as feature_user_select_csys
 Client.feature_delete = feature_delete
 Client.feature_delete_param = feature_delete_param
 Client.feature_list = feature_list
+Client.feature_list_params = feature_list_params
+Client.feature_list_group_features = feature_list_group_features
+Client.feature_list_pattern_features = feature_list_pattern_features
 Client.feature_param_exists = feature_param_exists
 Client.feature_rename = feature_rename
 Client.feature_resume = feature_resume
@@ -306,11 +314,13 @@ from creopyson.parameter import delete as parameter_delete
 from creopyson.parameter import exists as parameter_exists
 from creopyson.parameter import list_ as parameter_list
 from creopyson.parameter import set_ as parameter_set
+from creopyson.parameter import set_designated as parameter_set_designated
 Client.parameter_copy = parameter_copy
 Client.parameter_delete = parameter_delete
 Client.parameter_exists = parameter_exists
 Client.parameter_list = parameter_list
 Client.parameter_set = parameter_set
+Client.parameter_set_designated = parameter_set_designated
 
 
 # Server
