@@ -162,6 +162,7 @@ Client.familytable_set_cell = familytable_set_cell
 from creopyson.feature import delete as feature_delete
 from creopyson.feature import delete_param as feature_delete_param
 from creopyson.feature import list_ as feature_list
+from creopyson.feature import list_params as feature_list_params
 from creopyson.feature import list_group_features as \
     feature_list_group_features
 from creopyson.feature import list_pattern_features as \
@@ -175,6 +176,7 @@ from creopyson.feature import user_select_csys as feature_user_select_csys
 Client.feature_delete = feature_delete
 Client.feature_delete_param = feature_delete_param
 Client.feature_list = feature_list
+Client.feature_list_params = feature_list_params
 Client.feature_list_group_features = feature_list_group_features
 Client.feature_list_pattern_features = feature_list_pattern_features
 Client.feature_param_exists = feature_param_exists
