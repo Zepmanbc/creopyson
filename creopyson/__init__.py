@@ -306,11 +306,13 @@ from creopyson.parameter import delete as parameter_delete
 from creopyson.parameter import exists as parameter_exists
 from creopyson.parameter import list_ as parameter_list
 from creopyson.parameter import set_ as parameter_set
+from creopyson.parameter import set_designated as parameter_set_designated
 Client.parameter_copy = parameter_copy
 Client.parameter_delete = parameter_delete
 Client.parameter_exists = parameter_exists
 Client.parameter_list = parameter_list
 Client.parameter_set = parameter_set
+Client.parameter_set_designated = parameter_set_designated
 
 
 # Server
