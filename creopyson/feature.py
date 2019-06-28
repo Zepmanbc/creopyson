@@ -205,6 +205,40 @@ def list_group_features(client, group_name, type_=None, file_=None):
         "feature", "list_group_features", data, "featlist")
 
 
+def list_pattern_features(
+    client,
+    patter_name,
+    type_=None,
+    file_=None
+):
+    """List features in a Creo Pattern.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        patter_name (str):
+            Pattern name.
+        `type_` (str, optional):
+            Feature type patter (wildcards allowed: True).
+            Defaults: All feature types.
+        `file_` (str, optional):
+            File name. Defaults is the currently active model.
+
+    Returns:
+        (list:dict): List of feature information
+
+    """
+    data = {
+        "patter_name": patter_name,
+    }
+    if file_:
+        data["file"] = file_
+    if type_:
+        data["type"] = type_
+    return client._creoson_post(
+        "feature", "list_group_features", data, "featlist")
+
+
 def param_exists(client, file_=None, param=None):
     """Check whether parameter(s) exists on a feature.
 

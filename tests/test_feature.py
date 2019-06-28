@@ -64,6 +64,17 @@ def test_feature_list_group_features(mk_creoson_post_dict):
     assert isinstance(result, (list))
 
 
+def test_feature_list_pattern_features(mk_creoson_post_dict):
+    """Test list_group_features."""
+    c = creopyson.Client()
+    result = c.feature_list_pattern_features(
+        "pattern_name",
+        file_="file",
+        type_="type",
+    )
+    assert isinstance(result, (list))
+
+
 def test_feature_param_exists(mk_creoson_post_dict):
     """Test param_exists."""
     c = creopyson.Client()

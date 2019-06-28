@@ -164,6 +164,8 @@ from creopyson.feature import delete_param as feature_delete_param
 from creopyson.feature import list_ as feature_list
 from creopyson.feature import list_group_features as \
     feature_list_group_features
+from creopyson.feature import list_pattern_features as \
+    feature_list_pattern_features
 from creopyson.feature import param_exists as feature_param_exists
 from creopyson.feature import rename as feature_rename
 from creopyson.feature import resume as feature_resume
@@ -174,6 +176,7 @@ Client.feature_delete = feature_delete
 Client.feature_delete_param = feature_delete_param
 Client.feature_list = feature_list
 Client.feature_list_group_features = feature_list_group_features
+Client.feature_list_pattern_features = feature_list_pattern_features
 Client.feature_param_exists = feature_param_exists
 Client.feature_rename = feature_rename
 Client.feature_resume = feature_resume
