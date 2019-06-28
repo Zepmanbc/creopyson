@@ -79,7 +79,7 @@ Ready to contribute? Here's how to set up `creopyson` for local development.
    tests, including testing other Python versions with tox::
 
     $ flake8 creopyson tests
-    $ python setup.py test or py.test
+    $ python setup.py test # or pytest
     $ tox
 
    To get flake8 and tox, just install them with `pipenv install -r requirements-dev.txt --dev`
@@ -101,7 +101,7 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.rst.
-3. The pull request should work for Python 3.4, 3.5, 3.6 and 3.7, and for PyPy. Check
+3. The pull request should work for Python 3.6 and 3.7, and for PyPy. Check
    https://travis-ci.org/Zepmanbc/creopyson/pull_requests
    and make sure that the tests pass for all supported Python versions.
 
@@ -110,7 +110,7 @@ Tips
 
 To run a subset of tests::
 
-$ py.test tests.test_creopyson
+$ pytest tests/test_creo.py
 
 
 Deploying
@@ -121,8 +121,7 @@ Make sure all your changes are committed (including an entry in HISTORY.rst).
 Then run::
 
 $ bumpversion patch # possible: major / minor / patch
-$ git tag -a v1.4 -m "my version 1.4" # add the tag manualy if you don't use git-flow
-$ git push
+$ git tag -a vx.x.x -m "my version vx.x.x" # add the tag manualy if you don't use git-flow
 $ git push --tags
 
 Travis will then deploy to PyPI if tests pass.

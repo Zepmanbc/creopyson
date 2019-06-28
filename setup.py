@@ -37,6 +37,7 @@ setup(
     keywords='creopyson',
     name='creopyson',
     packages=find_packages(include=['creopyson']),
+    python_requires='>=3.6',
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
