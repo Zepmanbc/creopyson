@@ -17,8 +17,12 @@ def activate(client, name, file_=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("view", "activate", data)
 
 
@@ -39,8 +43,12 @@ def list_exploded(client, file_=None, name=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("view", "list_exploded", data, "viewlist")
 
 
@@ -61,10 +69,13 @@ def list_(client, file_=None, name=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("view", "list", data, "viewlist")
-    # TODO: group with list_exploded?
 
 
 def save(client, name, file_=None):
@@ -83,6 +94,10 @@ def save(client, name, file_=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("view", "save", data)

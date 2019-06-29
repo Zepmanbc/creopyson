@@ -793,7 +793,7 @@ def repaint(client, file_=None):
     return client._creoson_post("file", "repaint", data)
 
 
-def save(client, file_):
+def save(client, file_=None):
     """Save one or more models.
 
     Args:

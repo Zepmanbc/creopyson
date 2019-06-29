@@ -51,8 +51,12 @@ def get_paths(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if paths:
         data["paths"] = paths
     if skeletons:

@@ -35,8 +35,12 @@ def copy(
         "name": name,
         "to_name": to_name,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
     if designate:
@@ -60,8 +64,12 @@ def delete(client, name, file_=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("parameter", "delete", data)
 
 
@@ -82,8 +90,12 @@ def exists(client, name=None, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -126,8 +138,12 @@ def list_(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -179,8 +195,12 @@ def set_(
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
     if encoded:
@@ -215,4 +235,10 @@ def set_designated(client, name, designate, file_=None,):
         "name": name,
         "designate": designate,
     }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("parameter", "set_designated", data)

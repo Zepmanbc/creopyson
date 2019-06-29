@@ -22,8 +22,12 @@ def bound_box(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("geometry", "bound_box", data)
 
 
@@ -70,8 +74,12 @@ def get_edges(client, surface_ids, file_=None):
 
     """
     data = {"surface_ids": surface_ids}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("geometry", "get_edges", data, "contourlist")
 
 
@@ -110,7 +118,11 @@ def get_surfaces(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post(
         "geometry", "get_surfaces", data, "contourlist")

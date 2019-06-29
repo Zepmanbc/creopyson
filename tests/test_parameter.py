@@ -1,9 +1,9 @@
 """Parameters testing."""
 import creopyson
-from .fixtures import mk_creoson_post_dict, mk_creoson_post_None
+from .fixtures import mk_creoson_post_dict, mk_creoson_post_None, mk_getactivefile
 
 
-def test_parameter_copy(mk_creoson_post_None):
+def test_parameter_copy(mk_creoson_post_None, mk_getactivefile):
     """Test copy."""
     c = creopyson.Client()
     result = c.parameter_copy(
@@ -14,16 +14,23 @@ def test_parameter_copy(mk_creoson_post_None):
         designate=True
     )
     assert result is None
+    result = c.parameter_copy(
+        "name",
+        "to_name"
+    )
+    assert result is None
 
 
-def test_parameter_delete(mk_creoson_post_None):
+def test_parameter_delete(mk_creoson_post_None, mk_getactivefile):
     """Test delete."""
     c = creopyson.Client()
     result = c.parameter_delete("name", file_="file")
     assert result is None
+    result = c.parameter_delete("name")
+    assert result is None
 
 
-def test_parameter_exists(mk_creoson_post_dict):
+def test_parameter_exists(mk_creoson_post_dict, mk_getactivefile):
     """Test exists."""
     c = creopyson.Client()
     result = c.parameter_exists(name="name", file_="file")
@@ -32,7 +39,7 @@ def test_parameter_exists(mk_creoson_post_dict):
     assert result is True
 
 
-def test_parameter_list(mk_creoson_post_dict):
+def test_parameter_list(mk_creoson_post_dict, mk_getactivefile):
     """Test list."""
     c = creopyson.Client()
     result = c.parameter_list(
@@ -46,7 +53,7 @@ def test_parameter_list(mk_creoson_post_dict):
     assert isinstance(result, (list))
 
 
-def test_parameter_set(mk_creoson_post_None):
+def test_parameter_set(mk_creoson_post_None, mk_getactivefile):
     """Test set."""
     c = creopyson.Client()
     result = c.parameter_set(
@@ -59,11 +66,19 @@ def test_parameter_set(mk_creoson_post_None):
         no_create=True,
     )
     assert result is None
+    result = c.parameter_set("name")
+    assert result is None
 
 
-def test_parameter_set_designated(mk_creoson_post_None):
+def test_parameter_set_designated(mk_creoson_post_None, mk_getactivefile):
     """Test set_designated."""
     c = creopyson.Client()
+    result = c.parameter_set_designated(
+        "name",
+        True,
+        file_="file"
+    )
+    assert result is None
     result = c.parameter_set_designated(
         "name",
         True
