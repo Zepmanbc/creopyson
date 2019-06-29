@@ -116,8 +116,12 @@ def backup(client, target_dir, file_=None):
 
     """
     data = {"target_dir": target_dir}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "backup", data)
 
 
@@ -135,8 +139,12 @@ def close_window(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "close_window", data)
 
 
@@ -149,14 +157,17 @@ def display(client, file_, activate=None):
         `file_` (str):
             File name
         activate (boolean, optional):
-            Activate the model after displayong. Defaults is False.
+            Activate the model after displaying. Defaults is True.
 
     Returns:
         None
 
     """
-    data = {"file": file_}
-    if activate:
+    data = {
+        "file": file_,
+        "activate": True
+    }
+    if activate is not None:
         data["activate"] = activate
     return client._creoson_post("file", "display", data)
 
@@ -170,7 +181,7 @@ def erase(client, file_=None, erase_children=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             (Wildcards allowed: True).
-            if emptyall models in memory are erased.
+            if empty all models in memory are erased.
         erase_children (boolean, optional):
             Erase children of the models too. Defaults is False.
 
@@ -249,8 +260,12 @@ def get_fileinfo(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "get_fileinfo", data)
 
 
@@ -268,8 +283,12 @@ def get_length_units(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "get_length_units", data, "units")
 
 
@@ -287,8 +306,12 @@ def get_mass_units(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "get_mass_units", data, "units")
 
 
@@ -336,8 +359,12 @@ def has_instances(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "has_instances", data, "exists")
 
 
@@ -375,7 +402,7 @@ def list_(client, file_=None):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
-    return client._creoson_post("file", "is_active", data, "files")
+    return client._creoson_post("file", "list", data, "files")
 
 
 def list_instances(client, file_=None):
@@ -395,8 +422,12 @@ def list_instances(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "list_instances", data)
 
 
@@ -419,8 +450,12 @@ def list_simp_reps(client, file_=None, rep=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if rep:
         data["rep"] = rep
     return client._creoson_post("file", "list_simp_reps", data)
@@ -444,8 +479,12 @@ def massprops(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "massprops", data)
 
 
@@ -533,8 +572,12 @@ def open_errors(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "open_errors", data, "errors")
 
 
@@ -552,8 +595,12 @@ def postregen_relations_get(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post(
         "file", "postregen_relations_get", data, "relations")
 
@@ -575,8 +622,12 @@ def postregen_relations_set(client, file_=None, relations=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if relations:
         data["relations"] = relations
     return client._creoson_post("file", "postregen_relations_set", data)
@@ -596,8 +647,12 @@ def refresh(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "refresh", data)
 
 
@@ -618,11 +673,15 @@ def regenerate(client, file_=None, display=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         if isinstance(file_, (str)):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if display:
         data["display"] = display
     return client._creoson_post("file", "regenerate", data)
@@ -642,8 +701,12 @@ def relations_get(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "relations_get", data, "relations")
 
 
@@ -664,8 +727,12 @@ def relations_set(client, file_=None, relations=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if relations:
         data["relations"] = relations
     return client._creoson_post("file", "relations_set", data)
@@ -688,9 +755,16 @@ def rename(client, new_name, file_=None, onlysession=None):
         (str): The new model name.
 
     """
-    data = {"new_name": new_name}
-    if file_:
+    data = {
+        "new_name": new_name,
+        "onlysession": False
+    }
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if onlysession:
         data["onlysession"] = onlysession
     return client._creoson_post("file", "rename", data, "file")
@@ -710,8 +784,12 @@ def repaint(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "repaint", data)
 
 
@@ -723,17 +801,22 @@ def save(client, file_):
             creopyson Client.
         `file_` (str|list:str, optional):
             File name or List of file names;
+            Defaults is currently active model.
 
     Returns:
         None
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         if isinstance(file_, (str)):
             data["file"] = file_
         elif isinstance(file_, (list)):
             data["files"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("file", "save", data)
 
 
@@ -748,8 +831,9 @@ def set_length_units(client, units, file_=None, convert=None):
             creopyson Client.
         units (str):
             New length units.
-        `file_` (str, optional):
-            File name; only used if files is not given.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
+            Defaults is currently active model.
         convert (boolean, optional):
             Whether to convert the model's length values to the
             new units (True) or leave them the same value (False).
@@ -760,8 +844,15 @@ def set_length_units(client, units, file_=None, convert=None):
 
     """
     data = {"units": units}
-    if file_:
-        data["file"] = file_
+    if file_ is not None:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if convert:
         data["convert"] = convert
     return client._creoson_post("file", "set_length_units", data)
@@ -778,8 +869,9 @@ def set_mass_units(client, units, file_=None, convert=None):
             creopyson Client.
         units (str):
             New mass units.
-        `file_` (str, optional):
-            File name; only used if files is not given.
+        `file_` (str|list:str, optional):
+            File name or List of file names;
+            Defaults is currently active model.
         convert (boolean, optional):
             Whether to convert the model's mass values to the
             new units (True) or leave them the same value (False).
@@ -790,8 +882,15 @@ def set_mass_units(client, units, file_=None, convert=None):
 
     """
     data = {"units": units}
-    if file_:
-        data["file"] = file_
+    if file_ is not None:
+        if isinstance(file_, (str)):
+            data["file"] = file_
+        elif isinstance(file_, (list)):
+            data["files"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if convert:
         data["convert"] = convert
-    return client._creoson_post("file", "set_length_units", data)
+    return client._creoson_post("file", "set_mass_units", data)
