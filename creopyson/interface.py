@@ -50,8 +50,12 @@ def export_3dpdf(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
     if dirname:
@@ -116,8 +120,12 @@ def export_file(
 
     """
     data = {"type": file_type}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
     if dirname:
@@ -168,8 +176,12 @@ def export_image(
 
     """
     data = {"type": file_type}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
     # if dirname:
@@ -229,8 +241,12 @@ def export_pdf(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
     if dirname:
@@ -262,8 +278,12 @@ def export_program(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("interface", "export_program", data)
 
 
@@ -290,8 +310,12 @@ def import_program(client, file_=None, filename=None, dirname=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
     if dirname:
@@ -340,8 +364,12 @@ def plot(client, file_=None, dirname=None, driver=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if dirname:
         data["dirname"] = dirname
     if driver:

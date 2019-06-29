@@ -26,8 +26,12 @@ def copy(client, name, to_name=None, file_=None, to_file=None):
     data = {"name": name}
     if to_name:
         data["to_name"] = to_name
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
     return client._creoson_post("note", "copy", data)
@@ -50,8 +54,12 @@ def delete(client, name, file_=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("note", "delete", data)
 
 
@@ -72,8 +80,12 @@ def exists(client, file_=None, name=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -103,8 +115,12 @@ def get(client, name, file_=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("note", "get", data)
 
 
@@ -142,8 +158,12 @@ def list_(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -178,8 +198,12 @@ def set_(client, name, file_=None, encoded=None, value=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if encoded:
         data["encoded"] = encoded
     if value:

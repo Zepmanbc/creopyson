@@ -19,8 +19,12 @@ def add_inst(client, instance, file_=None):
 
     """
     data = {"instance": instance}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "add_inst", data)
 
 
@@ -40,8 +44,12 @@ def create_inst(client, instance, file_=None):
 
     """
     data = {"instance": instance}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "create_inst", data, "name")
 
 
@@ -61,8 +69,12 @@ def delete_inst(client, instance, file_=None):
 
     """
     data = {"instance": instance}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "delete_inst", data)
 
 
@@ -81,8 +93,12 @@ def delete(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "delete", data)
 
 
@@ -104,8 +120,12 @@ def exists(client, instance, file_=None):
 
     """
     data = {"instance": instance}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "exists", data, "exists")
 
 
@@ -140,8 +160,12 @@ def get_cell(client, instance, colid, file_=None):
         "instance": instance,
         "colid": colid
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_cell", data)
 
 
@@ -168,8 +192,12 @@ def get_header(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_header", data, "columns")
 
 
@@ -190,8 +218,12 @@ def get_parents(client, file_=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_parents", data, "parents")
 
 
@@ -219,8 +251,12 @@ def get_row(client, instance, file_=None):
 
     """
     data = {"instance": instance}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_row", data, "columns")
 
 
@@ -241,8 +277,12 @@ def list_(client, file_=None, instance=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if instance:
         data["instance"] = instance
     return client._creoson_post("familytable", "list", data, "instances")
@@ -276,8 +316,12 @@ def list_tree(client, file_=None, erase=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if erase:
         data["erase"] = erase
     return client._creoson_post("familytable", "list_tree", data, "instances")
@@ -318,8 +362,12 @@ def replace(
         "cur_model": cur_model,
         "new_inst": new_inst,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if cur_inst:
         data["cur_inst"] = cur_inst
     if path:
@@ -353,6 +401,10 @@ def set_cell(client, instance, colid, value, file_=None):
         "colid": colid,
         "value": value,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     return client._creoson_post("familytable", "set_cell", data)

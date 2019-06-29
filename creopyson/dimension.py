@@ -24,8 +24,12 @@ def copy(client, name, to_name, file_=None, to_file=None):
         "name": name,
         "to_name": to_name
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
     return client._creoson_post("dimension", "copy", data)
@@ -66,8 +70,12 @@ def list_(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -137,8 +145,12 @@ def list_detail(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -151,18 +163,18 @@ def list_detail(
     return client._creoson_post("dimension", "list_detail", data, "dimlist")
 
 
-def set_(client, file_, name, value, encoded=None):
+def set_(client, name, value, file_=None, encoded=None):
     """Set a dimension value.
 
     Args:
         client (obj):
             creopyson Client.
-        `file_` (str):
-            Model name.
         name (str):
             Dimension name.
         value (str|float):
             Dimension value.
+        `file_` (string, optional):
+            file name, if not set, active model is used.
         encoded (boolean, optional):
             Whether the value is Base64-encoded.
             Defaults is False.
@@ -176,10 +188,15 @@ def set_(client, file_, name, value, encoded=None):
 
     """
     data = {
-        "file": file_,
         "name": name,
         "value": value,
     }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if encoded:
         data["encoded"] = encoded
     return client._creoson_post("dimension", "set", data)
@@ -208,8 +225,12 @@ def show(client, name, file_=None, assembly=None, path=None):
 
     """
     data = {"name": name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if assembly:
         data["assembly"] = assembly
     if path:
@@ -247,8 +268,12 @@ def user_select(client, file_=None, maxi=None):
 
     """
     data = {"max": 1}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if maxi:
         data["max"] = maxi
     return client._creoson_post("dimension", "user_select", data, "dimlist")
