@@ -461,6 +461,9 @@ def open_(
 ):
     """Open one or more files in memory or from the drive.
 
+    note: if you open more than one file, it will only put file in your session
+    you won't be able to display more than one file at once.
+
     Args:
         client (obj):
             creopyson Client.
@@ -472,9 +475,9 @@ def open_(
             Generic model name (if file name represents an instance).
             Defaults to None.
         display (boolean, optional):
-            Display the model after opening. Defaults is False.
+            Display the model after opening. Defaults is True.
         activate (boolean, optional):
-            Activate the model after opening. Defaults is False.
+            Activate the model after opening. Defaults is True.
         new_window (boolean, optional):
             Open model in a new window. Defaults is False.
         regen_force (boolean, optional):
@@ -491,7 +494,10 @@ def open_(
                 if more than one file was opened, this field is not returned.
 
     """
-    data = {}
+    data = {
+        "display": True,
+        "activate": True,
+    }
     if file_:
         if isinstance(file_, (str)):
             data["file"] = file_
@@ -501,9 +507,9 @@ def open_(
         data["dirname"] = dirname
     if generic:
         data["generic"] = generic
-    if display:
+    if display is not None:
         data["display"] = display
-    if activate:
+    if activate is not None:
         data["activate"] = activate
     if new_window:
         data["new_window"] = new_window
