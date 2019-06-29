@@ -2,6 +2,18 @@
 History
 =======
 
+0.3.0 (2019-06-29)
+------------------
+
+*bugfixes:
+    * file_set_mass_units: function param correction
+    * file_list: function param correction
+    * general: set active file when file is optionnal
+*improvement:
+    * file_open: `activate` and `display` default to True
+    * dimension_set: file is optionnal
+
+
 0.2.0 (2019-06-28)
 ------------------
 
