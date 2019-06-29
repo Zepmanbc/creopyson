@@ -1,9 +1,9 @@
 """Note testing."""
 import creopyson
-from .fixtures import mk_creoson_post_dict, mk_creoson_post_None
+from .fixtures import mk_creoson_post_dict, mk_creoson_post_None, mk_getactivefile
 
 
-def test_note_copy(mk_creoson_post_None):
+def test_note_copy(mk_creoson_post_None, mk_getactivefile):
     """Test copy."""
     c = creopyson.Client()
     result = c.note_copy(
@@ -13,16 +13,20 @@ def test_note_copy(mk_creoson_post_None):
         to_file="target file"
     )
     assert result is None
+    result = c.note_copy("name")
+    assert result is None
 
 
-def test_note_delete(mk_creoson_post_None):
+def test_note_delete(mk_creoson_post_None, mk_getactivefile):
     """Test delete."""
     c = creopyson.Client()
     result = c.note_delete("name", file_="file")
     assert result is None
+    result = c.note_delete("name")
+    assert result is None
 
 
-def test_note_exists(mk_creoson_post_dict):
+def test_note_exists(mk_creoson_post_dict, mk_getactivefile):
     """Test exists."""
     c = creopyson.Client()
     result = c.note_exists(file_="file", name="name")
@@ -31,14 +35,16 @@ def test_note_exists(mk_creoson_post_dict):
     assert isinstance(result, (bool))
 
 
-def test_note_get(mk_creoson_post_dict):
+def test_note_get(mk_creoson_post_dict, mk_getactivefile):
     """Test get."""
     c = creopyson.Client()
     result = c.note_get("name", file_="file")
     assert isinstance(result, (dict))
+    result = c.note_get("name")
+    assert isinstance(result, (dict))
 
 
-def test_note_list(mk_creoson_post_dict):
+def test_note_list(mk_creoson_post_dict, mk_getactivefile):
     """Test list."""
     c = creopyson.Client()
     result = c.note_list(
@@ -52,7 +58,7 @@ def test_note_list(mk_creoson_post_dict):
     assert isinstance(result, (list))
 
 
-def test_note_set(mk_creoson_post_None):
+def test_note_set(mk_creoson_post_None, mk_getactivefile):
     """Test set."""
     c = creopyson.Client()
     result = c.note_set(
@@ -61,4 +67,6 @@ def test_note_set(mk_creoson_post_None):
         encoded=True,
         value="value"
     )
+    assert result is None
+    result = c.note_set("name")
     assert result is None

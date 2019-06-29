@@ -77,3 +77,14 @@ def mk_creoson_post_sessionId(monkeypatch):
         return "123456"
     monkeypatch.setattr(
         creopyson.connection.Client, '_creoson_post', fake_func)
+
+
+@pytest.fixture
+def mk_getactivefile(monkeypatch):
+    """Mock file_get_active()."""
+    def fake_func(client):
+        return {
+            "file": "file.prt"
+        }
+    monkeypatch.setattr(
+        creopyson.connection.Client, "file_get_active", fake_func)

@@ -38,8 +38,12 @@ def delete(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -74,8 +78,12 @@ def delete_param(client, name=None, file_=None, param=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         data["name"] = name
     if param:
@@ -152,8 +160,12 @@ def list_(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         data["name"] = name
     if type_:
@@ -240,8 +252,12 @@ def list_params(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(param, (str)):
             data["name"] = name
@@ -286,8 +302,12 @@ def list_group_features(client, group_name, type_=None, file_=None):
     data = {
         "group_name": group_name,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
     return client._creoson_post(
@@ -320,8 +340,12 @@ def list_pattern_features(
     data = {
         "patter_name": patter_name,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
     return client._creoson_post(
@@ -345,8 +369,12 @@ def param_exists(client, file_=None, param=None):
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if param:
         if isinstance(param, (str)):
             data["param"] = param
@@ -374,8 +402,12 @@ def rename(client, name, new_name, file_=None):
 
     """
     data = {"new_name": new_name}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if isinstance(name, (str)):
         data["name"] = name
     elif isinstance(name, (int)):
@@ -423,8 +455,12 @@ def resume(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -483,8 +519,12 @@ def set_param(
 
     """
     data = {}
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         data["name"] = name
     if param:
@@ -546,8 +586,12 @@ def suppress(
         "clip": True,
         "with_children": True
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
             data["name"] = name
@@ -600,8 +644,12 @@ def user_select_csys(client, file_=None, max_=None):
     data = {
         "max": 1,
     }
-    if file_:
+    if file_ is not None:
         data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
     if max_:
         data["max"] = max_
     return client._creoson_post("feature", "user_select_csys", data)
