@@ -8,7 +8,7 @@ class Client(object):
     """Creates Client object."""
 
     def __init__(self, ip_adress="localhost", port=9056):
-        """Create Cleint objet. Define server and sessionID vars."""
+        """Create Client objet. Define server and sessionID vars."""
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
         self.sessionId = ''
 
