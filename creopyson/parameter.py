@@ -102,7 +102,6 @@ def exists(client, name=None, file_=None):
         elif isinstance(name, (list)):
             data["names"] = name
     return client._creoson_post("parameter", "exists", data, "exists")
-    # TODO: group name/names
 
 
 def list_(
