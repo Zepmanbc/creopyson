@@ -68,13 +68,15 @@ def list_(client, file_=None, name=None):
         (list:str): List of view names.
 
     """
-    data = {"name": name}
+    data = {"name": "*"}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
         if active_file is not None:
             data["file"] = active_file["file"]
+    if name is not None:
+        data["name"] = name
     return client._creoson_post("view", "list", data, "viewlist")
 
 
