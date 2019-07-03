@@ -1,4 +1,5 @@
 """Creo module."""
+from creopyson.exceptions import MissingKey
 
 
 def cd(client, dirname):
@@ -108,7 +109,11 @@ def list_dirs(client, dirname=None):
     data = {"dirname": "*"}
     if dirname:
         data["dirname"] = dirname
-    return client._creoson_post("creo", "list_dirs", data, "dirlist")
+    try:
+        result = client._creoson_post("creo", "list_dirs", data, "dirlist")
+    except MissingKey:
+        result = []
+    return result
 
 
 def list_files(client, filename=None):

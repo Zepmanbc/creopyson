@@ -1,5 +1,6 @@
 """Creo testing."""
 import creopyson
+from creopyson.exceptions import MissingKey
 from .fixtures import mk_creoson_post_dict, mk_creoson_post_None
 
 
@@ -43,6 +44,23 @@ def test_creo_list_dirs(mk_creoson_post_dict):
     c = creopyson.Client()
     result = c.creo_list_dirs("filter_*")
     assert isinstance(result, (list))
+    result = c.creo_list_dirs()
+    assert isinstance(result, (list))
+
+
+def test_creo_list_dirs_empty(monkeypatch):
+    """Correction issue #1.
+
+    if there is no folder in directory, creoson does not return `data`.
+    Need to return an empty list.
+    """
+    def fake_func(client, command, function, data=None, key_data=None):
+        raise MissingKey("Missing `data` in creoson return")
+    monkeypatch.setattr(
+        creopyson.connection.Client, '_creoson_post', fake_func)
+    c = creopyson.Client()
+    result = c.creo_list_dirs()
+    assert result == []
 
 
 def test_creo_list_files(mk_creoson_post_dict):
