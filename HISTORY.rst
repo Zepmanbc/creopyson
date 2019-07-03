@@ -2,6 +2,17 @@
 History
 =======
 
+0.3.2 (2019-07-03)
+------------------
+
+* bugfix:
+    * creo_list_dirs: return empty list if there is no folder in the directory (`issue #1`_)
+
+* Add basic usage video on README
+
+.. _`issue #1`: https://github.com/Zepmanbc/creopyson/issues/1
+
+
 0.3.1 (2019-06-30)
 ------------------
 
