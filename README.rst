@@ -42,6 +42,12 @@ Creopyson can be used to automate actions in CREO:
 * Read/Write parameters, dimensions
 * Support Windchill
 
+Basic usage video:
+
+.. raw:: html
+
+    <iframe width="560" height="315" src="http://www.youtube.com/embed/NjkvRZJQzXs?rel=0" frameborder="0" allowfullscreen></iframe>
+
 See documentation for more informations...
 
 Credits
