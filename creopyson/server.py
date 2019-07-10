@@ -2,6 +2,7 @@
 
 import requests
 import json
+import re
 
 
 def pwd(client):
@@ -24,12 +25,9 @@ def pwd(client):
         "function": "pwd",
     }
     # ask `http://localhost:9056/server` vs `http://localhost:9056/creoson`
-    list_adress = client.server.split('/')[:-1]
-    list_adress.append('server')
-    server_adress = "/".join(list_adress)
-    server_adress = client.server.replace("creoson", "server")
+    server_adress = re.sub(r'creoson$', 'server',  client.server)
     r = requests.post(server_adress, data=json.dumps(request))
-    json_result = json.loads(r.content)
+    json_result = r.json()
     status = json_result["status"]["error"]
 
     if not status:
