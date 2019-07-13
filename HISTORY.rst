@@ -2,6 +2,14 @@
 History
 =======
 
+0.3.3 (2019-07-13)
+------------------
+
+* bugfix:
+    * feature_resume: `with_children` paramt set default to `False` (`issue #3`_)
+
+.. _`issue #3`: https://github.com/Zepmanbc/creopyson/issues/3
+
 0.3.2 (2019-07-03)
 ------------------
 
