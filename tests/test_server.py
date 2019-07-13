@@ -12,8 +12,7 @@ def test_server_pwd_ok(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": False,
@@ -22,7 +21,7 @@ def test_server_pwd_ok(monkeypatch):
                     "dirname": "C:/CreosonServer-2.3.0-win64"
                 }
             }
-            return json.dumps(results).encode()
+            return results
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
@@ -36,15 +35,14 @@ def test_server_pwd_error(monkeypatch):
         def __init__(self, *args, **kwargs):
             pass
 
-        @property
-        def content(self):
+        def json(self):
             results = {
                 "status": {
                     "error": True,
                     "message": "error message"
                 }
             }
-            return json.dumps(results).encode()
+            return results
 
     monkeypatch.setattr(requests, 'post', Mk_post)
     c = creopyson.Client()
