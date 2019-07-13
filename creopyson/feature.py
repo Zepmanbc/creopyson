@@ -437,7 +437,7 @@ def resume(
             File name (wildcards allowed: True).
             Defaults is the currently active model.
         name (str|list:str, optional):
-            Dimension name, (wildcards allowed: True);
+            Feature name, (wildcards allowed: True);
             if empty then all features are resumed.
         status (str, optional):
             Feature status pattern. Defaults: All feature statuses.
@@ -448,13 +448,15 @@ def resume(
             Defaults: All feature types.
         with_children (boolean, optional):
             Whether to resume any child features of the resumed feature.
-            Defaults is True.
+            Defaults is False.
 
     Returns:
         None
 
     """
-    data = {}
+    data = {
+        "with_children": False,
+    }
     if file_ is not None:
         data["file"] = file_
     else:
