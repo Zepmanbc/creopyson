@@ -44,8 +44,8 @@ Creopyson can be used to automate actions in CREO:
 
 Basic usage video:
 
-.. image:: https://github.com/Zepmanbc/creopyson/raw/develop/docs/_static/video.png
-        :target: http://www.youtube.com/embed/NjkvRZJQzXs
+.. image:: https://github.com/Zepmanbc/creopyson/raw/master/docs/_static/video.png
+        :target: https://youtu.be/NjkvRZJQzXs
 
 See documentation for more informations...
 
