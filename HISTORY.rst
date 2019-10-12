@@ -2,6 +2,28 @@
 History
 =======
 
+0.3.4 (2019-10-12)
+------------------
+
+* Update for `Creoson 2.5.0 release`_.
+    * New functions:
+        * file_delete_material
+        * drawing_get_sheet_format
+        * dimension_set_text
+    * Add parameters:
+        * windchill_clear_workspace: filenames
+        * dimension_list: select
+        * dimension_list_detail: select
+        * feature_resume: `name` can be an integer for *feat_ID*
+        * feature_suppress: `name` can be an integer for *feat_ID*
+    * New returns:
+        * note_get: location
+        * dimension_list: dwg_dim
+        * dimension_list_detail: dwg_dim
+    * Few notes updates
+
+.. _`Creoson 2.5.0 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.5.0
+
 0.3.3 (2019-07-13)
 ------------------
 
