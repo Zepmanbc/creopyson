@@ -436,9 +436,12 @@ def resume(
         `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is the currently active model.
-        name (str|list:str, optional):
-            Feature name, (wildcards allowed: True);
+        name (int|str|list:str, optional):
+            Feature name or Feature ID, (wildcards allowed: True);
             if empty then all features are resumed.
+            int => Feat_ID
+            str => name
+            list:str => names
         status (str, optional):
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
@@ -464,7 +467,9 @@ def resume(
         if active_file is not None:
             data["file"] = active_file["file"]
     if name:
-        if isinstance(name, (str)):
+        if isinstance(name, (int)):
+            data["feat_id"] = name
+        elif isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
@@ -563,9 +568,12 @@ def suppress(
         `file_` (str, optional):
             File name (wildcards allowed: True).
             Defaults is the currently active model.
-        name (str|list:str, optional):
-            Dimension name, (wildcards allowed: True);
+        name (int|str|list:str, optional):
+            Feature name or Feature ID, (wildcards allowed: True);
             if empty then all features are suppressed.
+            int => Feat_ID
+            str => name
+            list:str => names
         status (str, optional):
             Feature status pattern. Defaults: All feature statuses.
             Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
@@ -595,7 +603,9 @@ def suppress(
         if active_file is not None:
             data["file"] = active_file["file"]
     if name:
-        if isinstance(name, (str)):
+        if isinstance(name, (int)):
+            data["feat_id"] = name
+        elif isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name

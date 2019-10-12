@@ -148,6 +148,29 @@ def close_window(client, file_=None):
     return client._creoson_post("file", "close_window", data)
 
 
+def delete_material(client, material, file_=None):
+    """Delete a material from a part.
+
+    Args:
+        client (obj):
+            creopyson object
+        material (str):
+            Material name
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
+    """
+    data = {
+        "material": material,
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "delete_material", data)
+
+
 def display(client, file_, activate=None):
     """Display a model in a window.
 

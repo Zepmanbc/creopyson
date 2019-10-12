@@ -16,7 +16,9 @@ def test_windchill_clear_workspace(monkeypatch, mk_creoson_post_None):
     def fake_func():
         return "workspace"
     monkeypatch.setattr(c, 'windchill_get_workspace', fake_func)
-    result = c.windchill_clear_workspace("MyWorkspace")
+    result = c.windchill_clear_workspace(workspace="MyWorkspace")
+    assert result is None
+    result = c.windchill_clear_workspace(filenames=["file1", "file2"])
     assert result is None
 
 

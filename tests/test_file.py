@@ -52,6 +52,15 @@ def test_file_display(mk_creoson_post_None):
     assert result is None
 
 
+def test_file_delete_material(mk_creoson_post_None, mk_getactivefile):
+    """Test delete_material."""
+    c = creopyson.Client()
+    result = c.file_delete_material("brass", file_="file")
+    assert result is None
+    result = c.file_delete_material("brass")
+    assert result is None
+
+
 def test_file_erase(mk_creoson_post_None, mk_getactivefile):
     """Test erase."""
     c = creopyson.Client()

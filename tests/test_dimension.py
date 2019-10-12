@@ -27,7 +27,8 @@ def test_dimension_list(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         file_="file.prt",
         dim_type="linear",
-        encoded=True
+        encoded=True,
+        select=True
     )
     assert isinstance(result, (list))
     result = c.dimension_list(
@@ -48,7 +49,8 @@ def test_dimension_list_detail(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         file_="file.prt",
         dim_type="linear",
-        encoded=True
+        encoded=True,
+        select=True
     )
     assert isinstance(result, (list))
     result = c.dimension_list_detail(
@@ -75,6 +77,22 @@ def test_dimension_set(mk_creoson_post_None, mk_getactivefile):
     result = c.dimension_set(
         "name",
         12.4,
+    )
+    assert result is None
+
+
+def test_dimension_set_text(mk_creoson_post_None, mk_getactivefile):
+    """Test dimension_set_text."""
+    c = creopyson.Client()
+    result = c.dimension_set_text(
+        "name",
+        text="@D rad",
+        file_="file"
+    )
+    assert result is None
+    result = c.dimension_set_text(
+        "name",
+        encoded=True
     )
     assert result is None
 
