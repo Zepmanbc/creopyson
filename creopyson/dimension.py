@@ -40,9 +40,13 @@ def list_(
     name=None,
     file_=None,
     dim_type=None,
-    encoded=None
+    encoded=None,
+    select=False
 ):
     """Get a list of dimensions from a model.
+
+    If select is true, then the current selection in Creo will be cleared even
+    if no items are found.
 
     Args:
         client (obj):
@@ -57,6 +61,9 @@ def list_(
             Valid values: linear, radial, diameter, angular.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
+        select (boolean, optional):
+            If true, the dimensions that are found will be selected in Creo.
+            Defaults is False.
 
     Returns:
         (list:dict): List of dimension information.
@@ -85,6 +92,8 @@ def list_(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
+    if select:
+        data["select"] = select
     return client._creoson_post("dimension", "list", data, "dimlist")
 
 
@@ -93,9 +102,15 @@ def list_detail(
     name=None,
     file_=None,
     dim_type=None,
-    encoded=None
+    encoded=None,
+    select=False
 ):
     """Get a list of dimension details from a model.
+
+    Values will automatically be returned Base64-encoded if they are strings
+    which contain Creo Symbols or other non-ASCII data.
+    If select is true, then the current selection in Creo will be cleared
+    even if no items are found.
 
     Args:
         client (obj):
@@ -110,6 +125,9 @@ def list_detail(
             Valid values: linear, radial, diameter, angular.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
+        select (boolean, optional):
+            If true, the dimensions that are found will be selected in Creo.
+            Defaults is False.
 
     Returns:
         (list:dict): List of dimension information.
@@ -160,6 +178,8 @@ def list_detail(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
+    if select:
+        data["select"] = select
     return client._creoson_post("dimension", "list_detail", data, "dimlist")
 
 
