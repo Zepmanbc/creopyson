@@ -164,7 +164,13 @@ def list_detail(
 
 
 def set_(client, name, value, file_=None, encoded=None):
-    """Set a dimension value.
+    r"""Set a dimension value.
+
+    One reason to encode values is if the value contains special characters,
+    such as Creo symbols.
+    You may be able to avoid Base64-encoding symbols by using Unicode for the
+    binary characters, for example including \\u0001#\\u0002 in the value to
+    insert a plus/minus symbol.
 
     Args:
         client (obj):
