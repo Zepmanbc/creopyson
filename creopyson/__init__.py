@@ -47,12 +47,14 @@ from creopyson.dimension import copy as dimension_copy
 from creopyson.dimension import list_detail as dimension_list_detail
 from creopyson.dimension import list_ as dimension_list
 from creopyson.dimension import set_ as dimension_set
+from creopyson.dimension import set_text as dimension_set_text
 from creopyson.dimension import show as dimension_show
 from creopyson.dimension import user_select as dimension_user_select
 Client.dimension_copy = dimension_copy
 Client.dimension_list_detail = dimension_list_detail
 Client.dimension_list = dimension_list
 Client.dimension_set = dimension_set
+Client.dimension_set_text = dimension_set_text
 Client.dimension_show = dimension_show
 Client.dimension_user_select = dimension_user_select
 
@@ -72,6 +74,7 @@ from creopyson.drawing import delete_view as drawing_delete_view
 from creopyson.drawing import get_cur_model as drawing_get_cur_model
 from creopyson.drawing import get_cur_sheet as drawing_get_cur_sheet
 from creopyson.drawing import get_num_sheets as drawing_get_num_sheets
+from creopyson.drawing import get_sheet_format as drawing_get_sheet_format
 from creopyson.drawing import get_sheet_scale as drawing_get_sheet_scale
 from creopyson.drawing import get_sheet_size as drawing_get_sheet_size
 from creopyson.drawing import get_view_loc as drawing_get_view_loc
@@ -107,6 +110,7 @@ Client.drawing_delete_view = drawing_delete_view
 Client.drawing_get_cur_model = drawing_get_cur_model
 Client.drawing_get_cur_sheet = drawing_get_cur_sheet
 Client.drawing_get_num_sheets = drawing_get_num_sheets
+Client.drawing_get_sheet_format = drawing_get_sheet_format
 Client.drawing_get_sheet_scale = drawing_get_sheet_scale
 Client.drawing_get_sheet_size = drawing_get_sheet_size
 Client.drawing_get_view_loc = drawing_get_view_loc
@@ -192,6 +196,7 @@ from creopyson.file import assemble as file_assemble
 from creopyson.file import backup as file_backup
 from creopyson.file import close_window as file_close_window
 from creopyson.file import display as file_display
+from creopyson.file import delete_material as file_delete_material
 from creopyson.file import erase as file_erase
 from creopyson.file import erase_not_displayed as file_erase_not_displayed
 from creopyson.file import exists as file_exists
@@ -225,6 +230,7 @@ Client.file_assemble = file_assemble
 Client.file_backup = file_backup
 Client.file_close_window = file_close_window
 Client.file_display = file_display
+Client.file_delete_material = file_delete_material
 Client.file_erase = file_erase
 Client.file_erase_not_displayed = file_erase_not_displayed
 Client.file_exists = file_exists

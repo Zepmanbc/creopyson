@@ -97,6 +97,9 @@ def exists(client, file_=None, name=None):
 def get(client, name, file_=None):
     """Get the text of a model or drawing note.
 
+    Values will automatically be returned Base64-encoded if they are strings
+    which contain Creo Symbols or other non-ASCII data.
+
     Args:
         client (obj):
             creopyson Client.
@@ -108,10 +111,16 @@ def get(client, name, file_=None):
 
     Returns:
         (dict):
-            file (str): File name.
-            name (str): Note name.
-            encoded (boolean): Value is Base64-encoded.
-            url (str): "Note URL, if there is one.
+            file (str):
+                File name.
+            name (str):
+                Note name.
+            encoded (boolean):
+                Value is Base64-encoded.
+            url (str):
+                "Note URL, if there is one.
+            location (obj:JLPoint):
+                Note location in Drawing Units (drawing notes only)
 
     """
     data = {"name": name}
@@ -132,6 +141,9 @@ def list_(
     get_expanded=None
 ):
     """Get a list of notes from one or more models.
+
+    Values will automatically be returned Base64-encoded if they are strings
+    which contain Creo Symbols or other non-ASCII data.
 
     Args:
         client (obj):
@@ -177,7 +189,14 @@ def list_(
 
 
 def set_(client, name, file_=None, encoded=None, value=None):
-    """Set the text of a model or drawing note.
+    r"""Set the text of a model or drawing note.
+
+    The location parameter can used to position a new note, or to change the
+    position of an existing note. If the text contains Creo Symbols or other
+    non-ASCII text, you must Base64-encode the value and set encoded to true
+    You may be able to avoid Base64-encoding symbols by using Unicode for the
+    binary characters, for example including \\u0001#\\u0002 in the value to
+    insert a plus/minus symbol. Embed newlines in the value for line breaks.
 
     Args:
         client (obj):
@@ -190,8 +209,7 @@ def set_(client, name, file_=None, encoded=None, value=None):
             Whether the value is Base64-encoded. Defaults is False.
         value (str, optional):
             Note text with parameters not expanded.
-            Defaults to None: clears the note if missing;
-            embed newlines for line breaks
+            Defaults to None: clears the note if missing.
 
     Returns:
         None

@@ -454,6 +454,33 @@ def get_num_sheets(client, drawing=None):
         "drawing", "get_num_sheets", data, "num_sheets")
 
 
+def get_sheet_format(client, sheet, drawing=None):
+    """Get the drawing format file of drawing sheet.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        sheet (int):
+            Sheet number.
+        drawing (str, optional):
+            Drawing name. Defaults: current active drawing.
+
+    Returns:
+        (dict):
+            file(str):
+                Format file name, may be null if there is no current format.
+            full_name(str):
+                Format full name.
+            common_name(str):
+                Format common name.
+
+    """
+    data = {"sheet": sheet}
+    if drawing:
+        data["drawing"] = drawing
+    return client._creoson_post("drawing", "get_sheet_format", data)
+
+
 def get_sheet_scale(client, sheet, drawing=None, model=None):
     """Get the scale of a drawing sheet.
 

@@ -40,9 +40,13 @@ def list_(
     name=None,
     file_=None,
     dim_type=None,
-    encoded=None
+    encoded=None,
+    select=False
 ):
     """Get a list of dimensions from a model.
+
+    If select is true, then the current selection in Creo will be cleared even
+    if no items are found.
 
     Args:
         client (obj):
@@ -57,6 +61,9 @@ def list_(
             Valid values: linear, radial, diameter, angular.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
+        select (boolean, optional):
+            If true, the dimensions that are found will be selected in Creo.
+            Defaults is False.
 
     Returns:
         (list:dict): List of dimension information.
@@ -67,6 +74,9 @@ def list_(
                 if encoded is False it is a float.
             encoded (boolean):
                 Whether the returned value is Base64-encoded.
+            dwg_dim (boolean):
+                Whether dimension is a drawing dimension rather than
+                a model dimension.
 
     """
     data = {}
@@ -85,6 +95,8 @@ def list_(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
+    if select:
+        data["select"] = select
     return client._creoson_post("dimension", "list", data, "dimlist")
 
 
@@ -93,9 +105,15 @@ def list_detail(
     name=None,
     file_=None,
     dim_type=None,
-    encoded=None
+    encoded=None,
+    select=False
 ):
     """Get a list of dimension details from a model.
+
+    Values will automatically be returned Base64-encoded if they are strings
+    which contain Creo Symbols or other non-ASCII data.
+    If select is true, then the current selection in Creo will be cleared
+    even if no items are found.
 
     Args:
         client (obj):
@@ -110,6 +128,9 @@ def list_detail(
             Valid values: linear, radial, diameter, angular.
         encoded (boolean, optional):
             Whether to return the values Base64-encoded. Defaults is False.
+        select (boolean, optional):
+            If true, the dimensions that are found will be selected in Creo.
+            Defaults is False.
 
     Returns:
         (list:dict): List of dimension information.
@@ -127,6 +148,9 @@ def list_detail(
             dim_type (str):
                 Dimension type.
                 Valid values: linear, radial, diameter, angular.
+            dwg_dim (boolean):
+                Whether dimension is a drawing dimension rather than
+                a model dimension.
             text (str):
                 dimension text.
             location (dict): Coordonates location.
@@ -160,11 +184,19 @@ def list_detail(
         data["dim_type"] = dim_type
     if encoded:
         data["encoded"] = encoded
+    if select:
+        data["select"] = select
     return client._creoson_post("dimension", "list_detail", data, "dimlist")
 
 
 def set_(client, name, value, file_=None, encoded=None):
-    """Set a dimension value.
+    r"""Set a dimension value.
+
+    One reason to encode values is if the value contains special characters,
+    such as Creo symbols.
+    You may be able to avoid Base64-encoding symbols by using Unicode for the
+    binary characters, for example including \\u0001#\\u0002 in the value to
+    insert a plus/minus symbol.
 
     Args:
         client (obj):
@@ -200,6 +232,40 @@ def set_(client, name, value, file_=None, encoded=None):
     if encoded:
         data["encoded"] = encoded
     return client._creoson_post("dimension", "set", data)
+
+
+def set_text(client, name, file_=None, text=None, encoded=False):
+    """Set dimension text.
+
+    Args:
+        client (obj):
+            creopyson object.
+        name (str):
+            Dimension name.
+        `file_` (string, optional):
+            file name, if not set, active model is used.
+        text ([type], optional):
+            Dimension text. Defaults to None, sets the dimension's text to @D.
+        encoded (bool, optional):
+            Whether the text value is Base64-encoded. Defaults to False.
+
+    Returns:
+        None
+
+    """
+    data = {
+        "name": name,
+        "encoded": encoded,
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if text:
+        data["text"] = text
+    return client._creoson_post("dimension", "set_text", data)
 
 
 def show(client, name, file_=None, assembly=None, path=None):

@@ -25,7 +25,7 @@ def authorize(client, user, password):
     return client._creoson_post("windchill", "authorize", data)
 
 
-def clear_workspace(client, workspace=None):
+def clear_workspace(client, workspace=None, filenames=None):
     """Clear a workspace on the active server.
 
     Args:
@@ -33,6 +33,9 @@ def clear_workspace(client, workspace=None):
             creopyson Client
         workspace (str, optionnal):
             Workspace name. Default is current workspace.
+        filenames (str|list, optionnal):
+            List of files to delete from the workspace.
+            Default: All files are deleted.
 
     Returns:
         None
@@ -42,6 +45,8 @@ def clear_workspace(client, workspace=None):
     data = {"workspace": active_workspace}
     if workspace:
         data["workspace"] = workspace
+    if filenames:
+        data["filenames"] = filenames
     return client._creoson_post("windchill", "clear_workspace", data)
 
 
