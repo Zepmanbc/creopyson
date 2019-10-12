@@ -192,6 +192,7 @@ from creopyson.file import assemble as file_assemble
 from creopyson.file import backup as file_backup
 from creopyson.file import close_window as file_close_window
 from creopyson.file import display as file_display
+from creopyson.file import delete_material as file_delete_material
 from creopyson.file import erase as file_erase
 from creopyson.file import erase_not_displayed as file_erase_not_displayed
 from creopyson.file import exists as file_exists
@@ -225,6 +226,7 @@ Client.file_assemble = file_assemble
 Client.file_backup = file_backup
 Client.file_close_window = file_close_window
 Client.file_display = file_display
+Client.file_delete_material = file_delete_material
 Client.file_erase = file_erase
 Client.file_erase_not_displayed = file_erase_not_displayed
 Client.file_exists = file_exists
