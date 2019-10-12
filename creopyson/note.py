@@ -108,10 +108,16 @@ def get(client, name, file_=None):
 
     Returns:
         (dict):
-            file (str): File name.
-            name (str): Note name.
-            encoded (boolean): Value is Base64-encoded.
-            url (str): "Note URL, if there is one.
+            file (str):
+                File name.
+            name (str):
+                Note name.
+            encoded (boolean):
+                Value is Base64-encoded.
+            url (str):
+                "Note URL, if there is one.
+            location (obj:JLPoint):
+                Note location in Drawing Units (drawing notes only)
 
     """
     data = {"name": name}
