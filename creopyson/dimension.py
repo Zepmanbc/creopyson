@@ -74,6 +74,9 @@ def list_(
                 if encoded is False it is a float.
             encoded (boolean):
                 Whether the returned value is Base64-encoded.
+            dwg_dim (boolean):
+                Whether dimension is a drawing dimension rather than
+                a model dimension.
 
     """
     data = {}
@@ -145,6 +148,9 @@ def list_detail(
             dim_type (str):
                 Dimension type.
                 Valid values: linear, radial, diameter, angular.
+            dwg_dim (boolean):
+                Whether dimension is a drawing dimension rather than
+                a model dimension.
             text (str):
                 dimension text.
             location (dict): Coordonates location.
