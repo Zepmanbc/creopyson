@@ -72,6 +72,7 @@ from creopyson.drawing import delete_view as drawing_delete_view
 from creopyson.drawing import get_cur_model as drawing_get_cur_model
 from creopyson.drawing import get_cur_sheet as drawing_get_cur_sheet
 from creopyson.drawing import get_num_sheets as drawing_get_num_sheets
+from creopyson.drawing import get_sheet_format as drawing_get_sheet_format
 from creopyson.drawing import get_sheet_scale as drawing_get_sheet_scale
 from creopyson.drawing import get_sheet_size as drawing_get_sheet_size
 from creopyson.drawing import get_view_loc as drawing_get_view_loc
@@ -107,6 +108,7 @@ Client.drawing_delete_view = drawing_delete_view
 Client.drawing_get_cur_model = drawing_get_cur_model
 Client.drawing_get_cur_sheet = drawing_get_cur_sheet
 Client.drawing_get_num_sheets = drawing_get_num_sheets
+Client.drawing_get_sheet_format = drawing_get_sheet_format
 Client.drawing_get_sheet_scale = drawing_get_sheet_scale
 Client.drawing_get_sheet_size = drawing_get_sheet_size
 Client.drawing_get_view_loc = drawing_get_view_loc

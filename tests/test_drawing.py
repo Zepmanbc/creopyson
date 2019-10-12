@@ -142,6 +142,13 @@ def test_drawing_get_num_sheets(mk_creoson_post_dict):
     assert isinstance(result, (int))
 
 
+def test_drawing_get_sheet_format(mk_creoson_post_dict):
+    """Test get_sheet_format."""
+    c = creopyson.Client()
+    result = c.drawing_get_sheet_format(1, drawing="drawing")
+    assert isinstance(result, (dict))
+
+
 def test_drawing_get_sheet_scale(mk_creoson_post_dict):
     """Test get_sheet_scale."""
     c = creopyson.Client()
