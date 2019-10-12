@@ -153,6 +153,10 @@ def test_feature_resume(mk_creoson_post_None, mk_getactivefile):
         name=["name", "other name"],
     )
     assert result is None
+    result = c.feature_resume(
+        name=123,
+    )
+    assert result is None
 
 
 def test_feature_set_param(mk_creoson_post_None, mk_getactivefile):
@@ -187,6 +191,10 @@ def test_feature_suppress(mk_creoson_post_None, mk_getactivefile):
     assert result is None
     result = c.feature_suppress(
         name=["name", "other name"],
+    )
+    assert result is None
+    result = c.feature_suppress(
+        name=123,
     )
     assert result is None
 

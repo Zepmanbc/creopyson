@@ -27,7 +27,8 @@ def test_dimension_list(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         file_="file.prt",
         dim_type="linear",
-        encoded=True
+        encoded=True,
+        select=True
     )
     assert isinstance(result, (list))
     result = c.dimension_list(
@@ -48,7 +49,8 @@ def test_dimension_list_detail(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         file_="file.prt",
         dim_type="linear",
-        encoded=True
+        encoded=True,
+        select=True
     )
     assert isinstance(result, (list))
     result = c.dimension_list_detail(
