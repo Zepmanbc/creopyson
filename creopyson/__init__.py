@@ -47,12 +47,14 @@ from creopyson.dimension import copy as dimension_copy
 from creopyson.dimension import list_detail as dimension_list_detail
 from creopyson.dimension import list_ as dimension_list
 from creopyson.dimension import set_ as dimension_set
+from creopyson.dimension import set_text as dimension_set_text
 from creopyson.dimension import show as dimension_show
 from creopyson.dimension import user_select as dimension_user_select
 Client.dimension_copy = dimension_copy
 Client.dimension_list_detail = dimension_list_detail
 Client.dimension_list = dimension_list
 Client.dimension_set = dimension_set
+Client.dimension_set_text = dimension_set_text
 Client.dimension_show = dimension_show
 Client.dimension_user_select = dimension_user_select
 

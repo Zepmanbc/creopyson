@@ -208,6 +208,40 @@ def set_(client, name, value, file_=None, encoded=None):
     return client._creoson_post("dimension", "set", data)
 
 
+def set_text(client, name, file_=None, text=None, encoded=False):
+    """Set dimension text.
+
+    Args:
+        client (obj):
+            creopyson object.
+        name (str):
+            Dimension name.
+        `file_` (string, optional):
+            file name, if not set, active model is used.
+        text ([type], optional):
+            Dimension text. Defaults to None, sets the dimension's text to @D.
+        encoded (bool, optional):
+            Whether the text value is Base64-encoded. Defaults to False.
+
+    Returns:
+        None
+
+    """
+    data = {
+        "name": name,
+        "encoded": encoded,
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if text:
+        data["text"] = text
+    return client._creoson_post("dimension", "set_text", data)
+
+
 def show(client, name, file_=None, assembly=None, path=None):
     """Display or hide a dimension in Creo.
 

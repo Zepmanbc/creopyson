@@ -79,6 +79,22 @@ def test_dimension_set(mk_creoson_post_None, mk_getactivefile):
     assert result is None
 
 
+def test_dimension_set_text(mk_creoson_post_None, mk_getactivefile):
+    """Test dimension_set_text."""
+    c = creopyson.Client()
+    result = c.dimension_set_text(
+        "name",
+        text="@D rad",
+        file_="file"
+    )
+    assert result is None
+    result = c.dimension_set_text(
+        "name",
+        encoded=True
+    )
+    assert result is None
+
+
 def test_dimension_show(mk_creoson_post_None, mk_getactivefile):
     """Test dimension_show."""
     c = creopyson.Client()
