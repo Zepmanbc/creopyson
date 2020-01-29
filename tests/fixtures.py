@@ -36,6 +36,7 @@ def mk_creoson_post_dict(monkeypatch):
                 "scale": 1.5,
                 "size": "size",
                 "sheet": 4,
+                "surflist": [],
                 "symbols": [],
                 "transform": {"fake obj": 123},
                 "units": "units",

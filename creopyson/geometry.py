@@ -125,4 +125,4 @@ def get_surfaces(client, file_=None):
         if active_file is not None:
             data["file"] = active_file["file"]
     return client._creoson_post(
-        "geometry", "get_surfaces", data, "contourlist")
+        "geometry", "get_surfaces", data, "surflist")
