@@ -363,7 +363,7 @@ def test_connection_kill_creo_ok(mk_creoson_post_None):
 def test_connection_start_creo_ok(mk_creoson_post_None):
     """Test no error returned from creoson."""
     c = creopyson.Client()
-    result = c.start_creo("C:/folder/nitro_proe_remote.bat")
+    result = c.start_creo("C:/path/to/nitro_proe_remote.bat")
     assert result is None
 
 
