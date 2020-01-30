@@ -16,10 +16,8 @@ Creopyson
         :target: https://creopyson.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://cdn.buymeacoffee.com/buttons/arial-orange.png
+.. image:: https://github.com/Zepmanbc/creopyson/raw/master/docs/_static/buymeacoffe.png
         :target: https://www.buymeacoffee.com/Zv7CwOS
-        :width: 87
-        :height: 20
         :alt: Buy Me A Coffee
 
 Creopyson is a python library that aim to control `PTC's CREO Parametric`_ via JLink via CREOSON.
