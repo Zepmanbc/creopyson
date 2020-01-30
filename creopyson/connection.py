@@ -1,6 +1,7 @@
 """Connection module."""
 import requests
 import json
+from pathlib import Path
 from .exceptions import MissingKey, ErrorJsonDecode
 
 
@@ -159,8 +160,9 @@ class Client(object):
             None
 
         """
-        start_command = path.split('/')[-1]
-        start_dir = path.replace(start_command, '')[:-1]
+        path_obj = Path(path)
+        start_command = path_obj.name
+        start_dir = str(path_obj.parents[0])
         data = {
             "start_dir": start_dir,
             "start_command": start_command,
