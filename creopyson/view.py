@@ -42,7 +42,9 @@ def list_exploded(client, file_=None, name=None):
         (list:str): List of view names.
 
     """
-    data = {"name": name}
+    data = {}
+    if name is not None:
+        data["name"] = name
     if file_ is not None:
         data["file"] = file_
     else:
