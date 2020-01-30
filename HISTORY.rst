@@ -2,6 +2,18 @@
 History
 =======
 
+0.4.1 (2020-01-30)
+------------------
+
+* bugfix:
+    * view_list_exploded(): name param was in request even if empty (`issue#4`_)
+    * start_creo(): path decomposition did not worked with Windows style (`issue#5`_)
+    * geometry_get_surfaces(): wrong data_key waited in result, need *surflist* (`issue#6`_)
+
+.. _`issue#4`: https://github.com/Zepmanbc/creopyson/issues/4
+.. _`issue#5`: https://github.com/Zepmanbc/creopyson/issues/5
+.. _`issue#6`: https://github.com/Zepmanbc/creopyson/issues/6
+
 0.4.0 (2019-10-12)
 ------------------
 

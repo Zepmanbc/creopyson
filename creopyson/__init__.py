@@ -4,7 +4,7 @@
 
 __author__ = """Benjamin C."""
 __email__ = 'zepman@gmail.com'
-__version__ = '0.4.0'
+__version__ = '0.4.1'
 
 from creopyson.connection import Client
 from creopyson.objects import jlpoint
