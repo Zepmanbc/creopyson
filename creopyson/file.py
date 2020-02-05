@@ -277,9 +277,13 @@ def get_fileinfo(client, file_=None):
 
     Returns:
         (dict):
-            dirname (str): Directory name of the file.
-            file (str): File name.
-            revision (int): Revision number of file.
+            dirname (str):
+                Directory name of the file.
+            file (str):
+                File name.
+            revision (int):
+                Revision number of file.
+                (Not availlable if the file is in Windchill)
 
     """
     data = {}
