@@ -438,7 +438,6 @@ def rename(client, name, new_name, file_=None):
     else:
         raise TypeError("name must be str or int")
     return client._creoson_post("feature", "rename", data)
-    # TODO: feat_id/name
 
 
 def resume(
