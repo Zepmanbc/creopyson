@@ -1,4 +1,13 @@
 """Feature module."""
+STATUS_LIST = [
+    "ACTIVE",
+    "INACTIVE",
+    "FAMILY_TABLE_SUPPRESSED",
+    "SIMP_REP_SUPPRESSED",
+    "PROGRAM_SUPPRESSED",
+    "SUPPRESSED",
+    "UNREGENERATED"
+]
 
 
 def delete(
@@ -33,6 +42,9 @@ def delete(
             the end of the structure.
             Defaults is False.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -49,8 +61,10 @@ def delete(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if clip:
@@ -95,13 +109,12 @@ def list_(
     client,
     file_=None,
     name=None,
+    status=None,
     type_=None,
+    paths=None,
     no_datum=None,
     inc_unnamed=None,
-    no_comp=None,
-    param=None,
-    value=None,
-    encoded=None
+    no_comp=None
 ):
     """List feature parameters that match criteria.
 
@@ -114,6 +127,101 @@ def list_(
             File name. Defaults is the currently active model.
         name (str, optional):
             Feature name (wildcards allowed: True).
+            Defaults: All features are listed.
+        status (str, optionnal):
+            Feature status pattern.
+            Defaults: All feature statuses.
+            Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+            SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED.
+        `type_` (str, optional):
+            Feature type patter (wildcards allowed: True).
+            Defaults: All feature types.
+        paths (boolean, optionnal):
+            Whether feature ID and feature number are returned with the data
+            Default: False.
+        no_datum (boolean, optional):
+            Whether to exclude datum-type features from the list;
+            these are COORD_SYS, CURVE, DATUM_AXIS, DATUM_PLANE, DATUM_POINT,
+            DATUM_QUILT, and DATUM_SURFACE features.
+            Defaults is False.
+        inc_unnamed (boolean, optional):
+            Whether to include unnamed features in the list.
+            Defaults is False.
+        no_comp (boolean, optional):
+            Whether to include component-type features in the list.
+            Defaults is False.
+
+    Raises:
+        ValueError: status value is incorrect.
+
+    Returns:
+        (list:dict): List of parameter information.
+            name (str):
+                Parameter nam.
+            value (depends on data type):
+                Parameter value.
+            type (string):
+                Data type. Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
+            designate (boolean):
+                Value is designated.
+            encoded (boolean):
+                Value is Base64-encoded.
+            owner_name (str):
+                Owner Name.
+            owner_id (int):
+                Owner ID.
+            owner_type (str):
+                Owner type.
+
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if name:
+        data["name"] = name
+    if status in STATUS_LIST:
+        data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
+    if type_:
+        data["type"] = type_
+    if paths:
+        data["paths"] = paths
+    if no_datum:
+        data["no_datum"] = no_datum
+    if inc_unnamed:
+        data["inc_unnamed"] = inc_unnamed
+    if no_comp:
+        data["no_comp"] = no_comp
+    return client._creoson_post("feature", "list", data, "featlist")
+
+
+def list_params(
+    client,
+    file_=None,
+    name=None,
+    type_=None,
+    no_datum=None,
+    inc_unnamed=None,
+    no_comp=None,
+    param=None,
+    value=None,
+    encoded=None
+):
+    """List feature parameters that match criteria.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            File name. Defaults is the currently active model.
+        name (str|int, optional):
+            str: Feature name (wildcards allowed: True).
+            int: Feature ID.
             Defaults: All features are listed.
         `type_` (str, optional):
             Feature type patter (wildcards allowed: True).
@@ -167,98 +275,6 @@ def list_(
         if active_file is not None:
             data["file"] = active_file["file"]
     if name:
-        data["name"] = name
-    if type_:
-        data["type"] = type_
-    if no_datum:
-        data["no_datum"] = no_datum
-    if inc_unnamed:
-        data["inc_unnamed"] = inc_unnamed
-    if no_comp:
-        data["no_comp"] = no_comp
-    if param:
-        if isinstance(param, (str)):
-            data["param"] = param
-        elif isinstance(param, (list)):
-            data["params"] = param
-    if value:
-        data["value"] = value
-    if encoded:
-        data["encoded"] = encoded
-    return client._creoson_post("feature", "list", data, "featlist")
-
-
-def list_params(
-    client,
-    file_=None,
-    name=None,
-    type_=None,
-    no_datum=None,
-    no_comp=None,
-    param=None,
-    value=None,
-    encoded=None
-):
-    """List feature parameters that match criteria.
-
-    Args:
-        client (obj):
-            creopyson Client.
-        `file_` (str, optional):
-            File name. Defaults is the currently active model.
-        name (str|int, optional):
-            str: Feature name (wildcards allowed: True).
-            int: Feature ID.
-            Defaults: All features are listed.
-        `type_` (str, optional):
-            Feature type patter (wildcards allowed: True).
-            Defaults: All feature types.
-        no_datum (boolean, optional):
-            Whether to exclude datum-type features from the list;
-            these are COORD_SYS, CURVE, DATUM_AXIS, DATUM_PLANE, DATUM_POINT,
-            DATUM_QUILT, and DATUM_SURFACE features.
-            Defaults is False.
-        no_comp (boolean, optional):
-            Whether to include component-type features in the list.
-            Defaults is False.
-        param (str|list:str, optional):
-            Parameter name; (wildcards allowed: True)
-            if empty all parameters are listed.
-        value (str, optional):
-            Parameter value filter (wildcards allowed: True).
-            Defaults is no filter.
-        encoded (boolean, optional):
-            Whether to return the values Base64-encoded.
-            Defaults is False.
-
-    Returns:
-        (list:dict): List of parameter information.
-            name (str):
-                Parameter nam.
-            value (depends on data type):
-                Parameter value.
-            type (string):
-                Data type. Valid values: STRING, DOUBLE, INTEGER, BOOL, NOTE.
-            designate (boolean):
-                Value is designated.
-            encoded (boolean):
-                Value is Base64-encoded.
-            owner_name (str):
-                Owner Name.
-            owner_id (int):
-                Owner ID.
-            owner_type (str):
-                Owner type.
-
-    """
-    data = {}
-    if file_ is not None:
-        data["file"] = file_
-    else:
-        active_file = client.file_get_active()
-        if active_file is not None:
-            data["file"] = active_file["file"]
-    if name:
         if isinstance(param, (str)):
             data["name"] = name
         elif isinstance(param, (list)):
@@ -267,6 +283,8 @@ def list_params(
         data["type"] = type_
     if no_datum:
         data["no_datum"] = no_datum
+    if inc_unnamed:
+        data["inc_unnamed"] = inc_unnamed
     if no_comp:
         data["no_comp"] = no_comp
     if param:
@@ -352,7 +370,7 @@ def list_pattern_features(
         "feature", "list_group_features", data, "featlist")
 
 
-def param_exists(client, file_=None, param=None):
+def param_exists(client, file_=None, name=None, param=None):
     """Check whether parameter(s) exists on a feature.
 
     Args:
@@ -360,6 +378,9 @@ def param_exists(client, file_=None, param=None):
             creopyson Client.
         `file_` (str, optional):
             File name. Defaults is the currently active model.
+        name (str, optional):
+            Parameter name (wildcards allowed: True).
+            Defaults: All parameter names.
         param (str|list:str, optional):
             Parameter name; (wildcards allowed: True)
             if empty all parameters are listed.
@@ -375,6 +396,8 @@ def param_exists(client, file_=None, param=None):
         active_file = client.file_get_active()
         if active_file is not None:
             data["file"] = active_file["file"]
+    if name:
+        data["name"] = name
     if param:
         if isinstance(param, (str)):
             data["param"] = param
@@ -415,7 +438,6 @@ def rename(client, name, new_name, file_=None):
     else:
         raise TypeError("name must be str or int")
     return client._creoson_post("feature", "rename", data)
-    # TODO: feat_id/name
 
 
 def resume(
@@ -453,6 +475,9 @@ def resume(
             Whether to resume any child features of the resumed feature.
             Defaults is False.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -473,8 +498,10 @@ def resume(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if with_children:
@@ -588,6 +615,9 @@ def suppress(
             Whether to resume any child features of the resumed feature.
             Defaults is True.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -609,8 +639,10 @@ def suppress(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if clip is False:
