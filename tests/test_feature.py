@@ -40,19 +40,19 @@ def test_feature_list(mk_creoson_post_dict, mk_getactivefile):
     result = c.feature_list(
         file_="file",
         name="name",
+        status="ACTIVE",
         type_="type",
+        paths=True,
         no_datum=True,
         inc_unnamed=True,
-        no_comp=True,
-        param="param",
-        value="param",
-        encoded=True
+        no_comp=True
     )
     assert isinstance(result, (list))
-    result = c.feature_list(
-        param=["param", "other param"],
-    )
-    assert isinstance(result, (list))
+
+    with pytest.raises(ValueError):
+        c.feature_list(
+            status="FAKE STATUS",
+        )
 
 
 def test_feature_list_params(mk_creoson_post_dict, mk_getactivefile):

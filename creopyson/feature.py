@@ -1,4 +1,13 @@
 """Feature module."""
+STATUS_LIST = [
+    "ACTIVE",
+    "INACTIVE",
+    "FAMILY_TABLE_SUPPRESSED",
+    "SIMP_REP_SUPPRESSED",
+    "PROGRAM_SUPPRESSED",
+    "SUPPRESSED",
+    "UNREGENERATED"
+]
 
 
 def delete(
@@ -95,13 +104,12 @@ def list_(
     client,
     file_=None,
     name=None,
+    status=None,
     type_=None,
+    paths=None,
     no_datum=None,
     inc_unnamed=None,
-    no_comp=None,
-    param=None,
-    value=None,
-    encoded=None
+    no_comp=None
 ):
     """List feature parameters that match criteria.
 
@@ -115,9 +123,17 @@ def list_(
         name (str, optional):
             Feature name (wildcards allowed: True).
             Defaults: All features are listed.
+        status (str, optionnal):
+            Feature status pattern.
+            Defaults: All feature statuses.
+            Valid values: ACTIVE, INACTIVE, FAMILY_TABLE_SUPPRESSED,
+            SIMP_REP_SUPPRESSED, PROGRAM_SUPPRESSED, SUPPRESSED, UNREGENERATED.
         `type_` (str, optional):
             Feature type patter (wildcards allowed: True).
             Defaults: All feature types.
+        paths (boolean, optionnal):
+            Whether feature ID and feature number are returned with the data
+            Default: False.
         no_datum (boolean, optional):
             Whether to exclude datum-type features from the list;
             these are COORD_SYS, CURVE, DATUM_AXIS, DATUM_PLANE, DATUM_POINT,
@@ -129,15 +145,9 @@ def list_(
         no_comp (boolean, optional):
             Whether to include component-type features in the list.
             Defaults is False.
-        param (str|list:str, optional):
-            Parameter name; (wildcards allowed: True)
-            if empty all parameters are listed.
-        value (str, optional):
-            Parameter value filter (wildcards allowed: True).
-            Defaults is no filter.
-        encoded (boolean, optional):
-            Whether to return the values Base64-encoded.
-            Defaults is False.
+
+    Raises:
+        ValueError: status value is incorrect.
 
     Returns:
         (list:dict): List of parameter information.
@@ -168,23 +178,20 @@ def list_(
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
+    if status in STATUS_LIST:
+        data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
+    if paths:
+        data["paths"] = paths
     if no_datum:
         data["no_datum"] = no_datum
     if inc_unnamed:
         data["inc_unnamed"] = inc_unnamed
     if no_comp:
         data["no_comp"] = no_comp
-    if param:
-        if isinstance(param, (str)):
-            data["param"] = param
-        elif isinstance(param, (list)):
-            data["params"] = param
-    if value:
-        data["value"] = value
-    if encoded:
-        data["encoded"] = encoded
     return client._creoson_post("feature", "list", data, "featlist")
 
 
