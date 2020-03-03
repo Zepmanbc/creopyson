@@ -66,6 +66,7 @@ def test_feature_list_params(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         type_="type",
         no_datum=True,
+        inc_unnamed=True,
         no_comp=True,
         param="param",
         value="param",

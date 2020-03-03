@@ -206,6 +206,7 @@ def list_params(
     name=None,
     type_=None,
     no_datum=None,
+    inc_unnamed=None,
     no_comp=None,
     param=None,
     value=None,
@@ -229,6 +230,9 @@ def list_params(
             Whether to exclude datum-type features from the list;
             these are COORD_SYS, CURVE, DATUM_AXIS, DATUM_PLANE, DATUM_POINT,
             DATUM_QUILT, and DATUM_SURFACE features.
+            Defaults is False.
+        inc_unnamed (boolean, optional):
+            Whether to include unnamed features in the list.
             Defaults is False.
         no_comp (boolean, optional):
             Whether to include component-type features in the list.
@@ -279,6 +283,8 @@ def list_params(
         data["type"] = type_
     if no_datum:
         data["no_datum"] = no_datum
+    if inc_unnamed:
+        data["inc_unnamed"] = inc_unnamed
     if no_comp:
         data["no_comp"] = no_comp
     if param:
