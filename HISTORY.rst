@@ -2,6 +2,17 @@
 History
 =======
 
+0.4.2 (2020-03-03)
+------------------
+
+* bugfix:
+    * feature_list params correction (ADD: status, paths, no_comp. REMOVE: param, value, encoded)
+    * feature_list_params params correction(inc_unnamed)
+    * feature_param_exists params correction (name)
+    * add test on `status` correct values in feature's functions (feature_delete, feature_list feature_resume, feature_suppress)
+
+modify pipenv config for bleach security alert.
+
 0.4.1 (2020-01-30)
 ------------------
 
