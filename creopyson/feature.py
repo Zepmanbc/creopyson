@@ -370,7 +370,7 @@ def list_pattern_features(
         "feature", "list_group_features", data, "featlist")
 
 
-def param_exists(client, file_=None, param=None):
+def param_exists(client, file_=None, name=None, param=None):
     """Check whether parameter(s) exists on a feature.
 
     Args:
@@ -378,6 +378,9 @@ def param_exists(client, file_=None, param=None):
             creopyson Client.
         `file_` (str, optional):
             File name. Defaults is the currently active model.
+        name (str, optional):
+            Parameter name (wildcards allowed: True).
+            Defaults: All parameter names.
         param (str|list:str, optional):
             Parameter name; (wildcards allowed: True)
             if empty all parameters are listed.
@@ -393,6 +396,8 @@ def param_exists(client, file_=None, param=None):
         active_file = client.file_get_active()
         if active_file is not None:
             data["file"] = active_file["file"]
+    if name:
+        data["name"] = name
     if param:
         if isinstance(param, (str)):
             data["param"] = param

@@ -111,6 +111,7 @@ def test_feature_param_exists(mk_creoson_post_dict, mk_getactivefile):
     c = creopyson.Client()
     result = c.feature_param_exists(
         file_="file",
+        name="name",
         param="param"
     )
     assert result is True
