@@ -42,6 +42,9 @@ def delete(
             the end of the structure.
             Defaults is False.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -58,8 +61,10 @@ def delete(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if clip:
@@ -460,6 +465,9 @@ def resume(
             Whether to resume any child features of the resumed feature.
             Defaults is False.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -480,8 +488,10 @@ def resume(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if with_children:
@@ -595,6 +605,9 @@ def suppress(
             Whether to resume any child features of the resumed feature.
             Defaults is True.
 
+    Raises:
+        ValueError: status value is incorrect.
+
     Returns:
         None
 
@@ -616,8 +629,10 @@ def suppress(
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if status:
+    if status in STATUS_LIST:
         data["status"] = status
+    elif status is not None:
+        raise ValueError(f"`{status}` is not a correct status.")
     if type_:
         data["type"] = type_
     if clip is False:

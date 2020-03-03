@@ -20,6 +20,9 @@ def test_feature_delete(mk_creoson_post_None, mk_getactivefile):
     )
     assert result is None
 
+    with pytest.raises(ValueError):
+        c.feature_delete(status="FAKE")
+
 
 def test_feature_delete_param(mk_creoson_post_None, mk_getactivefile):
     """Test delete_param."""
@@ -157,6 +160,8 @@ def test_feature_resume(mk_creoson_post_None, mk_getactivefile):
         name=123,
     )
     assert result is None
+    with pytest.raises(ValueError):
+        c.feature_resume(status="FAKE")
 
 
 def test_feature_set_param(mk_creoson_post_None, mk_getactivefile):
@@ -197,6 +202,8 @@ def test_feature_suppress(mk_creoson_post_None, mk_getactivefile):
         name=123,
     )
     assert result is None
+    with pytest.raises(ValueError):
+        c.feature_suppress(status="FAKE")
 
 
 def test_feature_user_select_csys(mk_creoson_post_list, mk_getactivefile):
