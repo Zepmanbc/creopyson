@@ -20,6 +20,9 @@ def test_feature_delete(mk_creoson_post_None, mk_getactivefile):
     )
     assert result is None
 
+    with pytest.raises(ValueError):
+        c.feature_delete(status="FAKE")
+
 
 def test_feature_delete_param(mk_creoson_post_None, mk_getactivefile):
     """Test delete_param."""
@@ -40,19 +43,19 @@ def test_feature_list(mk_creoson_post_dict, mk_getactivefile):
     result = c.feature_list(
         file_="file",
         name="name",
+        status="ACTIVE",
         type_="type",
+        paths=True,
         no_datum=True,
         inc_unnamed=True,
-        no_comp=True,
-        param="param",
-        value="param",
-        encoded=True
+        no_comp=True
     )
     assert isinstance(result, (list))
-    result = c.feature_list(
-        param=["param", "other param"],
-    )
-    assert isinstance(result, (list))
+
+    with pytest.raises(ValueError):
+        c.feature_list(
+            status="FAKE STATUS",
+        )
 
 
 def test_feature_list_params(mk_creoson_post_dict, mk_getactivefile):
@@ -63,6 +66,7 @@ def test_feature_list_params(mk_creoson_post_dict, mk_getactivefile):
         name="name",
         type_="type",
         no_datum=True,
+        inc_unnamed=True,
         no_comp=True,
         param="param",
         value="param",
@@ -107,6 +111,7 @@ def test_feature_param_exists(mk_creoson_post_dict, mk_getactivefile):
     c = creopyson.Client()
     result = c.feature_param_exists(
         file_="file",
+        name="name",
         param="param"
     )
     assert result is True
@@ -157,6 +162,8 @@ def test_feature_resume(mk_creoson_post_None, mk_getactivefile):
         name=123,
     )
     assert result is None
+    with pytest.raises(ValueError):
+        c.feature_resume(status="FAKE")
 
 
 def test_feature_set_param(mk_creoson_post_None, mk_getactivefile):
@@ -197,6 +204,8 @@ def test_feature_suppress(mk_creoson_post_None, mk_getactivefile):
         name=123,
     )
     assert result is None
+    with pytest.raises(ValueError):
+        c.feature_suppress(status="FAKE")
 
 
 def test_feature_user_select_csys(mk_creoson_post_list, mk_getactivefile):
