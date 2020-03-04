@@ -1,7 +1,6 @@
 language: python
 python:
 - 3.7
-- 3.6
 install: pip install -U tox-travis coveralls
 script: 
   - tox
@@ -17,4 +16,4 @@ deploy:
   on:
     branch: master
     repo: Zepmanbc/creopyson
-    python: 3.6
+    python: 3.7
