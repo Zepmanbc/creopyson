@@ -98,6 +98,13 @@ def test_file_get_active(mk_creoson_post_dict):
     assert isinstance(result, (dict))
 
 
+def test_file_get_cur_material(mk_creoson_post_dict, mk_getactivefile):
+    """Test get_active."""
+    c = creopyson.Client()
+    result = c.file_get_cur_material()
+    assert isinstance(result, (str))
+
+
 def test_file_get_fileinfo(mk_creoson_post_dict, mk_getactivefile):
     """Test get_fileinfo."""
     c = creopyson.Client()
