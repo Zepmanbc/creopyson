@@ -94,6 +94,7 @@ from creopyson.drawing import scale_sheet as drawing_scale_sheet
 from creopyson.drawing import scale_view as drawing_scale_view
 from creopyson.drawing import select_sheet as drawing_select_sheet
 from creopyson.drawing import set_cur_model as drawing_set_cur_model
+from creopyson.drawing import set_sheet_format as drawing_set_sheet_format
 from creopyson.drawing import set_view_loc as drawing_set_view_loc
 from creopyson.drawing import view_bound_box as drawing_view_bound_box
 Client.drawing_add_model = drawing_add_model
@@ -129,6 +130,7 @@ Client.drawing_scale_sheet = drawing_scale_sheet
 Client.drawing_scale_view = drawing_scale_view
 Client.drawing_select_sheet = drawing_select_sheet
 Client.drawing_set_cur_model = drawing_set_cur_model
+Client.drawing_set_sheet_format = drawing_set_sheet_format
 Client.drawing_set_view_loc = drawing_set_view_loc
 Client.drawing_view_bound_box = drawing_view_bound_box
 
