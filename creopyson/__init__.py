@@ -216,6 +216,7 @@ from creopyson.file import list_materials as file_list_materials
 from creopyson.file import list_materials_wildcard as file_list_materials_wildcard
 from creopyson.file import list_ as file_list
 from creopyson.file import list_simp_reps as file_list_simp_reps
+from creopyson.file import load_material_file as file_load_material_file
 from creopyson.file import massprops as file_massprops
 from creopyson.file import open_errors as file_open_errors
 from creopyson.file import open_ as file_open
@@ -254,6 +255,7 @@ Client.file_list_materials = file_list_materials
 Client.file_list_materials_wildcard = file_list_materials_wildcard
 Client.file_list = file_list
 Client.file_list_simp_reps = file_list_simp_reps
+Client.file_load_material_file = file_load_material_file
 Client.file_massprops = file_massprops
 Client.file_open_errors = file_open_errors
 Client.file_open = file_open

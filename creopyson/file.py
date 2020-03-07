@@ -296,7 +296,8 @@ def get_cur_material(client, file_=None):
 
 
 def get_cur_material_wildcard(
-    client, file_=None,
+    client,
+    file_=None,
     include_non_matching_parts=False
 ):
     """Get the current material for a part or parts.
@@ -601,6 +602,7 @@ def list_materials_wildcard(
         "materials"
     )
 
+
 def list_simp_reps(client, file_=None, rep=None):
     """List simplified reps in a model.
 
@@ -629,6 +631,40 @@ def list_simp_reps(client, file_=None, rep=None):
     if rep:
         data["rep"] = rep
     return client._creoson_post("file", "list_simp_reps", data)
+
+
+def load_material_file(client, material, dirname=None, file_=None):
+    """Load a new material file into a part or parts.
+
+    Note: If 'material' has a file extension, it will be removed before
+    the material is loaded.
+
+    Args:
+        client (obj):
+            creopyson Client
+        material (str): Material name
+        dirname (str, optional):
+            Directory name containing the material file.
+            Default is Creo's 'pro_material_dir' config setting,
+            or search path, or current working directory
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
+
+    Returns:
+        list:
+            List of files impacted.
+    """
+    data = {
+        "dirname": dirname,
+        "material": material
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "load_material_file", data, "files")
 
 
 def massprops(client, file_=None):
