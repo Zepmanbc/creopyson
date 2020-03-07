@@ -138,7 +138,8 @@ def list_(
     file_=None,
     name=None,
     value=None,
-    get_expanded=None
+    get_expanded=None,
+    select=False
 ):
     """Get a list of notes from one or more models.
 
@@ -160,6 +161,9 @@ def list_(
         get_expanded (boolean, optional):
             Whether to return text with parameter values replaced.
             Defaults is False.
+        select (boolean, optional):
+            If true, the notes that are found will be selected in Creo.
+            Defaults is False.
 
     Returns:
         (list:dict):
@@ -167,6 +171,7 @@ def list_(
             value (str): Note text with parameters not expanded.
             value_expanded (str): Note text with parameters expanded.
             encoded (boolean): Value is Base64-encoded.
+            location (jlpoint): 3D coordinate dict.
 
     """
     data = {}
@@ -182,9 +187,11 @@ def list_(
         elif isinstance(name, (list)):
             data["names"] = name
     if get_expanded:
-        data["get_expanded"] = get_expanded
+        data["get_expanded"] = True
     if value:
         data["value"] = value
+    if select:
+        data["select"] = True
     return client._creoson_post("note", "list", data, "itemlist")
 
 
