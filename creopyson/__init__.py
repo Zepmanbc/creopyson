@@ -212,6 +212,7 @@ from creopyson.file import get_transform as file_get_transform
 from creopyson.file import has_instances as file_has_instances
 from creopyson.file import is_active as file_is_active
 from creopyson.file import list_instances as file_list_instances
+from creopyson.file import list_materials as file_list_materials
 from creopyson.file import list_ as file_list
 from creopyson.file import list_simp_reps as file_list_simp_reps
 from creopyson.file import massprops as file_massprops
@@ -248,6 +249,7 @@ Client.file_get_transform = file_get_transform
 Client.file_has_instances = file_has_instances
 Client.file_is_active = file_is_active
 Client.file_list_instances = file_list_instances
+Client.file_list_materials = file_list_materials
 Client.file_list = file_list
 Client.file_list_simp_reps = file_list_simp_reps
 Client.file_massprops = file_massprops

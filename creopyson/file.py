@@ -528,6 +528,34 @@ def list_instances(client, file_=None):
     return client._creoson_post("file", "list_instances", data)
 
 
+def list_materials(client, file_=None, material=None):
+    """List materials on a part.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        file_ (str, optional):
+            File name. Defaults is currently active model.
+        material (str, optional):
+            Material name pattern.
+            Wildcards allowed.
+            Defaults to None is all materials.
+
+    Returns:
+        list: List of materials in the part.
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if material:
+        data["material"] = material
+    return client._creoson_post("file", "list_materials", data, "materials")
+
+
 def list_simp_reps(client, file_=None, rep=None):
     """List simplified reps in a model.
 

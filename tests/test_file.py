@@ -186,6 +186,13 @@ def test_file_list_instances(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (dict))
 
 
+def test_file_list_materials(mk_creoson_post_dict, mk_getactivefile):
+    """Test list_materials."""
+    c = creopyson.Client()
+    result = c.file_list_materials(file_="file", material="wood*")
+    assert isinstance(result, (list))
+
+
 def test_file_list_simp_reps(mk_creoson_post_dict, mk_getactivefile):
     """Test list_simp_reps."""
     c = creopyson.Client()
