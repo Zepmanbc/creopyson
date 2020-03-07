@@ -277,13 +277,14 @@ def get_cur_material(client, file_=None):
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             Part name. Defaults to None is current active model.
 
     Returns:
         str:
             Current material for the part, may be null if there is no
             current material.
+
     """
     data = {}
     if file_ is not None:
@@ -309,7 +310,7 @@ def get_cur_material_wildcard(
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             Part name. Defaults to None is current active model.
         include_non_matching_parts (bool, optionnal):
             Whether to include parts that match the part name pattern but don't
@@ -535,7 +536,7 @@ def list_materials(client, file_=None, material=None):
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         material (str, optional):
             Material name pattern.
@@ -544,6 +545,7 @@ def list_materials(client, file_=None, material=None):
 
     Returns:
         list: List of materials in the part.
+
     """
     data = {}
     if file_ is not None:
@@ -568,7 +570,7 @@ def list_materials_wildcard(
     Args:
         client (obj):
             creopyson Client.
-        file_ (str, optional):
+        `file_` (str, optional):
             File name. Defaults is currently active model.
         material (str, optional):
             Material name pattern.
@@ -642,7 +644,8 @@ def load_material_file(client, material, dirname=None, file_=None):
     Args:
         client (obj):
             creopyson Client
-        material (str): Material name
+        material (str):
+            Material name
         dirname (str, optional):
             Directory name containing the material file.
             Default is Creo's 'pro_material_dir' config setting,
@@ -653,6 +656,7 @@ def load_material_file(client, material, dirname=None, file_=None):
     Returns:
         list:
             List of files impacted.
+
     """
     data = {
         "dirname": dirname,
@@ -1034,13 +1038,14 @@ def set_cur_material(client, material, file_=None):
             creopyson Client.
         material (str):
             Material name.
-        file_ (str, optional):
+        `file_` (str, optional):
             Part name. Wildcard allowed.
             Defaults is currently active model.
 
     Returns:
         list:
             list of impacted files.
+
     """
     data = {
         "material": material
