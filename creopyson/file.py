@@ -295,6 +295,47 @@ def get_cur_material(client, file_=None):
     return client._creoson_post("file", "get_cur_material", data, "material")
 
 
+def get_cur_material_wildcard(
+    client, file_=None,
+    include_non_matching_parts=False
+):
+    """Get the current material for a part or parts.
+
+    Note: This is the same as 'get_cur_material' but this function allows
+    wildcards on the part name. They are separate functions because the return
+    structures are different.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        file_ (str, optional):
+            Part name. Defaults to None is current active model.
+        include_non_matching_parts (boolean, optionnal):
+            Whether to include parts that match the part name pattern but don't
+            have a current material.
+            Defaults to False.
+
+    Returns:
+        list:
+            A list of part and current-material pairs.
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if include_non_matching_parts:
+        data["include_non_matching_parts"] = True
+    return client._creoson_post(
+        "file",
+        "get_cur_material_wildcard",
+        data,
+        "materials"
+    )
+
+
 def get_fileinfo(client, file_=None):
     """Open one or more files in memory or from the drive.
 

@@ -99,10 +99,17 @@ def test_file_get_active(mk_creoson_post_dict):
 
 
 def test_file_get_cur_material(mk_creoson_post_dict, mk_getactivefile):
-    """Test get_active."""
+    """Test get_cur_material."""
     c = creopyson.Client()
     result = c.file_get_cur_material()
     assert isinstance(result, (str))
+
+
+def test_file_get_cur_material_wildcard(mk_creoson_post_dict, mk_getactivefile):
+    """Test get_cur_material_wildcard."""
+    c = creopyson.Client()
+    result = c.file_get_cur_material_wildcard(include_non_matching_parts=True)
+    assert isinstance(result, (list))
 
 
 def test_file_get_fileinfo(mk_creoson_post_dict, mk_getactivefile):

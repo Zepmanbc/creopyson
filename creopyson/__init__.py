@@ -204,6 +204,7 @@ from creopyson.file import erase_not_displayed as file_erase_not_displayed
 from creopyson.file import exists as file_exists
 from creopyson.file import get_active as file_get_active
 from creopyson.file import get_cur_material as file_get_cur_material
+from creopyson.file import get_cur_material_wildcard as file_get_cur_material_wildcard
 from creopyson.file import get_fileinfo as file_get_fileinfo
 from creopyson.file import get_length_units as file_get_length_units
 from creopyson.file import get_mass_units as file_get_mass_units
@@ -239,6 +240,7 @@ Client.file_erase_not_displayed = file_erase_not_displayed
 Client.file_exists = file_exists
 Client.file_get_active = file_get_active
 Client.file_get_cur_material = file_get_cur_material
+Client.file_get_cur_material_wildcard = file_get_cur_material_wildcard
 Client.file_get_fileinfo = file_get_fileinfo
 Client.file_get_length_units = file_get_length_units
 Client.file_get_mass_units = file_get_mass_units
