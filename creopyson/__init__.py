@@ -231,6 +231,7 @@ from creopyson.file import relations_set as file_relations_set
 from creopyson.file import rename as file_rename
 from creopyson.file import repaint as file_repaint
 from creopyson.file import save as file_save
+from creopyson.file import set_cur_material as file_set_cur_material
 from creopyson.file import set_length_units as file_set_length_units
 from creopyson.file import set_mass_units as file_set_mass_units
 Client.file_assemble = file_assemble
@@ -268,6 +269,7 @@ Client.file_relations_set = file_relations_set
 Client.file_rename = file_rename
 Client.file_repaint = file_repaint
 Client.file_save = file_save
+Client.file_set_cur_material = file_set_cur_material
 Client.file_set_length_units = file_set_length_units
 Client.file_set_mass_units = file_set_mass_units
 

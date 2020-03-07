@@ -372,6 +372,15 @@ def test_file_save(mk_creoson_post_None, mk_getactivefile):
     assert result is None
 
 
+def test_set_cur_material(mk_creoson_post_dict, mk_getactivefile):
+    """Test set_cur_material."""
+    c = creopyson.Client()
+    result = c.file_set_cur_material("wood", file_="*.prt")
+    assert isinstance(result, (list))
+    result = c.file_set_cur_material("wood")
+    assert isinstance(result, (list))
+
+
 def test_file_set_length_units(mk_creoson_post_None, mk_getactivefile):
     """Test set_length_units."""
     c = creopyson.Client()

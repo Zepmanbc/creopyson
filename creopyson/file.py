@@ -1026,6 +1026,34 @@ def save(client, file_=None):
     return client._creoson_post("file", "save", data)
 
 
+def set_cur_material(client, material, file_=None):
+    """Set the current material for a part or parts.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        material (str):
+            Material name.
+        file_ (str, optional):
+            Part name. Wildcard allowed.
+            Defaults is currently active model.
+
+    Returns:
+        list:
+            list of impacted files.
+    """
+    data = {
+        "material": material
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "set_cur_material", data, "files")
+
+
 def set_length_units(client, units, file_=None, convert=None):
     """Set the current length units for a model.
 
