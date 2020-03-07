@@ -193,6 +193,14 @@ def test_file_list_materials(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (list))
 
 
+def test_file_list_materials_wildcard(mk_creoson_post_dict, mk_getactivefile):
+    """Test list_materials."""
+    c = creopyson.Client()
+    result = c.file_list_materials_wildcard(
+        file_="file", material="wood*", include_non_matching_parts=True)
+    assert isinstance(result, (list))
+
+
 def test_file_list_simp_reps(mk_creoson_post_dict, mk_getactivefile):
     """Test list_simp_reps."""
     c = creopyson.Client()

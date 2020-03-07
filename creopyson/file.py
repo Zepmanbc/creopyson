@@ -45,19 +45,19 @@ def assemble(
             certain constraint types. Defaults to None.
         constraints (obj_array:JLConstraint, optional):
             Assembly constraints. Defaults to None.
-        package_assembly (boolean, optional):
+        package_assembly (bool, optional):
             Whether to package the component to the assembly; only used if
             there are no constraints specified. Defaults is If there are no
             constraints, then the user will be prompted to constrain the
             component through the Creo user interface.
-        walk_children (boolean, optional):
+        walk_children (bool, optional):
             Whether to walk into subassemblies to find reference models to
             constrain to. Defaults to None.
-        assemble_to_root (boolean, optional):
+        assemble_to_root (bool, optional):
             Whether to always assemble to the root assembly, or assemble to
             the subassembly containing the reference path/model.
             Defaults to None.
-        suppress (boolean, optional):
+        suppress (bool, optional):
             Whether to suppress the components immediately after assembling
             them. Defaults to None.
 
@@ -179,7 +179,7 @@ def display(client, file_, activate=None):
             creopyson object.
         `file_` (str):
             File name
-        activate (boolean, optional):
+        activate (bool, optional):
             Activate the model after displaying. Defaults is True.
 
     Returns:
@@ -205,7 +205,7 @@ def erase(client, file_=None, erase_children=None):
             File name or List of file names;
             (Wildcards allowed: True).
             if empty all models in memory are erased.
-        erase_children (boolean, optional):
+        erase_children (bool, optional):
             Erase children of the models too. Defaults is False.
 
     Returns:
@@ -244,7 +244,7 @@ def exists(client, file_):
         `file_` (str): File name.
 
     Returns:
-        (Boolean): Whether the file is open in Creo.
+        (bool): Whether the file is open in Creo.
 
     """
     data = {"file": file_}
@@ -310,7 +310,7 @@ def get_cur_material_wildcard(
             creopyson Client.
         file_ (str, optional):
             Part name. Defaults to None is current active model.
-        include_non_matching_parts (boolean, optionnal):
+        include_non_matching_parts (bool, optionnal):
             Whether to include parts that match the part name pattern but don't
             have a current material.
             Defaults to False.
@@ -452,7 +452,7 @@ def has_instances(client, file_=None):
             File name. Defaults is currently active model.
 
     Returns:
-        (boolean): Whether the file has a family table.
+        (bool): Whether the file has a family table.
 
     """
     data = {}
@@ -473,7 +473,7 @@ def is_active(client, file_):
         `file_` (str): File name.
 
     Returns:
-        (boolean): Whether the file is the currently active model.
+        (bool): Whether the file is the currently active model.
 
     """
     data = {"file": file_}
@@ -555,6 +555,51 @@ def list_materials(client, file_=None, material=None):
         data["material"] = material
     return client._creoson_post("file", "list_materials", data, "materials")
 
+
+def list_materials_wildcard(
+    client,
+    file_=None,
+    material=None,
+    include_non_matching_parts=False
+):
+    """List materials on a part or parts.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        file_ (str, optional):
+            File name. Defaults is currently active model.
+        material (str, optional):
+            Material name pattern.
+            Wildcards allowed.
+            Defaults to None is all materials.
+        include_non_matching_parts (bool, optional):
+            Whether to include parts that match the part name pattern but
+            don't have any materials matching the material pattern.
+            Defaults to False.
+
+    Returns:
+        list:
+            A list of part and material pairs. If a part has more than one
+            material, it will have multiple entries in this array.
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if material:
+        data["material"] = material
+    if include_non_matching_parts:
+        data["include_non_matching_parts"] = True
+    return client._creoson_post(
+        "file",
+        "list_materials_wildcard",
+        data,
+        "materials"
+    )
 
 def list_simp_reps(client, file_=None, rep=None):
     """List simplified reps in a model.
@@ -638,13 +683,13 @@ def open_(
         generic (str, optional):
             Generic model name (if file name represents an instance).
             Defaults to None.
-        display (boolean, optional):
+        display (bool, optional):
             Display the model after opening. Defaults is True.
-        activate (boolean, optional):
+        activate (bool, optional):
             Activate the model after opening. Defaults is True.
-        new_window (boolean, optional):
+        new_window (bool, optional):
             Open model in a new window. Defaults is False.
-        regen_force (boolean, optional):
+        regen_force (bool, optional):
             Force regeneration after opening. Defaults is False.
 
     Returns:
@@ -693,7 +738,7 @@ def open_errors(client, file_=None):
             File name. Defaults is currently active model.
 
     Returns:
-        (boolean): Whether errors exist in Creo.
+        (bool): Whether errors exist in Creo.
 
     """
     data = {}
@@ -790,7 +835,7 @@ def regenerate(client, file_=None, display=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model
-        display (boolean, optional):
+        display (bool, optional):
             Display the model before regenerating. Defaults is False.
 
     Returns:
@@ -873,7 +918,7 @@ def rename(client, new_name, file_=None, onlysession=None):
             New file name.
         `file_` (str, optional):
             File name. Defaults is currently active model.
-        onlysession (boolean, optional):
+        onlysession (bool, optional):
             Modify only in memory, not on disk. Defaults is False.
 
     Returns:
@@ -959,7 +1004,7 @@ def set_length_units(client, units, file_=None, convert=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model.
-        convert (boolean, optional):
+        convert (bool, optional):
             Whether to convert the model's length values to the
             new units (True) or leave them the same value (False).
             Defaults is True.
@@ -997,7 +1042,7 @@ def set_mass_units(client, units, file_=None, convert=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model.
-        convert (boolean, optional):
+        convert (bool, optional):
             Whether to convert the model's mass values to the
             new units (True) or leave them the same value (False).
             Defaults is True.
