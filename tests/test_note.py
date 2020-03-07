@@ -51,7 +51,8 @@ def test_note_list(mk_creoson_post_dict, mk_getactivefile):
         file_="file",
         name="name",
         value="value",
-        get_expanded=True
+        get_expanded=True,
+        select=True
     )
     assert isinstance(result, (list))
     result = c.note_list(name=["name", "other name"])

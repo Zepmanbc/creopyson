@@ -612,7 +612,7 @@ def suppress(
             Whether to clip-suppress ANY features from this feature through
             the end of the structure. Defaults is True.
         with_children (boolean, optional):
-            Whether to resume any child features of the resumed feature.
+            Whether to suppress  any child features of the suppressed feature.
             Defaults is True.
 
     Raises:

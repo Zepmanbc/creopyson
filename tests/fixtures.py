@@ -27,6 +27,8 @@ def mk_creoson_post_dict(monkeypatch):
                 "itemlist": [],
                 "layers": [],
                 "loaded": True,
+                "material": "material",
+                "materials": [],
                 "name": "name",
                 "num_sheets": 4,
                 "paramlist": [],

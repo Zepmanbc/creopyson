@@ -2,6 +2,25 @@
 History
 =======
 
+0.4.3 (2020-03-07)
+------------------
+
+Update missing features from previous Creoson updates.
+
+* New Features:
+    * drawing_set_sheet_format
+    * file_get_cur_material
+    * file_get_cur_material_wildcard
+    * file_list_materials
+    * file_list_materials_wildcard
+    * file_load_material_file
+    * file_set_cur_material
+
+* New param:
+    * note_list:
+        * add *select* param
+        * add *location* in response
+
 0.4.2 (2020-03-03)
 ------------------
 

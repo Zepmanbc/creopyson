@@ -937,6 +937,35 @@ def set_cur_model(client, model, drawing=None):
     return client._creoson_post("drawing", "set_cur_model", data)
 
 
+def set_sheet_format(client, sheet, file_format, dirname=None, drawing=None):
+    """Set the drawing format file of a drawing sheet.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        sheet (int):
+            Sheet number.
+        file_format (str):
+            Format file name.
+        dirname (str, optional): Directory name containing the file format.
+            Defaults to None is current working directory.
+        drawing (str, optional):
+            Drawing name. Defaults to None is current active drawing.
+
+    Returns:
+        None
+    """
+    data = {
+        "sheet": sheet,
+        "dirname": dirname
+    }
+    if drawing:
+        data["drawing"] = drawing
+    if file_format:
+        data["file"] = file_format
+    return client._creoson_post("drawing", "set_sheet_format", data)
+
+
 def set_view_loc(client, view, point, drawing=None):
     """Set the location of a drawing view.
 

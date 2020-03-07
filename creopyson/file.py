@@ -45,19 +45,19 @@ def assemble(
             certain constraint types. Defaults to None.
         constraints (obj_array:JLConstraint, optional):
             Assembly constraints. Defaults to None.
-        package_assembly (boolean, optional):
+        package_assembly (bool, optional):
             Whether to package the component to the assembly; only used if
             there are no constraints specified. Defaults is If there are no
             constraints, then the user will be prompted to constrain the
             component through the Creo user interface.
-        walk_children (boolean, optional):
+        walk_children (bool, optional):
             Whether to walk into subassemblies to find reference models to
             constrain to. Defaults to None.
-        assemble_to_root (boolean, optional):
+        assemble_to_root (bool, optional):
             Whether to always assemble to the root assembly, or assemble to
             the subassembly containing the reference path/model.
             Defaults to None.
-        suppress (boolean, optional):
+        suppress (bool, optional):
             Whether to suppress the components immediately after assembling
             them. Defaults to None.
 
@@ -179,7 +179,7 @@ def display(client, file_, activate=None):
             creopyson object.
         `file_` (str):
             File name
-        activate (boolean, optional):
+        activate (bool, optional):
             Activate the model after displaying. Defaults is True.
 
     Returns:
@@ -205,7 +205,7 @@ def erase(client, file_=None, erase_children=None):
             File name or List of file names;
             (Wildcards allowed: True).
             if empty all models in memory are erased.
-        erase_children (boolean, optional):
+        erase_children (bool, optional):
             Erase children of the models too. Defaults is False.
 
     Returns:
@@ -244,7 +244,7 @@ def exists(client, file_):
         `file_` (str): File name.
 
     Returns:
-        (Boolean): Whether the file is open in Creo.
+        (bool): Whether the file is open in Creo.
 
     """
     data = {"file": file_}
@@ -264,6 +264,78 @@ def get_active(client):
 
     """
     return client._creoson_post("file", "get_active")
+
+
+def get_cur_material(client, file_=None):
+    """Get the current material for a part.
+
+    Note: This is the same as 'get_cur_material_wildcard' but this function
+    does not allow wildcards on the part name. They are separate functions
+    because the return structures are different. This function is retained
+    for backwards compatibility.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            Part name. Defaults to None is current active model.
+
+    Returns:
+        str:
+            Current material for the part, may be null if there is no
+            current material.
+
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "get_cur_material", data, "material")
+
+
+def get_cur_material_wildcard(
+    client,
+    file_=None,
+    include_non_matching_parts=False
+):
+    """Get the current material for a part or parts.
+
+    Note: This is the same as 'get_cur_material' but this function allows
+    wildcards on the part name. They are separate functions because the return
+    structures are different.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            Part name. Defaults to None is current active model.
+        include_non_matching_parts (bool, optionnal):
+            Whether to include parts that match the part name pattern but don't
+            have a current material.
+            Defaults to False.
+
+    Returns:
+        list:
+            A list of part and current-material pairs.
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if include_non_matching_parts:
+        data["include_non_matching_parts"] = True
+    return client._creoson_post(
+        "file",
+        "get_cur_material_wildcard",
+        data,
+        "materials"
+    )
 
 
 def get_fileinfo(client, file_=None):
@@ -382,7 +454,7 @@ def has_instances(client, file_=None):
             File name. Defaults is currently active model.
 
     Returns:
-        (boolean): Whether the file has a family table.
+        (bool): Whether the file has a family table.
 
     """
     data = {}
@@ -403,7 +475,7 @@ def is_active(client, file_):
         `file_` (str): File name.
 
     Returns:
-        (boolean): Whether the file is the currently active model.
+        (bool): Whether the file is the currently active model.
 
     """
     data = {"file": file_}
@@ -458,6 +530,81 @@ def list_instances(client, file_=None):
     return client._creoson_post("file", "list_instances", data)
 
 
+def list_materials(client, file_=None, material=None):
+    """List materials on a part.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
+        material (str, optional):
+            Material name pattern.
+            Wildcards allowed.
+            Defaults to None is all materials.
+
+    Returns:
+        list: List of materials in the part.
+
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if material:
+        data["material"] = material
+    return client._creoson_post("file", "list_materials", data, "materials")
+
+
+def list_materials_wildcard(
+    client,
+    file_=None,
+    material=None,
+    include_non_matching_parts=False
+):
+    """List materials on a part or parts.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
+        material (str, optional):
+            Material name pattern.
+            Wildcards allowed.
+            Defaults to None is all materials.
+        include_non_matching_parts (bool, optional):
+            Whether to include parts that match the part name pattern but
+            don't have any materials matching the material pattern.
+            Defaults to False.
+
+    Returns:
+        list:
+            A list of part and material pairs. If a part has more than one
+            material, it will have multiple entries in this array.
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    if material:
+        data["material"] = material
+    if include_non_matching_parts:
+        data["include_non_matching_parts"] = True
+    return client._creoson_post(
+        "file",
+        "list_materials_wildcard",
+        data,
+        "materials"
+    )
+
+
 def list_simp_reps(client, file_=None, rep=None):
     """List simplified reps in a model.
 
@@ -486,6 +633,42 @@ def list_simp_reps(client, file_=None, rep=None):
     if rep:
         data["rep"] = rep
     return client._creoson_post("file", "list_simp_reps", data)
+
+
+def load_material_file(client, material, dirname=None, file_=None):
+    """Load a new material file into a part or parts.
+
+    Note: If 'material' has a file extension, it will be removed before
+    the material is loaded.
+
+    Args:
+        client (obj):
+            creopyson Client
+        material (str):
+            Material name
+        dirname (str, optional):
+            Directory name containing the material file.
+            Default is Creo's 'pro_material_dir' config setting,
+            or search path, or current working directory
+        `file_` (str, optional):
+            File name. Defaults is currently active model.
+
+    Returns:
+        list:
+            List of files impacted.
+
+    """
+    data = {
+        "dirname": dirname,
+        "material": material
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "load_material_file", data, "files")
 
 
 def massprops(client, file_=None):
@@ -540,13 +723,13 @@ def open_(
         generic (str, optional):
             Generic model name (if file name represents an instance).
             Defaults to None.
-        display (boolean, optional):
+        display (bool, optional):
             Display the model after opening. Defaults is True.
-        activate (boolean, optional):
+        activate (bool, optional):
             Activate the model after opening. Defaults is True.
-        new_window (boolean, optional):
+        new_window (bool, optional):
             Open model in a new window. Defaults is False.
-        regen_force (boolean, optional):
+        regen_force (bool, optional):
             Force regeneration after opening. Defaults is False.
 
     Returns:
@@ -595,7 +778,7 @@ def open_errors(client, file_=None):
             File name. Defaults is currently active model.
 
     Returns:
-        (boolean): Whether errors exist in Creo.
+        (bool): Whether errors exist in Creo.
 
     """
     data = {}
@@ -692,7 +875,7 @@ def regenerate(client, file_=None, display=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model
-        display (boolean, optional):
+        display (bool, optional):
             Display the model before regenerating. Defaults is False.
 
     Returns:
@@ -775,7 +958,7 @@ def rename(client, new_name, file_=None, onlysession=None):
             New file name.
         `file_` (str, optional):
             File name. Defaults is currently active model.
-        onlysession (boolean, optional):
+        onlysession (bool, optional):
             Modify only in memory, not on disk. Defaults is False.
 
     Returns:
@@ -847,6 +1030,35 @@ def save(client, file_=None):
     return client._creoson_post("file", "save", data)
 
 
+def set_cur_material(client, material, file_=None):
+    """Set the current material for a part or parts.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        material (str):
+            Material name.
+        `file_` (str, optional):
+            Part name. Wildcard allowed.
+            Defaults is currently active model.
+
+    Returns:
+        list:
+            list of impacted files.
+
+    """
+    data = {
+        "material": material
+    }
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "set_cur_material", data, "files")
+
+
 def set_length_units(client, units, file_=None, convert=None):
     """Set the current length units for a model.
 
@@ -861,7 +1073,7 @@ def set_length_units(client, units, file_=None, convert=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model.
-        convert (boolean, optional):
+        convert (bool, optional):
             Whether to convert the model's length values to the
             new units (True) or leave them the same value (False).
             Defaults is True.
@@ -899,7 +1111,7 @@ def set_mass_units(client, units, file_=None, convert=None):
         `file_` (str|list:str, optional):
             File name or List of file names;
             Defaults is currently active model.
-        convert (boolean, optional):
+        convert (bool, optional):
             Whether to convert the model's mass values to the
             new units (True) or leave them the same value (False).
             Defaults is True.

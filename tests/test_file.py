@@ -98,6 +98,25 @@ def test_file_get_active(mk_creoson_post_dict):
     assert isinstance(result, (dict))
 
 
+def test_file_get_cur_material(mk_creoson_post_dict, mk_getactivefile):
+    """Test get_cur_material."""
+    c = creopyson.Client()
+    result = c.file_get_cur_material(file_="file")
+    assert isinstance(result, (str))
+    result = c.file_get_cur_material()
+    assert isinstance(result, (str))
+
+
+def test_file_get_cur_material_wildcard(mk_creoson_post_dict, mk_getactivefile):
+    """Test get_cur_material_wildcard."""
+    c = creopyson.Client()
+    result = c.file_get_cur_material_wildcard(
+        file_="file", include_non_matching_parts=True)
+    assert isinstance(result, (list))
+    result = c.file_get_cur_material_wildcard()
+    assert isinstance(result, (list))
+
+
 def test_file_get_fileinfo(mk_creoson_post_dict, mk_getactivefile):
     """Test get_fileinfo."""
     c = creopyson.Client()
@@ -172,6 +191,25 @@ def test_file_list_instances(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (dict))
 
 
+def test_file_list_materials(mk_creoson_post_dict, mk_getactivefile):
+    """Test list_materials."""
+    c = creopyson.Client()
+    result = c.file_list_materials(file_="file", material="wood*")
+    assert isinstance(result, (list))
+    result = c.file_list_materials()
+    assert isinstance(result, (list))
+
+
+def test_file_list_materials_wildcard(mk_creoson_post_dict, mk_getactivefile):
+    """Test list_materials."""
+    c = creopyson.Client()
+    result = c.file_list_materials_wildcard(
+        file_="file", material="wood*", include_non_matching_parts=True)
+    assert isinstance(result, (list))
+    result = c.file_list_materials_wildcard()
+    assert isinstance(result, (list))
+
+
 def test_file_list_simp_reps(mk_creoson_post_dict, mk_getactivefile):
     """Test list_simp_reps."""
     c = creopyson.Client()
@@ -182,6 +220,19 @@ def test_file_list_simp_reps(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (dict))
     result = c.file_list_simp_reps()
     assert isinstance(result, (dict))
+
+
+def test_load_material_file(mk_creoson_post_dict, mk_getactivefile):
+    """Test load_material_file"""
+    c = creopyson.Client()
+    result = c.file_load_material_file(
+        "material",
+        file_="file",
+        dirname="dirname"
+    )
+    assert isinstance(result, (list))
+    result = c.file_load_material_file("material")
+    assert isinstance(result, (list))
 
 
 def test_file_massprops(mk_creoson_post_dict, mk_getactivefile):
@@ -319,6 +370,15 @@ def test_file_save(mk_creoson_post_None, mk_getactivefile):
     assert result is None
     result = c.file_save()
     assert result is None
+
+
+def test_set_cur_material(mk_creoson_post_dict, mk_getactivefile):
+    """Test set_cur_material."""
+    c = creopyson.Client()
+    result = c.file_set_cur_material("wood", file_="*.prt")
+    assert isinstance(result, (list))
+    result = c.file_set_cur_material("wood")
+    assert isinstance(result, (list))
 
 
 def test_file_set_length_units(mk_creoson_post_None, mk_getactivefile):

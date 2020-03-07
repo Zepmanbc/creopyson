@@ -4,7 +4,7 @@
 
 __author__ = """Benjamin C."""
 __email__ = 'zepman@gmail.com'
-__version__ = '0.4.2'
+__version__ = '0.4.3'
 
 from creopyson.connection import Client
 from creopyson.objects import jlpoint
@@ -94,6 +94,7 @@ from creopyson.drawing import scale_sheet as drawing_scale_sheet
 from creopyson.drawing import scale_view as drawing_scale_view
 from creopyson.drawing import select_sheet as drawing_select_sheet
 from creopyson.drawing import set_cur_model as drawing_set_cur_model
+from creopyson.drawing import set_sheet_format as drawing_set_sheet_format
 from creopyson.drawing import set_view_loc as drawing_set_view_loc
 from creopyson.drawing import view_bound_box as drawing_view_bound_box
 Client.drawing_add_model = drawing_add_model
@@ -129,6 +130,7 @@ Client.drawing_scale_sheet = drawing_scale_sheet
 Client.drawing_scale_view = drawing_scale_view
 Client.drawing_select_sheet = drawing_select_sheet
 Client.drawing_set_cur_model = drawing_set_cur_model
+Client.drawing_set_sheet_format = drawing_set_sheet_format
 Client.drawing_set_view_loc = drawing_set_view_loc
 Client.drawing_view_bound_box = drawing_view_bound_box
 
@@ -201,6 +203,8 @@ from creopyson.file import erase as file_erase
 from creopyson.file import erase_not_displayed as file_erase_not_displayed
 from creopyson.file import exists as file_exists
 from creopyson.file import get_active as file_get_active
+from creopyson.file import get_cur_material as file_get_cur_material
+from creopyson.file import get_cur_material_wildcard as file_get_cur_material_wildcard
 from creopyson.file import get_fileinfo as file_get_fileinfo
 from creopyson.file import get_length_units as file_get_length_units
 from creopyson.file import get_mass_units as file_get_mass_units
@@ -208,8 +212,11 @@ from creopyson.file import get_transform as file_get_transform
 from creopyson.file import has_instances as file_has_instances
 from creopyson.file import is_active as file_is_active
 from creopyson.file import list_instances as file_list_instances
+from creopyson.file import list_materials as file_list_materials
+from creopyson.file import list_materials_wildcard as file_list_materials_wildcard
 from creopyson.file import list_ as file_list
 from creopyson.file import list_simp_reps as file_list_simp_reps
+from creopyson.file import load_material_file as file_load_material_file
 from creopyson.file import massprops as file_massprops
 from creopyson.file import open_errors as file_open_errors
 from creopyson.file import open_ as file_open
@@ -224,6 +231,7 @@ from creopyson.file import relations_set as file_relations_set
 from creopyson.file import rename as file_rename
 from creopyson.file import repaint as file_repaint
 from creopyson.file import save as file_save
+from creopyson.file import set_cur_material as file_set_cur_material
 from creopyson.file import set_length_units as file_set_length_units
 from creopyson.file import set_mass_units as file_set_mass_units
 Client.file_assemble = file_assemble
@@ -235,6 +243,8 @@ Client.file_erase = file_erase
 Client.file_erase_not_displayed = file_erase_not_displayed
 Client.file_exists = file_exists
 Client.file_get_active = file_get_active
+Client.file_get_cur_material = file_get_cur_material
+Client.file_get_cur_material_wildcard = file_get_cur_material_wildcard
 Client.file_get_fileinfo = file_get_fileinfo
 Client.file_get_length_units = file_get_length_units
 Client.file_get_mass_units = file_get_mass_units
@@ -242,8 +252,11 @@ Client.file_get_transform = file_get_transform
 Client.file_has_instances = file_has_instances
 Client.file_is_active = file_is_active
 Client.file_list_instances = file_list_instances
+Client.file_list_materials = file_list_materials
+Client.file_list_materials_wildcard = file_list_materials_wildcard
 Client.file_list = file_list
 Client.file_list_simp_reps = file_list_simp_reps
+Client.file_load_material_file = file_load_material_file
 Client.file_massprops = file_massprops
 Client.file_open_errors = file_open_errors
 Client.file_open = file_open
@@ -256,6 +269,7 @@ Client.file_relations_set = file_relations_set
 Client.file_rename = file_rename
 Client.file_repaint = file_repaint
 Client.file_save = file_save
+Client.file_set_cur_material = file_set_cur_material
 Client.file_set_length_units = file_set_length_units
 Client.file_set_mass_units = file_set_mass_units
 

@@ -284,6 +284,13 @@ def test_drawing_set_cur_model(mk_creoson_post_None):
     assert result is None
 
 
+def test_drawing_set_sheet_formatl(mk_creoson_post_None):
+    """Test set_sheet_format."""
+    c = creopyson.Client()
+    result = c.drawing_set_sheet_format(1, "file_fmt", dirname="dirname", drawing="drawing")
+    assert result is None
+
+
 def test_drawing_set_view_loc(mk_creoson_post_None):
     """Test set_view_loc."""
     c = creopyson.Client()
