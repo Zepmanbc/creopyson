@@ -654,7 +654,9 @@ def load_material_file(client, material, dirname=None, file_=None):
             Default is Creo's 'pro_material_dir' config setting,
             or search path, or current working directory
         `file_` (str, optional):
-            File name. Defaults is currently active model.
+            File name.
+            Wildcards allowed.
+            Defaults is currently active model.
 
     Returns:
         list:
