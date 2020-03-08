@@ -45,6 +45,8 @@ def get_paths(
             children (object:BomChild):
                 The hierarchy of component data,
                 starting with the top-level assembly.
+            has_simprep (boolean):
+                Whether the assembly has a Simplified Rep.
 
             in `children` there is the `seq_path` which indicates
             the children level, ex: `root.3.2`.
