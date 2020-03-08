@@ -679,6 +679,14 @@ def load_material_file(client, material, dirname=None, file_=None):
 def massprops(client, file_=None):
     """Get mass property information about a model.
 
+    Notes: PTC's description of coord_sys_inertia:
+    "The inertia matrix with respect to coordinate frame:(element ij is
+    the integral of x_i x_j over the object)".
+    PTC's description of coord_sys_inertia_tensor:
+    "The inertia tensor with respect to coordinate frame:
+    CoordSysInertiaTensor =
+        trace(CoordSysInertia) * identity - CoordSysInertia".
+
     Args:
         client (obj):
             creopyson Client.
@@ -687,10 +695,20 @@ def massprops(client, file_=None):
 
     Returns:
         (dict):
-            volume (float): Model volume.
-            mass (float): Model mass.
-            density (float): Model density.
-            surface_area (float): Model surface area.
+            volume (float):
+                Model volume.
+            mass (float):
+                Model mass.
+            density (float):
+                Model density.
+            surface_area (float):
+                Model surface area.
+            ctr_grav_inertia_tensor (object:JLInertia):
+                Model's Inertia Tensor translated to center of gravity.
+            coord_sys_inertia (object:JLInertia):
+                Model's Inertia Matrix with respect to the coordinate frame.
+            coord_sys_inertia_tensor (object:JLInertia):
+                Model's Inertia Tensor with respect to the coordinate frame.
 
     """
     data = {}
