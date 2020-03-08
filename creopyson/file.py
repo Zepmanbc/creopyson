@@ -155,9 +155,12 @@ def delete_material(client, material, file_=None):
         client (obj):
             creopyson object
         material (str):
-            Material name
+            Material name.
         `file_` (str, optional):
-            File name. Defaults is currently active model.
+            File name.
+            (Wildcards allowed: True).
+            Defaults is currently active model.
+
     """
     data = {
         "material": material,
