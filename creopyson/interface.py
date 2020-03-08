@@ -291,7 +291,7 @@ def export_program(client, file_=None):
 def import_file(
     client,
     filename,
-    type_,
+    file_type,
     dirname=None,
     new_name=None,
     new_model_type="asm"
@@ -309,7 +309,7 @@ def import_file(
             creopyson Client.
         filename (str):
             Source file name.
-        type_ (str):
+        file_type (str):
             File type.
             Valid values: "IGES", "NEUTRAL", "PV", "STEP".
         dirname (str, optional):
@@ -331,7 +331,7 @@ def import_file(
     """
     data = {
         "filename": filename,
-        "type": type_,  # TODO get type from filename extension?
+        "type": file_type,  # TODO get type from filename extension?
         "new_model_type": new_model_type
     }
     if dirname is not None:

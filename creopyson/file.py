@@ -685,7 +685,7 @@ def massprops(client, file_=None):
     PTC's description of coord_sys_inertia_tensor:
     "The inertia tensor with respect to coordinate frame:
     CoordSysInertiaTensor =
-        trace(CoordSysInertia) * identity - CoordSysInertia".
+    trace(CoordSysInertia) * identity - CoordSysInertia".
 
     Args:
         client (obj):
