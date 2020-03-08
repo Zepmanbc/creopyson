@@ -94,7 +94,8 @@ def export_file(
         client (obj):
             creopyson Client.
         file_type (str):
-            File type. Valid values: DXF, IGES, PV, STEP, VRML.
+            File type.
+            Valid values: "DXF", "IGES", "NEUTRAL", "PV", "STEP", "VRML".
         `file_` (str, optional):
             Model name. Defaults is current active model.
         filename (str, optional):
