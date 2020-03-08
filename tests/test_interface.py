@@ -1,4 +1,5 @@
 """Interface testing."""
+import pytest
 import creopyson
 from .fixtures import mk_creoson_post_dict, mk_creoson_post_None, mk_getactivefile
 
@@ -90,6 +91,26 @@ def test_import_file(mk_creoson_post_dict):
         new_model_type="prt"
     )
     assert isinstance(result, (str))
+
+
+def test_import_file_tryAllExtensions(mk_creoson_post_dict):
+    """Test import_file."""
+    c = creopyson.Client()
+    result = c.interface_import_file("filename.stp")
+    assert isinstance(result, (str))
+    result = c.interface_import_file("filename.igs.1")
+    assert isinstance(result, (str))
+    result = c.interface_import_file("filename.neu.59")
+    assert isinstance(result, (str))
+    result = c.interface_import_file("filename.pv")
+    assert isinstance(result, (str))
+
+
+def test_import_file_Needfile_type(mk_creoson_post_dict):
+    """Test import_file."""
+    c = creopyson.Client()
+    with pytest.raises(TypeError):
+        c.interface_import_file("filename.fake_ext.12")
 
 
 def test_interface_import_program(mk_creoson_post_dict, mk_getactivefile):

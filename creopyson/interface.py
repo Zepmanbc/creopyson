@@ -5,7 +5,7 @@ Run mapkey
 Import/Export program (pls, als)
 
 """
-
+import re
 # TODO : add STL export
 
 
@@ -291,7 +291,7 @@ def export_program(client, file_=None):
 def import_file(
     client,
     filename,
-    file_type,
+    file_type=None,
     dirname=None,
     new_name=None,
     new_model_type="asm"
@@ -309,9 +309,14 @@ def import_file(
             creopyson Client.
         filename (str):
             Source file name.
-        file_type (str):
+        file_type (str, optional):
             File type.
             Valid values: "IGES", "NEUTRAL", "PV", "STEP".
+            Defaults to None. Will analyse filename extension
+            *.igs*|*.iges* => IGES
+            *.stp*|*.step* => STEP
+            *.neu* => NEUTRAL
+            *.pv* => PV
         dirname (str, optional):
             Source directory.
             Defaults is Creo's current working directory.
@@ -331,9 +336,23 @@ def import_file(
     """
     data = {
         "filename": filename,
-        "type": file_type,  # TODO get type from filename extension?
         "new_model_type": new_model_type
     }
+
+    if file_type is None:
+        if re.search(r".*\.(igs|iges).*", filename):
+            data["type"] = "IGES"
+        elif re.search(r".*\.(stp|step).*", filename):
+            data["type"] = "STEP"
+        elif re.search(r".*\.(neu).*", filename):
+            data["type"] = "NEUTRAL"
+        elif re.search(r".*\.(pv).*", filename):
+            data["type"] = "PV"
+        else:
+            raise TypeError(f"`{filename}` extension was not recognized, fill in file_type.")
+    else:
+        data["type"] = file_type
+
     if dirname is not None:
         data["dirname"] = dirname
     if new_name is not None:
