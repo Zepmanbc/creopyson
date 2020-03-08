@@ -79,6 +79,19 @@ def test_interface_export_program(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (dict))
 
 
+def test_import_file(mk_creoson_post_dict):
+    """Test import_file."""
+    c = creopyson.Client()
+    result = c.interface_import_file(
+        "filename.stp",
+        "STEP",
+        dirname="directory/of/filename/",
+        new_name="my_imported_file",
+        new_model_type="prt"
+    )
+    assert isinstance(result, (str))
+
+
 def test_interface_import_program(mk_creoson_post_dict, mk_getactivefile):
     """Test import_program."""
     c = creopyson.Client()

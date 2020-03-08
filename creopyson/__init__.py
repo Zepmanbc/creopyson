@@ -289,6 +289,7 @@ from creopyson.interface import export_file as interface_export_file
 from creopyson.interface import export_image as interface_export_image
 from creopyson.interface import export_pdf as interface_export_pdf
 from creopyson.interface import export_program as interface_export_program
+from creopyson.interface import import_file as interface_import_file
 from creopyson.interface import import_program as interface_import_program
 from creopyson.interface import mapkey as interface_mapkey
 from creopyson.interface import plot as interface_plot
@@ -297,6 +298,7 @@ Client.interface_export_file = interface_export_file
 Client.interface_export_image = interface_export_image
 Client.interface_export_pdf = interface_export_pdf
 Client.interface_export_program = interface_export_program
+Client.interface_import_file = interface_import_file
 Client.interface_import_program = interface_import_program
 Client.interface_mapkey = interface_mapkey
 Client.interface_plot = interface_plot

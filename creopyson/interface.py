@@ -287,6 +287,59 @@ def export_program(client, file_=None):
     return client._creoson_post("interface", "export_program", data)
 
 
+def import_file(
+    client,
+    filename,
+    type_,
+    dirname=None,
+    new_name=None,
+    new_model_type="asm"
+):
+    """Import a file as a model.
+
+    Note: This function will not automatically display or activate
+    the imported model. If you want that, you should take the file name
+    returned by this function and pass it to file:open.
+    Users of the old import_pv function should start using this
+    function instead.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        filename (str):
+            Source file name.
+        type_ (str):
+            File type.
+            Valid values: "IGES", "NEUTRAL", "PV", "STEP".
+        dirname (str, optional):
+            Source directory.
+            Defaults is Creo's current working directory.
+        new_name (str, optional):
+            New model name. Any extension will be stripped off and replaced
+            with one based on new_model_type.
+            Defaults to None is the name of the file with an extension based
+            on new_model_type..
+        new_model_type (str, optional):
+            New model type.
+            Valid values: "asm", "prt"
+            Defaults to "asm".
+
+    Returns:
+        str: Name of the model imported
+
+    """
+    data = {
+        "filename": filename,
+        "type": type_,  # TODO get type from filename extension?
+        "new_model_type": new_model_type
+    }
+    if dirname is not None:
+        data["dirname"] = dirname
+    if new_name is not None:
+        data["new_name"] = new_name
+    return client._creoson_post("interface", "import_file", data, "file")
+
+
 def import_program(client, file_=None, filename=None, dirname=None):
     """Import a program file for a model.
 
