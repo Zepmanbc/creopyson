@@ -102,7 +102,7 @@ def test_import_file_tryAllExtensions(mk_creoson_post_dict):
     assert isinstance(result, (str))
     result = c.interface_import_file("filename.neu.59")
     assert isinstance(result, (str))
-    result = c.interface_import_file("filename.pv")
+    result = c.interface_import_file("filename.pvz")
     assert isinstance(result, (str))
 
 
