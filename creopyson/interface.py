@@ -316,7 +316,7 @@ def import_file(
             *.igs*|*.iges* => IGES
             *.stp*|*.step* => STEP
             *.neu* => NEUTRAL
-            *.pv* => PV
+            *.pvz* => PV
         dirname (str, optional):
             Source directory.
             Defaults is Creo's current working directory.
@@ -346,7 +346,7 @@ def import_file(
             data["type"] = "STEP"
         elif re.search(r".*\.(neu).*", filename):
             data["type"] = "NEUTRAL"
-        elif re.search(r".*\.(pv).*", filename):
+        elif re.search(r".*\.(pvz).*", filename):
             data["type"] = "PV"
         else:
             raise TypeError(f"`{filename}` extension was not recognized, fill in file_type.")
