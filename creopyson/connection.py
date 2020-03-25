@@ -132,7 +132,7 @@ class Client(object):
         """
         return self._creoson_post("connection", "kill_creo")
 
-    def start_creo(self, path, retries=0):
+    def start_creo(self, path, retries=0, use_desktop=False):
         """Execute an external .bat file to start Creo.
 
         Then attempts to connect to Creo.
@@ -142,8 +142,12 @@ class Client(object):
         Set retries to 0 to NOT attempt to connect to Creo.
         The server will pause for 3 seconds before attempting a
         connection, and will pause for 10 seconds between
-        connection retries", "If Creo pops up a message after startup,
-        this function may cause Creo to crash unless retries is set to 0.
+        connection retries.
+        If Creo pops up a message after startup, this function may
+        cause Creo to crash unless retries is set to 0.
+        If use_desktop is set, make sure that your
+        nitro_proe_remote.bat file contains a cd command to change
+        to the directory where you want Creo to start!
 
         Args:
             path (string):
@@ -152,6 +156,11 @@ class Client(object):
             retries (int):
                 Number of retries to make when connecting
                 (default 0)
+            use_desktop (boolean):
+                Whether to use the desktop to start creo rather than
+                the java runtime. Should only be used if the runtime
+                method doesn't work.
+                Default is False.
 
         Raises:
             Warning: error message from creoson.
@@ -166,7 +175,8 @@ class Client(object):
         data = {
             "start_dir": start_dir,
             "start_command": start_command,
-            "retries": retries
+            "retries": retries,
+            "use_desktop": use_desktop
         }
         return self._creoson_post("connection", "start_creo", data)
 
