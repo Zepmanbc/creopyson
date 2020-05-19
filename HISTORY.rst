@@ -2,6 +2,23 @@
 History
 =======
 
+0.5.1 (2020-05-19)
+------------------
+
+Docstring updates:
+
+* interface_import_file: PV extension correction.
+* interface_export_image: add infos about valid values in docstrings for dpi and depth.
+
+Features updates:
+
+* interface_mapkey: remove extra white space in script string.
+* connection_start_creo: add use_desktop param.
+
+New Feature:
+
+* Add **logging DEBUG** on request & response.
+
 0.5.0 (2020-03-08)
 ------------------
 
