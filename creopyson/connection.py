@@ -1,8 +1,11 @@
 """Connection module."""
 import requests
 import json
+import logging
 from pathlib import Path
 from .exceptions import MissingKey, ErrorJsonDecode
+
+lg = logging.getLogger(__name__)
 
 
 class Client(object):
@@ -11,7 +14,7 @@ class Client(object):
     def __init__(self, ip_adress="localhost", port=9056):
         """Create Client objet. Define server and sessionID vars."""
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
-        self.sessionId = ''
+        self.sessionId = ""
 
     def connect(self):
         """Connect to CREOSON.
@@ -43,8 +46,9 @@ class Client(object):
             "sessionId": self.sessionId,
             "command": command,
             "function": function,
-            "data": data
+            "data": data,
         }
+        lg.debug("request: %s", str(request))
         try:
             r = requests.post(self.server, data=json.dumps(request))
         except requests.exceptions.RequestException as e:
@@ -55,9 +59,9 @@ class Client(object):
 
         try:
             json_result = r.json()
+            lg.debug("response: %s", str(json_result))
         except TypeError:
-            raise ErrorJsonDecode(
-                "Cannot decode JSON, creoson result invalid.")
+            raise ErrorJsonDecode("Cannot decode JSON, creoson result invalid.")
 
         if "status" not in json_result.keys():
             raise MissingKey("Missing `status` in creoson result.")
@@ -70,8 +74,7 @@ class Client(object):
             error_msg = json_result["status"]["message"]
             raise RuntimeError(error_msg)
 
-        if request["command"] == "connection" and\
-           request["function"] == "connect":
+        if request["command"] == "connection" and request["function"] == "connect":
             if "sessionId" not in json_result.keys():
                 raise MissingKey("Missing `sessionId` in creoson result.")
             else:
@@ -81,8 +84,7 @@ class Client(object):
             if "data" not in json_result.keys():
                 raise MissingKey("Missing `data` in creoson return")
             if key_data not in json_result["data"].keys():
-                raise MissingKey(
-                    "Missing `{}` in creoson result".format(key_data))
+                raise MissingKey("Missing `{}` in creoson result".format(key_data))
             return json_result["data"][key_data]
 
         return json_result.get("data", None)
@@ -93,7 +95,7 @@ class Client(object):
         Empty sessionId.
         """
         self._creoson_post("connection", "disconnect")
-        self.sessionId = ''
+        self.sessionId = ""
 
     def is_creo_running(self):
         """Check whether Creo is running.
@@ -111,11 +113,7 @@ class Client(object):
 
         """
         # return self._creoson_post("connection", "is_creo_running")["running"]
-        return self._creoson_post(
-            "connection",
-            "is_creo_running",
-            key_data="running"
-        )
+        return self._creoson_post("connection", "is_creo_running", key_data="running")
 
     def kill_creo(self):
         """Kill primary Creo processes.
@@ -132,7 +130,7 @@ class Client(object):
         """
         return self._creoson_post("connection", "kill_creo")
 
-    def start_creo(self, path, retries=0):
+    def start_creo(self, path, retries=0, use_desktop=False):
         """Execute an external .bat file to start Creo.
 
         Then attempts to connect to Creo.
@@ -142,8 +140,12 @@ class Client(object):
         Set retries to 0 to NOT attempt to connect to Creo.
         The server will pause for 3 seconds before attempting a
         connection, and will pause for 10 seconds between
-        connection retries", "If Creo pops up a message after startup,
-        this function may cause Creo to crash unless retries is set to 0.
+        connection retries.
+        If Creo pops up a message after startup, this function may
+        cause Creo to crash unless retries is set to 0.
+        If use_desktop is set, make sure that your
+        nitro_proe_remote.bat file contains a cd command to change
+        to the directory where you want Creo to start!
 
         Args:
             path (string):
@@ -152,6 +154,11 @@ class Client(object):
             retries (int):
                 Number of retries to make when connecting
                 (default 0)
+            use_desktop (boolean):
+                Whether to use the desktop to start creo rather than
+                the java runtime. Should only be used if the runtime
+                method doesn't work.
+                Default is False.
 
         Raises:
             Warning: error message from creoson.
@@ -166,7 +173,8 @@ class Client(object):
         data = {
             "start_dir": start_dir,
             "start_command": start_command,
-            "retries": retries
+            "retries": retries,
+            "use_desktop": use_desktop,
         }
         return self._creoson_post("connection", "start_creo", data)
 
