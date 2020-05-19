@@ -1,8 +1,11 @@
 """Connection module."""
 import requests
 import json
+import logging
 from pathlib import Path
 from .exceptions import MissingKey, ErrorJsonDecode
+
+lg = logging.getLogger(__name__)
 
 
 class Client(object):
@@ -11,7 +14,7 @@ class Client(object):
     def __init__(self, ip_adress="localhost", port=9056):
         """Create Client objet. Define server and sessionID vars."""
         self.server = "http://{}:{}/creoson".format(ip_adress, port)
-        self.sessionId = ''
+        self.sessionId = ""
 
     def connect(self):
         """Connect to CREOSON.
@@ -43,8 +46,9 @@ class Client(object):
             "sessionId": self.sessionId,
             "command": command,
             "function": function,
-            "data": data
+            "data": data,
         }
+        lg.debug("request: %s", str(request))
         try:
             r = requests.post(self.server, data=json.dumps(request))
         except requests.exceptions.RequestException as e:
@@ -55,9 +59,9 @@ class Client(object):
 
         try:
             json_result = r.json()
+            lg.debug("response: %s", str(json_result))
         except TypeError:
-            raise ErrorJsonDecode(
-                "Cannot decode JSON, creoson result invalid.")
+            raise ErrorJsonDecode("Cannot decode JSON, creoson result invalid.")
 
         if "status" not in json_result.keys():
             raise MissingKey("Missing `status` in creoson result.")
@@ -70,8 +74,7 @@ class Client(object):
             error_msg = json_result["status"]["message"]
             raise RuntimeError(error_msg)
 
-        if request["command"] == "connection" and\
-           request["function"] == "connect":
+        if request["command"] == "connection" and request["function"] == "connect":
             if "sessionId" not in json_result.keys():
                 raise MissingKey("Missing `sessionId` in creoson result.")
             else:
@@ -81,8 +84,7 @@ class Client(object):
             if "data" not in json_result.keys():
                 raise MissingKey("Missing `data` in creoson return")
             if key_data not in json_result["data"].keys():
-                raise MissingKey(
-                    "Missing `{}` in creoson result".format(key_data))
+                raise MissingKey("Missing `{}` in creoson result".format(key_data))
             return json_result["data"][key_data]
 
         return json_result.get("data", None)
@@ -93,7 +95,7 @@ class Client(object):
         Empty sessionId.
         """
         self._creoson_post("connection", "disconnect")
-        self.sessionId = ''
+        self.sessionId = ""
 
     def is_creo_running(self):
         """Check whether Creo is running.
@@ -111,11 +113,7 @@ class Client(object):
 
         """
         # return self._creoson_post("connection", "is_creo_running")["running"]
-        return self._creoson_post(
-            "connection",
-            "is_creo_running",
-            key_data="running"
-        )
+        return self._creoson_post("connection", "is_creo_running", key_data="running")
 
     def kill_creo(self):
         """Kill primary Creo processes.
@@ -176,7 +174,7 @@ class Client(object):
             "start_dir": start_dir,
             "start_command": start_command,
             "retries": retries,
-            "use_desktop": use_desktop
+            "use_desktop": use_desktop,
         }
         return self._creoson_post("connection", "start_creo", data)
 
