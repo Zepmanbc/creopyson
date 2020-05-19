@@ -168,8 +168,10 @@ def export_image(
             Image width. Defaults is `10.0`.
         dpi (int, optional):
             Image DPI. Defaults is `100`.
+            Valid values: 100, 200, 300, 400.
         depth (int, optional):
             Image depth. Defaults is `24`.
+            Valid values: 8, 24.
 
     Returns:
         dict:
