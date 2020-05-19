@@ -6,6 +6,7 @@ Import/Export program (pls, als)
 
 """
 import re
+
 # TODO : add STL export
 
 
@@ -17,7 +18,7 @@ def export_3dpdf(
     height=None,
     width=None,
     dpi=None,
-    use_drawing_settings=None
+    use_drawing_settings=None,
 ):
     """Export a model to a 3D PDF file.
 
@@ -78,7 +79,7 @@ def export_file(
     filename=None,
     dirname=None,
     geom_flags=None,
-    advanced=None
+    advanced=None,
 ):
     """Export a model to a file.
 
@@ -146,7 +147,7 @@ def export_image(
     height=None,
     width=None,
     dpi=None,
-    depth=None
+    depth=None,
 ):
     """Export a model to an image file.
 
@@ -206,7 +207,7 @@ def export_pdf(
     height=None,
     width=None,
     dpi=None,
-    use_drawing_settings=None
+    use_drawing_settings=None,
 ):
     """Export a model to a PDF file.
 
@@ -289,12 +290,7 @@ def export_program(client, file_=None):
 
 
 def import_file(
-    client,
-    filename,
-    file_type=None,
-    dirname=None,
-    new_name=None,
-    new_model_type="asm"
+    client, filename, file_type=None, dirname=None, new_name=None, new_model_type="asm"
 ):
     """Import a file as a model.
 
@@ -334,10 +330,7 @@ def import_file(
         str: Name of the model imported
 
     """
-    data = {
-        "filename": filename,
-        "new_model_type": new_model_type
-    }
+    data = {"filename": filename, "new_model_type": new_model_type}
 
     if file_type is None:
         if re.search(r".*\.(igs|iges).*", filename):
@@ -349,7 +342,9 @@ def import_file(
         elif re.search(r".*\.(pvz).*", filename):
             data["type"] = "PV"
         else:
-            raise TypeError(f"`{filename}` extension was not recognized, fill in file_type.")
+            raise TypeError(
+                f"`{filename}` extension was not recognized, fill in file_type."
+            )
     else:
         data["type"] = file_type
 
@@ -410,7 +405,7 @@ def mapkey(client, script):
     Returns: None
 
     """
-    data = {"script": script}
+    data = {"script": script.replace("  ", "")}
     return client._creoson_post("interface", "mapkey", data)
 
 
