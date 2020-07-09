@@ -2,6 +2,25 @@
 History
 =======
 
+0.5.2 (2020-07-09)
+------------------
+
+Documentation update
+
+* usage: path slashes correction
+
+Docstring correction
+
+* drawing_list_models : correction (`issue#18`_)
+
+Bugfix
+
+* file_get_transform : Does not return *transform* key (`issue#17`_)
+
+.. _`issue#18`: https://github.com/Zepmanbc/creopyson/issues/18
+.. _`issue#17`: https://github.com/Zepmanbc/creopyson/issues/17
+
+
 0.5.1 (2020-05-19)
 ------------------
 
