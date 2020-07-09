@@ -14,7 +14,7 @@ Launch CREOSON:
 
 If you want to launch Creo with Creoson, please create a `nitro_proe_remote.bat` file.
 
-You can copy `C:\Program Files\PTC\Creo x.x\Mxxx\Parametric\bin\parametric.bat` and rename it `nitro_proe_remote.bat` anywhere you want.
+You can copy `C:\\Program Files\\PTC\\Creo x.x\\Mxxx\\Parametric\\bin\\parametric.bat` and rename it `nitro_proe_remote.bat` anywhere you want.
 
 To use Creopyson in a project::
 
