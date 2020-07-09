@@ -54,7 +54,7 @@ def create(
     scale=None,
     display=None,
     activate=None,
-    new_window=None
+    new_window=None,
 ):
     """Create a new drawing from a template.
 
@@ -107,7 +107,7 @@ def create_gen_view(
     model=None,
     scale=None,
     display_data=None,
-    exploded=None
+    exploded=None,
 ):
     """Create general view on a drawing.
 
@@ -138,10 +138,7 @@ def create_gen_view(
         None
 
     """
-    data = {
-        "model_view": model_view,
-        "point": point
-    }
+    data = {"model_view": model_view, "point": point}
     if drawing:
         data["drawing"] = drawing
     if view:
@@ -169,7 +166,7 @@ def create_proj_view(
     view=None,
     sheet=None,
     display_data=None,
-    exploded=None
+    exploded=None,
 ):
     """Create projection view on a drawing.
 
@@ -201,10 +198,7 @@ def create_proj_view(
         None
 
     """
-    data = {
-        "parent_view": parent_view,
-        "point": point
-    }
+    data = {"parent_view": parent_view, "point": point}
     if drawing:
         data["drawing"] = drawing
     if view:
@@ -219,12 +213,7 @@ def create_proj_view(
 
 
 def create_symbol(
-    client,
-    symbol_file,
-    point,
-    drawing=None,
-    replace_values=None,
-    sheet=None
+    client, symbol_file, point, drawing=None, replace_values=None, sheet=None
 ):
     """Add a symbol instance to a drawing.
 
@@ -248,10 +237,7 @@ def create_symbol(
         None
 
     """
-    data = {
-        "symbol_file": symbol_file,
-        "point": point
-    }
+    data = {"symbol_file": symbol_file, "point": point}
     if drawing:
         data["drawing"] = drawing
     if replace_values:
@@ -261,12 +247,7 @@ def create_symbol(
     return client._creoson_post("drawing", "create_symbol", data)
 
 
-def delete_models(
-    client,
-    model=None,
-    drawing=None,
-    delete_views=None
-):
+def delete_models(client, model=None, drawing=None, delete_views=None):
     """Delete one or more models from a drawing.
 
     Args:
@@ -360,13 +341,7 @@ def delete_symbol_inst(client, symbol_id, drawing=None):
     return client._creoson_post("drawing", "delete_symbol_inst", data)
 
 
-def delete_view(
-    client,
-    view,
-    drawing=None,
-    sheet=None,
-    del_children=None
-):
+def delete_view(client, view, drawing=None, sheet=None, del_children=None):
     """Delete a drawing view.
 
     Args:
@@ -450,8 +425,7 @@ def get_num_sheets(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client._creoson_post(
-        "drawing", "get_num_sheets", data, "num_sheets")
+    return client._creoson_post("drawing", "get_num_sheets", data, "num_sheets")
 
 
 def get_sheet_format(client, sheet, drawing=None):
@@ -616,12 +590,11 @@ def is_symbol_def_loaded(client, symbol_file, drawing=None):
     data = {"symbol_file": symbol_file}
     if drawing:
         data["drawing"] = drawing
-    return client._creoson_post(
-        "drawing", "is_symbol_def_loaded", data, "loaded")
+    return client._creoson_post("drawing", "is_symbol_def_loaded", data, "loaded")
 
 
 def list_models(client, model=None, drawing=None):
-    """Check whether a symbol definition file is loaded into Creo.
+    """List the models contained in a drawing.
 
     Args:
         client (obj):
@@ -644,12 +617,7 @@ def list_models(client, model=None, drawing=None):
     return client._creoson_post("drawing", "list_models", data, "files")
 
 
-def list_symbols(
-    client,
-    drawing=None,
-    symbol_file=None,
-    sheet=None
-):
+def list_symbols(client, drawing=None, symbol_file=None, sheet=None):
     """List symbols contained on a drawing.
 
     Args:
@@ -826,10 +794,7 @@ def rename_view(client, view, new_view, drawing=None):
         None
 
     """
-    data = {
-        "view": view,
-        "new_view": new_view
-    }
+    data = {"view": view, "new_view": new_view}
     if drawing:
         data["drawing"] = drawing
     return client._creoson_post("drawing", "rename_view", data)
@@ -854,10 +819,7 @@ def scale_sheet(client, sheet, scale, drawing=None, model=None):
         None
 
     """
-    data = {
-        "sheet": sheet,
-        "scale": scale
-    }
+    data = {"sheet": sheet, "scale": scale}
     if drawing:
         data["drawing"] = drawing
     if model:
@@ -955,10 +917,7 @@ def set_sheet_format(client, sheet, file_format, dirname=None, drawing=None):
     Returns:
         None
     """
-    data = {
-        "sheet": sheet,
-        "dirname": dirname
-    }
+    data = {"sheet": sheet, "dirname": dirname}
     if drawing:
         data["drawing"] = drawing
     if file_format:
@@ -983,10 +942,7 @@ def set_view_loc(client, view, point, drawing=None):
         None
 
     """
-    data = {
-        "view": view,
-        "point": point
-    }
+    data = {"view": view, "point": point}
     if drawing:
         data["drawing"] = drawing
     return client._creoson_post("drawing", "set_cur_model", data)

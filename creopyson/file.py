@@ -14,7 +14,7 @@ def assemble(
     package_assembly=None,
     walk_children=None,
     assemble_to_root=None,
-    suppress=None
+    suppress=None,
 ):
     """Assemble a component into an assembly.
 
@@ -189,10 +189,7 @@ def display(client, file_, activate=None):
         None
 
     """
-    data = {
-        "file": file_,
-        "activate": True
-    }
+    data = {"file": file_, "activate": True}
     if activate is not None:
         data["activate"] = activate
     return client._creoson_post("file", "display", data)
@@ -299,11 +296,7 @@ def get_cur_material(client, file_=None):
     return client._creoson_post("file", "get_cur_material", data, "material")
 
 
-def get_cur_material_wildcard(
-    client,
-    file_=None,
-    include_non_matching_parts=False
-):
+def get_cur_material_wildcard(client, file_=None, include_non_matching_parts=False):
     """Get the current material for a part or parts.
 
     Note: This is the same as 'get_cur_material' but this function allows
@@ -333,12 +326,7 @@ def get_cur_material_wildcard(
             data["file"] = active_file["file"]
     if include_non_matching_parts:
         data["include_non_matching_parts"] = True
-    return client._creoson_post(
-        "file",
-        "get_cur_material_wildcard",
-        data,
-        "materials"
-    )
+    return client._creoson_post("file", "get_cur_material_wildcard", data, "materials")
 
 
 def get_fileinfo(client, file_=None):
@@ -444,7 +432,7 @@ def get_transform(client, asm=None, path=None, csys=None):
         data["path"] = path
     if csys:
         data["csys"] = csys
-    return client._creoson_post("file", "get_transform", data, "transform")
+    return client._creoson_post("file", "get_transform", data)
 
 
 def has_instances(client, file_=None):
@@ -563,10 +551,7 @@ def list_materials(client, file_=None, material=None):
 
 
 def list_materials_wildcard(
-    client,
-    file_=None,
-    material=None,
-    include_non_matching_parts=False
+    client, file_=None, material=None, include_non_matching_parts=False
 ):
     """List materials on a part or parts.
 
@@ -600,12 +585,7 @@ def list_materials_wildcard(
         data["material"] = material
     if include_non_matching_parts:
         data["include_non_matching_parts"] = True
-    return client._creoson_post(
-        "file",
-        "list_materials_wildcard",
-        data,
-        "materials"
-    )
+    return client._creoson_post("file", "list_materials_wildcard", data, "materials")
 
 
 def list_simp_reps(client, file_=None, rep=None):
@@ -663,10 +643,7 @@ def load_material_file(client, material, dirname=None, file_=None):
             List of files impacted.
 
     """
-    data = {
-        "dirname": dirname,
-        "material": material
-    }
+    data = {"dirname": dirname, "material": material}
     if file_ is not None:
         data["file"] = file_
     else:
@@ -729,7 +706,7 @@ def open_(
     display=None,
     activate=None,
     new_window=None,
-    regen_force=None
+    regen_force=None,
 ):
     """Open one or more files in memory or from the drive.
 
@@ -834,8 +811,7 @@ def postregen_relations_get(client, file_=None):
         active_file = client.file_get_active()
         if active_file is not None:
             data["file"] = active_file["file"]
-    return client._creoson_post(
-        "file", "postregen_relations_get", data, "relations")
+    return client._creoson_post("file", "postregen_relations_get", data, "relations")
 
 
 def postregen_relations_set(client, file_=None, relations=None):
@@ -988,10 +964,7 @@ def rename(client, new_name, file_=None, onlysession=None):
         (str): The new model name.
 
     """
-    data = {
-        "new_name": new_name,
-        "onlysession": False
-    }
+    data = {"new_name": new_name, "onlysession": False}
     if file_ is not None:
         data["file"] = file_
     else:
@@ -1070,9 +1043,7 @@ def set_cur_material(client, material, file_=None):
             list of impacted files.
 
     """
-    data = {
-        "material": material
-    }
+    data = {"material": material}
     if file_ is not None:
         data["file"] = file_
     else:
