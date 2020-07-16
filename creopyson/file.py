@@ -251,6 +251,36 @@ def exists(client, file_):
     return client._creoson_post("file", "exists", data, "exists")
 
 
+def get_accuracy(client, file_=None):
+    """Get a solid's accuracy.
+
+    If the model has no accuracy value, this function will return null.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        `file_` (str, optional):
+            File name.
+            Defaults is current active model
+
+    Returns:
+        (list):
+            accuracy (float):
+                Accuracy value.
+            relative (bool): 
+                True = relative; False = absolute accuracy.
+
+    """
+    data = {}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file is not None:
+            data["file"] = active_file["file"]
+    return client._creoson_post("file", "get_accuracy", data)
+
+
 def get_active(client):
     """Get the active model from Creo.
 
