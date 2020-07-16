@@ -267,7 +267,7 @@ def get_accuracy(client, file_=None):
         (list):
             accuracy (float):
                 Accuracy value.
-            relative (bool): 
+            relative (bool):
                 True = relative; False = absolute accuracy.
 
     """
