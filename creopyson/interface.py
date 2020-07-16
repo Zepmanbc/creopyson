@@ -7,8 +7,6 @@ Import/Export program (pls, als)
 """
 import re
 
-# TODO : add STL export
-
 
 def export_3dpdf(
     client,
@@ -19,6 +17,7 @@ def export_3dpdf(
     width=None,
     dpi=None,
     use_drawing_settings=None,
+    sheet_range="all",
 ):
     """Export a model to a 3D PDF file.
 
@@ -43,6 +42,9 @@ def export_3dpdf(
         use_drawing_settings (boolean, optional):
             Whether to use special settings for exporting drawings.
             Defaut is False.
+        sheet_range (string):
+            Range of drawing sheets to export. Default vale is "all".
+            Valid values: "all", "current", range of sheet numbers (ex: "1,3-4")
 
     Returns:
         dict:
@@ -50,7 +52,7 @@ def export_3dpdf(
             filename (str): Name of the output file
 
     """
-    data = {}
+    data = {"sheet_range": sheet_range}
     if file_ is not None:
         data["file"] = file_
     else:
@@ -210,6 +212,7 @@ def export_pdf(
     width=None,
     dpi=None,
     use_drawing_settings=None,
+    sheet_range="all",
 ):
     """Export a model to a PDF file.
 
@@ -237,6 +240,9 @@ def export_pdf(
         use_drawing_settings (boolean, optional):
             Whether to use special settings for exporting drawings.
             Defaut is False.
+        sheet_range (string):
+            Range of drawing sheets to export. Default vale is "all".
+            Valid values: "all", "current", range of sheet numbers (ex: "1,3-4")
 
     Returns:
         dict:
@@ -244,7 +250,7 @@ def export_pdf(
             filename (str): Name of the output file
 
     """
-    data = {}
+    data = {"sheet_range": sheet_range}
     if file_ is not None:
         data["file"] = file_
     else:
