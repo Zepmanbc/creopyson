@@ -2,6 +2,19 @@
 History
 =======
 
+0.6.0 (2020-07-16)
+------------------
+
+Update for `Creoson 2.7.0 release`_.
+
+* New functions:
+    * file_get_accuracy
+* Add parameters:
+    * interface_mapkey: delay
+    * interface_export_pdf interface_export_pdf3d : sheet_range
+
+.. _`Creoson 2.7.0 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.7.0
+
 0.5.2 (2020-07-09)
 ------------------
 
