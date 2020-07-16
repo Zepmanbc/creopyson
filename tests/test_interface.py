@@ -129,7 +129,7 @@ def test_interface_import_program(mk_creoson_post_dict, mk_getactivefile):
 def test_interface_mapkey(mk_creoson_post_None):
     """Test mapkey."""
     c = creopyson.Client()
-    result = c.interface_mapkey("script")
+    result = c.interface_mapkey("script", delay=12)
     assert result is None
 
 

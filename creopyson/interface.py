@@ -399,7 +399,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
     return client._creoson_post("interface", "import_program", data, "file")
 
 
-def mapkey(client, script):
+def mapkey(client, script, delay=0):
     """Run a Mapkey script in Creo.
 
     Make sure to remove any `mapkey(continued)` clauses from the script
@@ -407,13 +407,18 @@ def mapkey(client, script):
     after the semicolon at the end of the previous line.
 
     Args:
-        client (obj): creopyson Client.
-        script (str): The mapkey script to run.
+        client (obj):
+            creopyson Client.
+        script (str):
+            The mapkey script to run.
+        delay (int):
+            Amount of time to wait after starting the mapkey, in milliseconds.
+            Default is 0.
 
     Returns: None
 
     """
-    data = {"script": script.replace("  ", "")}
+    data = {"script": script.replace("  ", ""), "delay": delay}
     return client._creoson_post("interface", "mapkey", data)
 
 
