@@ -2,7 +2,8 @@
 Usage
 =====
 
-Launch CREOSON:
+Quickstart
+==========
 
 * Download last release_ of Creoson Server for your system.
 
@@ -46,44 +47,47 @@ Basic usage::
 
 -----
 
-«Vanilla» Creoson usage (mostly for debugging):
+«Vanilla» Creoson usage
+=======================
+
+mostly for debugging::
 
     import creopyson
     c = creopyson.Client()
     c.connect()
 
-    # Here you define command/function and data is a dictionnary with data part of the JSON request
+    # Here you define command/function
+    # data is a dictionnary with data part of the JSON request
     # Please refer to Creoson documentation
     command = "file"
     function = "open"
     data ={"file":"my_file.prt", "display": True}
     result = c._creoson_post(command, function, data)
 
-*result* would be the *data* part of Creoson's response
+*result* would be the *data* part of Creoson's response::
 
     {'dirname': 'C:/your/working/path/', 'files': ['my_file.prt'], 'revision': 1}
 
 -----
 
-Logging basic usage:
+Logging basic usage
+===================
 
-If you want see what are the requests to Creoson ou should activate logging this way:
+If you want see what are the requests to Creoson you should activate logging this way::
 
     import logging
     logging.basicConfig(level=logging.DEBUG)
+    # Hide urllib3 logging
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     import creopyson
-
-    import logging
-    logging.basicConfig(level=logging.DEBUG)
 
     c = creopyson.Client()
     c.connect()
 
     c.file_open("my_file.prt", display=True)
 
-The result in you console would be something like this:
+The result in you console would be something like this::
 
     DEBUG:creopyson.connection:request: {'sessionId': '', 'command': 'connection', 'function': 'connect', 'data': None}
     DEBUG:creopyson.connection:response: {'status': {'error': False}, 'sessionId': '-8685569143476874454'}
