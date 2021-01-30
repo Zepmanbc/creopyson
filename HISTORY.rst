@@ -2,6 +2,22 @@
 History
 =======
 
+0.6.1 (2021-01-30)
+------------------
+
+Bugfix:
+
+* familytable.list_tree: correction data_key (`issue#21`_)
+
+Documentation update:
+
+* Usage: Add vanilla Creoson
+* Usage: Add logging
+* Issues template: add Creo version
+
+
+.. _`issue#21`: https://github.com/Zepmanbc/creopyson/issues/21
+
 0.6.0 (2020-07-16)
 ------------------
 

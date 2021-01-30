@@ -324,7 +324,7 @@ def list_tree(client, file_=None, erase=None):
             data["file"] = active_file["file"]
     if erase:
         data["erase"] = erase
-    return client._creoson_post("familytable", "list_tree", data, "instances")
+    return client._creoson_post("familytable", "list_tree", data, "children")
 
 
 def replace(
