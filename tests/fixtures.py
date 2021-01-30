@@ -11,6 +11,7 @@ def mk_creoson_post_dict(monkeypatch):
             result = {
                 "active": True,
                 "checked_out": True,
+                "children": [],
                 "columns": [],
                 "contourlist": [],
                 "dirname": "dirname",
