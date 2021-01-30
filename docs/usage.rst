@@ -43,3 +43,49 @@ Basic usage::
     c.file_open("my_file.prt", display=True)  # Open `my_file.prt` in Creo.
     c.dimension_set("my_file.prt", "diamm", 180)  # Modify `diamm` dimension.
     c.file_regenerate("my_file.prt")  # Regenerate file, raise `Warning` if regeneration fails.
+
+-----
+
+«Vanilla» Creoson usage (mostly for debugging):
+
+    import creopyson
+    c = creopyson.Client()
+    c.connect()
+
+    # Here you define command/function and data is a dictionnary with data part of the JSON request
+    # Please refer to Creoson documentation
+    command = "file"
+    function = "open"
+    data ={"file":"my_file.prt", "display": True}
+    result = c._creoson_post(command, function, data)
+
+*result* would be the *data* part of Creoson's response
+
+    {'dirname': 'C:/your/working/path/', 'files': ['my_file.prt'], 'revision': 1}
+
+-----
+
+Logging basic usage:
+
+If you want see what are the requests to Creoson ou should activate logging this way:
+
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
+
+    import creopyson
+
+    import logging
+    logging.basicConfig(level=logging.DEBUG)
+
+    c = creopyson.Client()
+    c.connect()
+
+    c.file_open("my_file.prt", display=True)
+
+The result in you console would be something like this:
+
+    DEBUG:creopyson.connection:request: {'sessionId': '', 'command': 'connection', 'function': 'connect', 'data': None}
+    DEBUG:creopyson.connection:response: {'status': {'error': False}, 'sessionId': '-8685569143476874454'}
+    DEBUG:creopyson.connection:request: {'sessionId': '-8685569143476874454', 'command': 'file', 'function': 'open', 'data': {'display': True, 'activate': True, 'file': 'my_file.prt'}}
+    DEBUG:creopyson.connection:response: {'status': {'error': False}, 'data': {'revision': 1, 'files': ['MY_FILE.prt'], 'dirname': 'C:/your/working/path/'}}
