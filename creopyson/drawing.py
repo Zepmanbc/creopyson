@@ -387,7 +387,7 @@ def get_cur_model(client, drawing=None):
     data = {}
     if drawing:
         data["drawing"] = drawing
-    return client._creoson_post("drawing", "get_cur_model", data, "drawing")
+    return client._creoson_post("drawing", "get_cur_model", data, "file")
 
 
 def get_cur_sheet(client, drawing=None):
