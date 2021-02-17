@@ -2,6 +2,15 @@
 History
 =======
 
+0.6.2 (2021-02-17)
+------------------
+
+Bugfix:
+
+* drawing.get_cur_model: correction data_key (`issue#27`_)
+
+.. _`issue#27`: https://github.com/Zepmanbc/creopyson/issues/27
+
 0.6.1 (2021-01-30)
 ------------------
 
