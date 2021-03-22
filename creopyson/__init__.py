@@ -29,6 +29,7 @@ from creopyson.creo import mkdir as creo_mkdir
 from creopyson.creo import pwd as creo_pwd
 from creopyson.creo import rmdir as creo_rmdir
 from creopyson.creo import set_config as creo_set_config
+from creopyson.creo import set_creo_version as creo_set_creo_version
 from creopyson.creo import set_std_color as creo_set_std_color
 
 Client.creo_cd = creo_cd
@@ -41,6 +42,7 @@ Client.creo_mkdir = creo_mkdir
 Client.creo_pwd = creo_pwd
 Client.creo_rmdir = creo_rmdir
 Client.creo_set_config = creo_set_config
+Client.creo_set_creo_version = creo_set_creo_version
 Client.creo_set_std_color = creo_set_std_color
 
 
