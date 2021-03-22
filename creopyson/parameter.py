@@ -1,14 +1,7 @@
 """Parameter module."""
 
 
-def copy(
-    client,
-    name,
-    to_name,
-    file_=None,
-    to_file=None,
-    designate=None
-):
+def copy(client, name, to_name, file_=None, to_file=None, designate=None):
     """Copy parameter to another in the same model or another model.
 
     Args:
@@ -104,13 +97,7 @@ def exists(client, name=None, file_=None):
     return client._creoson_post("parameter", "exists", data, "exists")
 
 
-def list_(
-    client,
-    name=None,
-    file_=None,
-    encoded=None,
-    value=None
-):
+def list_(client, name=None, file_=None, encoded=None, value=None):
     """Get a list of parameters from one or more models.
 
     Args:
@@ -132,6 +119,7 @@ def list_(
             type (str): Parameter type.
             value (various): Parameter value # TODO
             designate (boolean): Whether the parameter is designated.
+            description (str): Description.
             encoded (boolean): Whether the parameter is encoded.
             owner_name (str): File name.
 
@@ -213,7 +201,12 @@ def set_(
     return client._creoson_post("parameter", "set", data)
 
 
-def set_designated(client, name, designate, file_=None,):
+def set_designated(
+    client,
+    name,
+    designate,
+    file_=None,
+):
     """Set the designated state of a parameter.
 
     Args:
