@@ -548,7 +548,7 @@ def set_param(
         designate (boolean, optional):
             Set parameter to be designated/not designated, blank=do not set.
             Defaults is `blank`.
-        description (str):
+        description (str, optionnal):
             Parameter description. If missing, leaves the currect description in place.
         no_create (boolean, optional):
             If parameter does not already exist, do not create it.

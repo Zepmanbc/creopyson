@@ -207,7 +207,9 @@ def set_creo_version(client, version):
     """Set the version of Creo you are running.
 
     This function only needs to be called once per creoson session.
-    This function must be called if you are doing certain functions in Creo 7 due to deprecated config options
+    This function must be called if you are doing certain functions
+    in Creo 7 due to deprecated config options.
+
     Needed for functions:
         familytable_replace
         file_assemble

@@ -151,6 +151,7 @@ def set_(
     type_=None,
     encoded=None,
     designate=None,
+    description=None,
     no_create=None,
 ):
     """Set the value of a parameter.
@@ -173,6 +174,9 @@ def set_(
         designate (boolean, optional):
             Set parameter to be designated/not designated, blank=do not set.
             Defaults is `blank`.
+        description (str, optional):
+            Parameter description.
+            If missing, leaves the current description in place.
         no_create (boolean, optional):
             If parameter does not already exist, do not create it.
             Defaults is False.
@@ -196,6 +200,8 @@ def set_(
         data["value"] = value
     if designate:
         data["designate"] = designate
+    if description:
+        data["description"] = description
     if no_create:
         data["no_create"] = no_create
     return client._creoson_post("parameter", "set", data)
