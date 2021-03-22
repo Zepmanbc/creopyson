@@ -366,13 +366,21 @@ def list_selected(client):
             [
                 {
                     'file' : model name (str)
+
                     'name' : feature name (str)
+
                     'status' : feature status (str)
+
                     'type' : feature type (str)
+
                     'feat_id' : feature ID (int)
+
                     'feat_number' : feature number (int)
+
                     'path' : feature's component path (list of ints)
+
                 },
+
             ]
 
     """

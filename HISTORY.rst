@@ -2,6 +2,27 @@
 History
 =======
 
+0.7.0 (2021-03-22)
+------------------
+
+Update for `Creoson 2.8.0 release`_.
+
+* New functions:
+    * creo_set_creo_version (prevent Creo 7 problems)
+    * feature_list_selected
+* Add parameters:
+    * feature_set_param: description
+    * parameter_set: description
+* Documentation update:
+    * drawing_list: add *view_model*, *simp_rep* in Return
+    * feature_list_param: add *description* in Return
+    * feature_user_select_csys: add *file*, remove "feat_number* in Return object.
+    * parameter_list: add *description* in Return
+* BugFix:
+    file_set_cur_material: now working with Creoson >2.8.0
+
+.. _`Creoson 2.8.0 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.8.0
+
 0.6.2 (2021-02-17)
 ------------------
 
