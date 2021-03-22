@@ -686,8 +686,10 @@ def user_select_csys(client, file_=None, max_=None):
                     UNREGENERATED.
                 feat_id (int):
                     Feature ID.
-                feat_number (int):
-                    Feature Number.
+                file (str):
+                    File name containing the feature.
+                path (list:int):
+                    Component Path to feature (optionnal)
 
     """
     data = {
