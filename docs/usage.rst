@@ -47,6 +47,15 @@ Basic usage::
 
 -----
 
+Creo 7 Users
+============
+
+If you are using Creo 7 you must declare it once per session to prevent errors on deprecated features::
+
+    c.creo_set_creo_version(7)
+
+-----
+
 «Vanilla» Creoson usage
 =======================
 

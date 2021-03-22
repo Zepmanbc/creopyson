@@ -17,9 +17,7 @@ def test_creo_delete_files(mk_creoson_post_dict):
     c = creopyson.Client()
     result = c.creo_delete_files()
     assert isinstance(result, (list))
-    result = c.creo_delete_files(
-        dirname="C:/dir/",
-        filename="fake_file.prt")
+    result = c.creo_delete_files(dirname="C:/dir/", filename="fake_file.prt")
     assert isinstance(result, (list))
     result = c.creo_delete_files(filename=["C:/dir/fake_file.prt"])
     assert isinstance(result, (list))
@@ -54,10 +52,11 @@ def test_creo_list_dirs_empty(monkeypatch):
     if there is no folder in directory, creoson does not return `data`.
     Need to return an empty list.
     """
+
     def fake_func(client, command, function, data=None, key_data=None):
         raise MissingKey("Missing `data` in creoson return")
-    monkeypatch.setattr(
-        creopyson.connection.Client, '_creoson_post', fake_func)
+
+    monkeypatch.setattr(creopyson.connection.Client, "_creoson_post", fake_func)
     c = creopyson.Client()
     result = c.creo_list_dirs()
     assert result == []
@@ -95,6 +94,13 @@ def test_creo_set_config_ok(mk_creoson_post_None):
     """Test creo_set_config."""
     c = creopyson.Client()
     result = c.creo_set_config("option", 12, True)
+    assert result is None
+
+
+def test_creo_set_creo_version(mk_creoson_post_None):
+    """Test creo_set_creao_version."""
+    c = creopyson.Client()
+    result = c.creo_set_creo_version(7)
     assert result is None
 
 

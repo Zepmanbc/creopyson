@@ -1,23 +1,23 @@
 """Feature testing."""
 import creopyson
 import pytest
-from .fixtures import mk_creoson_post_dict, mk_creoson_post_None, mk_creoson_post_list, mk_getactivefile, mk_getactivefile
+from .fixtures import (
+    mk_creoson_post_dict,
+    mk_creoson_post_None,
+    mk_creoson_post_list,
+    mk_getactivefile,
+    mk_getactivefile,
+)
 
 
 def test_feature_delete(mk_creoson_post_None, mk_getactivefile):
     """Test delete."""
     c = creopyson.Client()
     result = c.feature_delete(
-        file_="file",
-        name="name",
-        status="ACTIVE",
-        type_="type",
-        clip=True
+        file_="file", name="name", status="ACTIVE", type_="type", clip=True
     )
     assert result is None
-    result = c.feature_delete(
-        name=["name1", "name2"]
-    )
+    result = c.feature_delete(name=["name1", "name2"])
     assert result is None
 
     with pytest.raises(ValueError):
@@ -27,11 +27,7 @@ def test_feature_delete(mk_creoson_post_None, mk_getactivefile):
 def test_feature_delete_param(mk_creoson_post_None, mk_getactivefile):
     """Test delete_param."""
     c = creopyson.Client()
-    result = c.feature_delete_param(
-        file_="file",
-        name="name",
-        param="param"
-    )
+    result = c.feature_delete_param(file_="file", name="name", param="param")
     assert result is None
     result = c.feature_delete_param()
     assert result is None
@@ -48,7 +44,7 @@ def test_feature_list(mk_creoson_post_dict, mk_getactivefile):
         paths=True,
         no_datum=True,
         inc_unnamed=True,
-        no_comp=True
+        no_comp=True,
     )
     assert isinstance(result, (list))
 
@@ -106,52 +102,40 @@ def test_feature_list_pattern_features(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (list))
 
 
+def test_feature_list_selected(mk_creoson_post_dict, mk_getactivefile):
+    """Test list_selected."""
+    c = creopyson.Client()
+    result = c.feature_list_selected()
+    assert isinstance(result, (list))
+
+
 def test_feature_param_exists(mk_creoson_post_dict, mk_getactivefile):
     """Test param_exists."""
     c = creopyson.Client()
-    result = c.feature_param_exists(
-        file_="file",
-        name="name",
-        param="param"
-    )
+    result = c.feature_param_exists(file_="file", name="name", param="param")
     assert result is True
-    result = c.feature_param_exists(
-        param=["param", "other param"]
-    )
+    result = c.feature_param_exists(param=["param", "other param"])
     assert result is True
 
 
 def test_feature_rename(mk_creoson_post_None, mk_getactivefile):
     """Test rename."""
     c = creopyson.Client()
-    result = c.feature_rename(
-        "oldname", "new_name",
-        file_="file"
-    )
+    result = c.feature_rename("oldname", "new_name", file_="file")
     assert result is None
     c = creopyson.Client()
     result = c.feature_rename("oldname", "new_name")
     assert result is None
-    result = c.feature_rename(
-        1, "new_name",
-        file_="file"
-    )
+    result = c.feature_rename(1, "new_name", file_="file")
     with pytest.raises(TypeError):
-        c.feature_rename(
-            ["list"], "new_name",
-            file_="file"
-        )
+        c.feature_rename(["list"], "new_name", file_="file")
 
 
 def test_feature_resume(mk_creoson_post_None, mk_getactivefile):
     """Test resume."""
     c = creopyson.Client()
     result = c.feature_resume(
-        file_="file",
-        name="name",
-        status="ACTIVE",
-        type_="type",
-        with_children=True
+        file_="file", name="name", status="ACTIVE", type_="type", with_children=True
     )
     assert result is None
     result = c.feature_resume(
@@ -177,7 +161,8 @@ def test_feature_set_param(mk_creoson_post_None, mk_getactivefile):
         value=12,
         encoded=True,
         designate=True,
-        no_create=True
+        description="This is a description",
+        no_create=True,
     )
     assert result is None
     result = c.feature_set_param("param")
@@ -193,7 +178,7 @@ def test_feature_suppress(mk_creoson_post_None, mk_getactivefile):
         status="ACTIVE",
         type_="type",
         clip=False,
-        with_children=False
+        with_children=False,
     )
     assert result is None
     result = c.feature_suppress(
@@ -211,10 +196,7 @@ def test_feature_suppress(mk_creoson_post_None, mk_getactivefile):
 def test_feature_user_select_csys(mk_creoson_post_list, mk_getactivefile):
     """Test user_select_csys."""
     c = creopyson.Client()
-    result = c.feature_user_select_csys(
-        file_="file",
-        max_=12
-    )
+    result = c.feature_user_select_csys(file_="file", max_=12)
     assert isinstance(result, (list))
     result = c.feature_user_select_csys()
     assert isinstance(result, (list))

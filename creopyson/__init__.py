@@ -4,7 +4,7 @@
 
 __author__ = """Benjamin C."""
 __email__ = "zepman@gmail.com"
-__version__ = "__version__ = '0.6.2'"
+__version__ = "__version__ = '0.7.0'"
 
 from creopyson.connection import Client
 from creopyson.objects import jlpoint
@@ -29,6 +29,7 @@ from creopyson.creo import mkdir as creo_mkdir
 from creopyson.creo import pwd as creo_pwd
 from creopyson.creo import rmdir as creo_rmdir
 from creopyson.creo import set_config as creo_set_config
+from creopyson.creo import set_creo_version as creo_set_creo_version
 from creopyson.creo import set_std_color as creo_set_std_color
 
 Client.creo_cd = creo_cd
@@ -41,6 +42,7 @@ Client.creo_mkdir = creo_mkdir
 Client.creo_pwd = creo_pwd
 Client.creo_rmdir = creo_rmdir
 Client.creo_set_config = creo_set_config
+Client.creo_set_creo_version = creo_set_creo_version
 Client.creo_set_std_color = creo_set_std_color
 
 
@@ -175,6 +177,7 @@ from creopyson.feature import list_ as feature_list
 from creopyson.feature import list_params as feature_list_params
 from creopyson.feature import list_group_features as feature_list_group_features
 from creopyson.feature import list_pattern_features as feature_list_pattern_features
+from creopyson.feature import list_selected as feature_list_selected
 from creopyson.feature import param_exists as feature_param_exists
 from creopyson.feature import rename as feature_rename
 from creopyson.feature import resume as feature_resume
@@ -188,6 +191,7 @@ Client.feature_list = feature_list
 Client.feature_list_params = feature_list_params
 Client.feature_list_group_features = feature_list_group_features
 Client.feature_list_pattern_features = feature_list_pattern_features
+Client.feature_list_selected = feature_list_selected
 Client.feature_param_exists = feature_param_exists
 Client.feature_rename = feature_rename
 Client.feature_resume = feature_resume
