@@ -521,6 +521,7 @@ def set_param(
     value=None,
     encoded=None,
     designate=None,
+    description=None,
     no_create=None,
 ):
     """Set the value of a feature parameter.
@@ -547,6 +548,8 @@ def set_param(
         designate (boolean, optional):
             Set parameter to be designated/not designated, blank=do not set.
             Defaults is `blank`.
+        description (str):
+            Parameter description. If missing, leaves the currect description in place.
         no_create (boolean, optional):
             If parameter does not already exist, do not create it.
             Defaults is False.
@@ -574,6 +577,8 @@ def set_param(
         data["encoded"] = encoded
     if designate:
         data["designate"] = designate
+    if description:
+        data["description"] = description
     if no_create:
         data["no_create"] = no_create
     return client._creoson_post("feature", "set_param", data)

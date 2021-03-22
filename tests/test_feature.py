@@ -161,6 +161,7 @@ def test_feature_set_param(mk_creoson_post_None, mk_getactivefile):
         value=12,
         encoded=True,
         designate=True,
+        description="This is a description",
         no_create=True,
     )
     assert result is None
