@@ -258,6 +258,8 @@ def list_params(
                 Owner ID.
             owner_type (str):
                 Owner type.
+            description (str):
+                List of parameter information.
 
     """
     data = {}
