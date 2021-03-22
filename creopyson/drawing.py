@@ -667,11 +667,17 @@ def list_view_details(client, view=None, drawing=None):
                     View name.
                 sheet (int):
                     Sheet number.
-                location (dict) :
+                location (dict):
                     Coordonates
                         x (float): X-coordinate of the view
                         y (float): Y-coordinate of the view
                         z (float): Z-coordinate of the view
+                text_height (float):
+                    Text Heigh in Drawing Units.
+                view_model (str):
+                    View model name.
+                simp_rep (str):
+                    View simplified rep name.
 
     """
     data = {}

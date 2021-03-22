@@ -6,18 +6,11 @@ STATUS_LIST = [
     "SIMP_REP_SUPPRESSED",
     "PROGRAM_SUPPRESSED",
     "SUPPRESSED",
-    "UNREGENERATED"
+    "UNREGENERATED",
 ]
 
 
-def delete(
-    client,
-    name=None,
-    file_=None,
-    status=None,
-    type_=None,
-    clip=None
-):
+def delete(client, name=None, file_=None, status=None, type_=None, clip=None):
     """Delete one or more features that match criteria.
 
     Args:
@@ -114,7 +107,7 @@ def list_(
     paths=None,
     no_datum=None,
     inc_unnamed=None,
-    no_comp=None
+    no_comp=None,
 ):
     """List feature parameters that match criteria.
 
@@ -210,7 +203,7 @@ def list_params(
     no_comp=None,
     param=None,
     value=None,
-    encoded=None
+    encoded=None,
 ):
     """List feature parameters that match criteria.
 
@@ -265,6 +258,8 @@ def list_params(
                 Owner ID.
             owner_type (str):
                 Owner type.
+            description (str):
+                List of parameter information.
 
     """
     data = {}
@@ -328,16 +323,10 @@ def list_group_features(client, group_name, type_=None, file_=None):
             data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
-    return client._creoson_post(
-        "feature", "list_group_features", data, "featlist")
+    return client._creoson_post("feature", "list_group_features", data, "featlist")
 
 
-def list_pattern_features(
-    client,
-    patter_name,
-    type_=None,
-    file_=None
-):
+def list_pattern_features(client, patter_name, type_=None, file_=None):
     """List features in a Creo Pattern.
 
     Args:
@@ -366,8 +355,29 @@ def list_pattern_features(
             data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
-    return client._creoson_post(
-        "feature", "list_group_features", data, "featlist")
+    return client._creoson_post("feature", "list_group_features", data, "featlist")
+
+
+def list_selected(client):
+    """List the currently selected features in Creo
+
+    Returns:
+        (list): List of feature informations.
+            [
+                {
+                    'file' : model name (str)
+                    'name' : feature name (str)
+                    'status' : feature status (str)
+                    'type' : feature type (str)
+                    'feat_id' : feature ID (int)
+                    'feat_number' : feature number (int)
+                    'path' : feature's component path (list of ints)
+                },
+            ]
+
+    """
+    data = None
+    return client._creoson_post("feature", "list_selected", data, "featlist")
 
 
 def param_exists(client, file_=None, name=None, param=None):
@@ -440,14 +450,7 @@ def rename(client, name, new_name, file_=None):
     return client._creoson_post("feature", "rename", data)
 
 
-def resume(
-    client,
-    file_=None,
-    name=None,
-    status=None,
-    type_=None,
-    with_children=None
-):
+def resume(client, file_=None, name=None, status=None, type_=None, with_children=None):
     """Resume one or more features that match criteria.
 
     Will only resume visible features.
@@ -518,7 +521,8 @@ def set_param(
     value=None,
     encoded=None,
     designate=None,
-    no_create=None
+    description=None,
+    no_create=None,
 ):
     """Set the value of a feature parameter.
 
@@ -544,6 +548,8 @@ def set_param(
         designate (boolean, optional):
             Set parameter to be designated/not designated, blank=do not set.
             Defaults is `blank`.
+        description (str, optionnal):
+            Parameter description. If missing, leaves the currect description in place.
         no_create (boolean, optional):
             If parameter does not already exist, do not create it.
             Defaults is False.
@@ -571,6 +577,8 @@ def set_param(
         data["encoded"] = encoded
     if designate:
         data["designate"] = designate
+    if description:
+        data["description"] = description
     if no_create:
         data["no_create"] = no_create
     return client._creoson_post("feature", "set_param", data)
@@ -583,7 +591,7 @@ def suppress(
     status=None,
     type_=None,
     clip=None,
-    with_children=None
+    with_children=None,
 ):
     """Suppress one or more features that match criteria.
 
@@ -622,10 +630,7 @@ def suppress(
         None
 
     """
-    data = {
-        "clip": True,
-        "with_children": True
-    }
+    data = {"clip": True, "with_children": True}
     if file_ is not None:
         data["file"] = file_
     else:
@@ -681,8 +686,10 @@ def user_select_csys(client, file_=None, max_=None):
                     UNREGENERATED.
                 feat_id (int):
                     Feature ID.
-                feat_number (int):
-                    Feature Number.
+                file (str):
+                    File name containing the feature.
+                path (list:int):
+                    Component Path to feature (optionnal)
 
     """
     data = {

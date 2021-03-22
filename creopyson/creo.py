@@ -197,14 +197,39 @@ def set_config(client, name, value, ignore_errors=None):
         None.
 
     """
-    data = {
-        "name": name,
-        "value": value,
-        "ignore_errors": False
-    }
+    data = {"name": name, "value": value, "ignore_errors": False}
     if ignore_errors:
         data["ignore_errors"] = ignore_errors
     return client._creoson_post("creo", "set_config", data)
+
+
+def set_creo_version(client, version):
+    """Set the version of Creo you are running.
+
+    This function only needs to be called once per creoson session.
+    This function must be called if you are doing certain functions
+    in Creo 7 due to deprecated config options.
+
+    Needed for functions:
+        familytable_replace
+        file_assemble
+        file_regenerate
+        feature_delete
+        feature_resume
+        feature_suppress
+
+    Args:
+        client (obj):
+            creopyson Client.
+        version (int):
+            Creo version.
+
+    Returns:
+        None.
+
+    """
+    data = {"version": int(version)}
+    return client._creoson_post("creo", "set_creo_version", data)
 
 
 def set_std_color(client, color_type, red, green, blue):
@@ -230,11 +255,6 @@ def set_std_color(client, color_type, red, green, blue):
         None.
 
     """
-    data = {
-        "color_type": color_type,
-        "red": red,
-        "green": green,
-        "blue": blue
-    }
+    data = {"color_type": color_type, "red": red, "green": green, "blue": blue}
     return client._creoson_post("creo", "rmdir", data)
     # TODO: convert RGB to a tuple or hexa color?

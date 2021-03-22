@@ -1,14 +1,7 @@
 """Parameter module."""
 
 
-def copy(
-    client,
-    name,
-    to_name,
-    file_=None,
-    to_file=None,
-    designate=None
-):
+def copy(client, name, to_name, file_=None, to_file=None, designate=None):
     """Copy parameter to another in the same model or another model.
 
     Args:
@@ -104,13 +97,7 @@ def exists(client, name=None, file_=None):
     return client._creoson_post("parameter", "exists", data, "exists")
 
 
-def list_(
-    client,
-    name=None,
-    file_=None,
-    encoded=None,
-    value=None
-):
+def list_(client, name=None, file_=None, encoded=None, value=None):
     """Get a list of parameters from one or more models.
 
     Args:
@@ -132,6 +119,7 @@ def list_(
             type (str): Parameter type.
             value (various): Parameter value # TODO
             designate (boolean): Whether the parameter is designated.
+            description (str): Description.
             encoded (boolean): Whether the parameter is encoded.
             owner_name (str): File name.
 
@@ -163,6 +151,7 @@ def set_(
     type_=None,
     encoded=None,
     designate=None,
+    description=None,
     no_create=None,
 ):
     """Set the value of a parameter.
@@ -185,6 +174,9 @@ def set_(
         designate (boolean, optional):
             Set parameter to be designated/not designated, blank=do not set.
             Defaults is `blank`.
+        description (str, optional):
+            Parameter description.
+            If missing, leaves the current description in place.
         no_create (boolean, optional):
             If parameter does not already exist, do not create it.
             Defaults is False.
@@ -208,12 +200,19 @@ def set_(
         data["value"] = value
     if designate:
         data["designate"] = designate
+    if description:
+        data["description"] = description
     if no_create:
         data["no_create"] = no_create
     return client._creoson_post("parameter", "set", data)
 
 
-def set_designated(client, name, designate, file_=None,):
+def set_designated(
+    client,
+    name,
+    designate,
+    file_=None,
+):
     """Set the designated state of a parameter.
 
     Args:
