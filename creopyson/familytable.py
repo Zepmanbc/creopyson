@@ -23,7 +23,7 @@ def add_inst(client, instance, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "add_inst", data)
 
@@ -48,7 +48,7 @@ def create_inst(client, instance, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "create_inst", data, "name")
 
@@ -73,7 +73,7 @@ def delete_inst(client, instance, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "delete_inst", data)
 
@@ -97,7 +97,7 @@ def delete(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "delete", data)
 
@@ -124,7 +124,7 @@ def exists(client, instance, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "exists", data, "exists")
 
@@ -156,15 +156,12 @@ def get_cell(client, instance, colid, file_=None):
                 Column Type; a string corresponding to the Creo column type.
 
     """
-    data = {
-        "instance": instance,
-        "colid": colid
-    }
+    data = {"instance": instance, "colid": colid}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_cell", data)
 
@@ -196,7 +193,7 @@ def get_header(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_header", data, "columns")
 
@@ -222,7 +219,7 @@ def get_parents(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_parents", data, "parents")
 
@@ -255,7 +252,7 @@ def get_row(client, instance, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "get_row", data, "columns")
 
@@ -281,7 +278,7 @@ def list_(client, file_=None, instance=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if instance:
         data["instance"] = instance
@@ -320,21 +317,14 @@ def list_tree(client, file_=None, erase=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if erase:
         data["erase"] = erase
     return client._creoson_post("familytable", "list_tree", data, "children")
 
 
-def replace(
-    client,
-    cur_model,
-    new_inst,
-    file_=None,
-    cur_inst=None,
-    path=None
-):
+def replace(client, cur_model, new_inst, file_=None, cur_inst=None, path=None):
     """Replace a model in an assembly with another inst in the same family table.
 
     You must specify either cur_inst or path.
@@ -366,7 +356,7 @@ def replace(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if cur_inst:
         data["cur_inst"] = cur_inst
@@ -405,6 +395,6 @@ def set_cell(client, instance, colid, value, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("familytable", "set_cell", data)

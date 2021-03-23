@@ -21,7 +21,7 @@ def activate(client, name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("view", "activate", data)
 
@@ -49,7 +49,7 @@ def list_exploded(client, file_=None, name=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("view", "list_exploded", data, "viewlist")
 
@@ -75,7 +75,7 @@ def list_(client, file_=None, name=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name is not None:
         data["name"] = name
@@ -102,6 +102,6 @@ def save(client, name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("view", "save", data)

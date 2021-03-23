@@ -8,7 +8,7 @@ def get_paths(
     skeletons=None,
     top_level=None,
     get_transforms=None,
-    exclude_inactive=None
+    exclude_inactive=None,
 ):
     """Get a hierarchy of components within an assembly.
 
@@ -57,7 +57,7 @@ def get_paths(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if paths:
         data["paths"] = paths
