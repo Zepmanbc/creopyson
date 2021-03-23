@@ -2,6 +2,12 @@
 History
 =======
 
+0.7.1 (2021-03-23)
+------------------
+
+* BugFix:
+    * `file_get_active` returns `{}` instead of `None` with Creoson 2.8.0
+
 0.7.0 (2021-03-22)
 ------------------
 
