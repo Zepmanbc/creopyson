@@ -57,7 +57,7 @@ def export_3dpdf(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -128,7 +128,7 @@ def export_file(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -186,7 +186,7 @@ def export_image(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -255,7 +255,7 @@ def export_pdf(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -292,7 +292,7 @@ def export_program(client, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("interface", "export_program", data)
 
@@ -390,7 +390,7 @@ def import_program(client, file_=None, filename=None, dirname=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if filename:
         data["filename"] = filename
@@ -449,7 +449,7 @@ def plot(client, file_=None, dirname=None, driver=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if dirname:
         data["dirname"] = dirname

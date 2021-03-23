@@ -20,29 +20,19 @@ def copy(client, name, to_name, file_=None, to_file=None):
         None
 
     """
-    data = {
-        "name": name,
-        "to_name": to_name
-    }
+    data = {"name": name, "to_name": to_name}
     if file_ is not None:
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
     return client._creoson_post("dimension", "copy", data)
 
 
-def list_(
-    client,
-    name=None,
-    file_=None,
-    dim_type=None,
-    encoded=None,
-    select=False
-):
+def list_(client, name=None, file_=None, dim_type=None, encoded=None, select=False):
     """Get a list of dimensions from a model.
 
     If select is true, then the current selection in Creo will be cleared even
@@ -84,7 +74,7 @@ def list_(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -101,12 +91,7 @@ def list_(
 
 
 def list_detail(
-    client,
-    name=None,
-    file_=None,
-    dim_type=None,
-    encoded=None,
-    select=False
+    client, name=None, file_=None, dim_type=None, encoded=None, select=False
 ):
     """Get a list of dimension details from a model.
 
@@ -173,7 +158,7 @@ def list_detail(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -227,7 +212,7 @@ def set_(client, name, value, file_=None, encoded=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if encoded:
         data["encoded"] = encoded
@@ -261,7 +246,7 @@ def set_text(client, name, file_=None, text=None, encoded=False):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if text:
         data["text"] = text
@@ -295,7 +280,7 @@ def show(client, name, file_=None, assembly=None, path=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if assembly:
         data["assembly"] = assembly
@@ -338,7 +323,7 @@ def user_select(client, file_=None, maxi=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if maxi:
         data["max"] = maxi

@@ -18,10 +18,7 @@ def authorize(client, user, password):
         None
 
     """
-    data = {
-        "user": user,
-        "password": password
-    }
+    data = {"user": user, "password": password}
     return client._creoson_post("windchill", "authorize", data)
 
 
@@ -62,10 +59,7 @@ def create_workspace(client, workspace, context_name):
         None
 
     """
-    data = {
-        "workspace": workspace,
-        "context": context_name
-    }
+    data = {"workspace": workspace, "context": context_name}
     return client._creoson_post("windchill", "create_workspace", data)
 
 
@@ -100,14 +94,10 @@ def file_checked_out(client, filename, workspace=None):
 
     """
     active_workspace = client.windchill_get_workspace()
-    data = {
-        "workspace": active_workspace,
-        "filename": filename
-    }
+    data = {"workspace": active_workspace, "filename": filename}
     if workspace:
         data["workspace"] = workspace
-    return client._creoson_post(
-        "windchill", "file_checked_out", data, "checked_out")
+    return client._creoson_post("windchill", "file_checked_out", data, "checked_out")
 
 
 def get_workspace(client):
@@ -120,8 +110,7 @@ def get_workspace(client):
         str: Active Workspace name.
 
     """
-    return client._creoson_post(
-        "windchill", "get_workspace", key_data="workspace")
+    return client._creoson_post("windchill", "get_workspace", key_data="workspace")
 
 
 def list_workspace_files(client, workspace=None, filename=None):
@@ -141,16 +130,12 @@ def list_workspace_files(client, workspace=None, filename=None):
 
     """
     active_workspace = client.windchill_get_workspace()
-    data = {
-        "workspace": active_workspace,
-        "filename": "*"
-    }
+    data = {"workspace": active_workspace, "filename": "*"}
     if workspace:
         data["workspace"] = workspace
     if filename:
         data["filename"] = filename
-    return client._creoson_post(
-        "windchill", "list_workspace_files", data, "filelist")
+    return client._creoson_post("windchill", "list_workspace_files", data, "filelist")
 
 
 def list_workspaces(client):
@@ -163,8 +148,7 @@ def list_workspaces(client):
         list: List of workspaces
 
     """
-    return client._creoson_post(
-        "windchill", "list_workspaces", key_data="workspaces")
+    return client._creoson_post("windchill", "list_workspaces", key_data="workspaces")
 
 
 def server_exists(client, server_url):
@@ -224,5 +208,4 @@ def workspace_exists(client, workspace):
 
     """
     data = {"workspace": workspace}
-    return client._creoson_post(
-        "windchill", "workspace_exists", data, "exists")
+    return client._creoson_post("windchill", "workspace_exists", data, "exists")

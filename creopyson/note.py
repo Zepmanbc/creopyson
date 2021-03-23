@@ -30,7 +30,7 @@ def copy(client, name, to_name=None, file_=None, to_file=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
@@ -58,7 +58,7 @@ def delete(client, name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("note", "delete", data)
 
@@ -84,7 +84,7 @@ def exists(client, file_=None, name=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -128,19 +128,12 @@ def get(client, name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("note", "get", data)
 
 
-def list_(
-    client,
-    file_=None,
-    name=None,
-    value=None,
-    get_expanded=None,
-    select=False
-):
+def list_(client, file_=None, name=None, value=None, get_expanded=None, select=False):
     """Get a list of notes from one or more models.
 
     Values will automatically be returned Base64-encoded if they are strings
@@ -179,7 +172,7 @@ def list_(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -227,7 +220,7 @@ def set_(client, name, file_=None, encoded=None, value=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if encoded:
         data["encoded"] = encoded

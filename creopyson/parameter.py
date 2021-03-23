@@ -32,7 +32,7 @@ def copy(client, name, to_name, file_=None, to_file=None, designate=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if to_file:
         data["to_file"] = to_file
@@ -61,7 +61,7 @@ def delete(client, name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("parameter", "delete", data)
 
@@ -87,7 +87,7 @@ def exists(client, name=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -129,7 +129,7 @@ def list_(client, name=None, file_=None, encoded=None, value=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -190,7 +190,7 @@ def set_(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
@@ -237,6 +237,6 @@ def set_designated(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     return client._creoson_post("parameter", "set_designated", data)

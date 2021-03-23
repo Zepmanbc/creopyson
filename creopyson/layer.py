@@ -23,7 +23,7 @@ def delete(client, name=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -52,7 +52,7 @@ def exists(client, name=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -87,7 +87,7 @@ def list_(client, name=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -119,7 +119,7 @@ def show(client, name=None, file_=None, show_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name

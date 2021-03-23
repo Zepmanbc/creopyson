@@ -47,7 +47,7 @@ def delete(client, name=None, file_=None, status=None, type_=None, clip=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (str)):
@@ -89,7 +89,7 @@ def delete_param(client, name=None, file_=None, param=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -172,7 +172,7 @@ def list_(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -267,7 +267,7 @@ def list_params(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(param, (str)):
@@ -319,7 +319,7 @@ def list_group_features(client, group_name, type_=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
@@ -351,7 +351,7 @@ def list_pattern_features(client, patter_name, type_=None, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if type_:
         data["type"] = type_
@@ -412,7 +412,7 @@ def param_exists(client, file_=None, name=None, param=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -447,7 +447,7 @@ def rename(client, name, new_name, file_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if isinstance(name, (str)):
         data["name"] = name
@@ -500,7 +500,7 @@ def resume(client, file_=None, name=None, status=None, type_=None, with_children
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (int)):
@@ -571,7 +571,7 @@ def set_param(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         data["name"] = name
@@ -643,7 +643,7 @@ def suppress(
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if name:
         if isinstance(name, (int)):
@@ -707,7 +707,7 @@ def user_select_csys(client, file_=None, max_=None):
         data["file"] = file_
     else:
         active_file = client.file_get_active()
-        if active_file is not None:
+        if active_file:
             data["file"] = active_file["file"]
     if max_:
         data["max"] = max_
