@@ -31,6 +31,8 @@ setup(
         "Natural Language :: English",
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
     ],
     description="Python library for Creoson",
     install_requires=requirements,
@@ -45,6 +47,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/Zepmanbc/creopyson",
-    version="0.7.1",
+    version="version='0.7.2'",
     zip_safe=False,
 )
