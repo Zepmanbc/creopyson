@@ -1,0 +1,31 @@
+name: dev_verif
+
+on:
+  push:
+    branches: ['develop']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env: 
+      GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+      - name: Run Tox
+        run: tox -e py
+      - name: install coverages stuffs
+        run: |
+          pip install -U coveralls coverage pytest pytest-cov
+          coverage run --source=creopyson setup.py test
+          coveralls

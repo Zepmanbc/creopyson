@@ -59,14 +59,14 @@ def get_paths(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if paths:
+    if paths is not None:
         data["paths"] = paths
-    if skeletons:
+    if skeletons is not None:
         data["skeletons"] = skeletons
-    if top_level:
+    if top_level is not None:
         data["top_level"] = top_level
-    if get_transforms:
+    if get_transforms is not None:
         data["get_transforms"] = get_transforms
-    if exclude_inactive:
+    if exclude_inactive is not None:
         data["exclude_inactive"] = exclude_inactive
     return client._creoson_post("bom", "get_paths", data)

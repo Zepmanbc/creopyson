@@ -6,8 +6,8 @@ Creopyson
 .. image:: https://img.shields.io/pypi/v/creopyson.svg
         :target: https://pypi.python.org/pypi/creopyson
 
-.. image:: https://img.shields.io/travis/Zepmanbc/creopyson.svg
-        :target: https://travis-ci.org/Zepmanbc/creopyson
+.. image:: https://github.com/Zepmanbc/creopyson/actions/workflows/release.yml/badge.svg
+        :target: https://github.com/Zepmanbc/creopyson/actions/workflows/release.yml
 
 .. image:: https://coveralls.io/repos/github/Zepmanbc/creopyson/badge.svg?branch=master
         :target: https://coveralls.io/github/Zepmanbc/creopyson?branch=master

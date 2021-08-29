@@ -39,7 +39,7 @@ def delete_files(client, filename=None, dirname=None):
 
     """
     data = {}
-    if filename:
+    if filename is not None:
         if isinstance(filename, (list)):
             data["filenames"] = filename
         else:
@@ -107,7 +107,7 @@ def list_dirs(client, dirname=None):
 
     """
     data = {"dirname": "*"}
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
     try:
         result = client._creoson_post("creo", "list_dirs", data, "dirlist")
@@ -131,7 +131,7 @@ def list_files(client, filename=None):
 
     """
     data = {"filename": "*"}
-    if filename:
+    if filename is not None:
         data["filename"] = filename
     return client._creoson_post("creo", "list_files", data, "filelist")
 
@@ -198,7 +198,7 @@ def set_config(client, name, value, ignore_errors=None):
 
     """
     data = {"name": name, "value": value, "ignore_errors": False}
-    if ignore_errors:
+    if ignore_errors is not None:
         data["ignore_errors"] = ignore_errors
     return client._creoson_post("creo", "set_config", data)
 

@@ -34,9 +34,9 @@ def copy(client, name, to_name, file_=None, to_file=None, designate=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if to_file:
+    if to_file is not None:
         data["to_file"] = to_file
-    if designate:
+    if designate is not None:
         data["designate"] = designate
     return client._creoson_post("parameter", "copy", data)
 
@@ -89,7 +89,7 @@ def exists(client, name=None, file_=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
@@ -131,14 +131,14 @@ def list_(client, name=None, file_=None, encoded=None, value=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if encoded:
+    if encoded is not None:
         data["encoded"] = encoded
-    if value:
+    if value is not None:
         data["value"] = value
     return client._creoson_post("parameter", "list", data, "paramlist")
 
@@ -192,17 +192,17 @@ def set_(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if encoded:
+    if encoded is not None:
         data["encoded"] = encoded
-    if value:
+    if value is not None:
         data["value"] = value
-    if designate:
+    if designate is not None:
         data["designate"] = designate
-    if description:
+    if description is not None:
         data["description"] = description
-    if no_create:
+    if no_create is not None:
         data["no_create"] = no_create
     return client._creoson_post("parameter", "set", data)
 
