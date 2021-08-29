@@ -59,17 +59,17 @@ def export_3dpdf(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if filename:
+    if filename is not None:
         data["filename"] = filename
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
-    if height:
+    if height is not None:
         data["height"] = height
-    if width:
+    if width is not None:
         data["width"] = width
-    if dpi:
+    if dpi is not None:
         data["dpi"] = dpi
-    if use_drawing_settings:
+    if use_drawing_settings is not None:
         data["use_drawing_settings"] = use_drawing_settings
     return client._creoson_post("interface", "export_3dpdf", data)
 
@@ -130,13 +130,13 @@ def export_file(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if filename:
+    if filename is not None:
         data["filename"] = filename
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
-    if geom_flags:
+    if geom_flags is not None:
         data["geom_flags"] = geom_flags
-    if advanced:
+    if advanced is not None:
         data["advanced"] = advanced
     return client._creoson_post("interface", "export_file", data)
 
@@ -188,17 +188,17 @@ def export_image(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if filename:
+    if filename is not None:
         data["filename"] = filename
     # if dirname:
     #     data["dirname"] = dirname
-    if height:
+    if height is not None:
         data["height"] = height
-    if width:
+    if width is not None:
         data["width"] = width
-    if dpi:
+    if dpi is not None:
         data["dpi"] = dpi
-    if depth:
+    if depth is not None:
         data["depth"] = depth
     return client._creoson_post("interface", "export_image", data)
 
@@ -257,17 +257,17 @@ def export_pdf(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if filename:
+    if filename is not None:
         data["filename"] = filename
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
-    if height:
+    if height is not None:
         data["height"] = height
-    if width:
+    if width is not None:
         data["width"] = width
-    if dpi:
+    if dpi is not None:
         data["dpi"] = dpi
-    if use_drawing_settings:
+    if use_drawing_settings is not None:
         data["use_drawing_settings"] = use_drawing_settings
     return client._creoson_post("interface", "export_pdf", data)
 
@@ -392,9 +392,9 @@ def import_program(client, file_=None, filename=None, dirname=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if filename:
+    if filename is not None:
         data["filename"] = filename
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
     return client._creoson_post("interface", "import_program", data, "file")
 
@@ -451,8 +451,8 @@ def plot(client, file_=None, dirname=None, driver=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if dirname:
+    if dirname is not None:
         data["dirname"] = dirname
-    if driver:
+    if driver is not None:
         data["driver"] = driver
     return client._creoson_post("interface", "plot", data)

@@ -40,9 +40,9 @@ def clear_workspace(client, workspace=None, filenames=None):
     """
     active_workspace = client.windchill_get_workspace()
     data = {"workspace": active_workspace}
-    if workspace:
+    if workspace is not None:
         data["workspace"] = workspace
-    if filenames:
+    if filenames is not None:
         data["filenames"] = filenames
     return client._creoson_post("windchill", "clear_workspace", data)
 
@@ -95,7 +95,7 @@ def file_checked_out(client, filename, workspace=None):
     """
     active_workspace = client.windchill_get_workspace()
     data = {"workspace": active_workspace, "filename": filename}
-    if workspace:
+    if workspace is not None:
         data["workspace"] = workspace
     return client._creoson_post("windchill", "file_checked_out", data, "checked_out")
 
@@ -131,9 +131,9 @@ def list_workspace_files(client, workspace=None, filename=None):
     """
     active_workspace = client.windchill_get_workspace()
     data = {"workspace": active_workspace, "filename": "*"}
-    if workspace:
+    if workspace is not None:
         data["workspace"] = workspace
-    if filename:
+    if filename is not None:
         data["filename"] = filename
     return client._creoson_post("windchill", "list_workspace_files", data, "filelist")
 

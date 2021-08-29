@@ -49,7 +49,7 @@ def delete(client, name=None, file_=None, status=None, type_=None, clip=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
@@ -58,9 +58,9 @@ def delete(client, name=None, file_=None, status=None, type_=None, clip=None):
         data["status"] = status
     elif status is not None:
         raise ValueError(f"`{status}` is not a correct status.")
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if clip:
+    if clip is not None:
         data["clip"] = clip
     return client._creoson_post("feature", "delete", data)
 
@@ -91,7 +91,7 @@ def delete_param(client, name=None, file_=None, param=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         data["name"] = name
     if param:
         data["param"] = param
@@ -174,21 +174,21 @@ def list_(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         data["name"] = name
     if status in STATUS_LIST:
         data["status"] = status
     elif status is not None:
         raise ValueError(f"`{status}` is not a correct status.")
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if paths:
+    if paths is not None:
         data["paths"] = paths
-    if no_datum:
+    if no_datum is not None:
         data["no_datum"] = no_datum
-    if inc_unnamed:
+    if inc_unnamed is not None:
         data["inc_unnamed"] = inc_unnamed
-    if no_comp:
+    if no_comp is not None:
         data["no_comp"] = no_comp
     return client._creoson_post("feature", "list", data, "featlist")
 
@@ -269,27 +269,27 @@ def list_params(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(param, (str)):
             data["name"] = name
         elif isinstance(param, (list)):
             data["feat_id"] = name
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if no_datum:
+    if no_datum is not None:
         data["no_datum"] = no_datum
-    if inc_unnamed:
+    if inc_unnamed is not None:
         data["inc_unnamed"] = inc_unnamed
-    if no_comp:
+    if no_comp is not None:
         data["no_comp"] = no_comp
-    if param:
+    if param is not None:
         if isinstance(param, (str)):
             data["param"] = param
         elif isinstance(param, (list)):
             data["params"] = param
-    if value:
+    if value is not None:
         data["value"] = value
-    if encoded:
+    if encoded is not None:
         data["encoded"] = encoded
     return client._creoson_post("feature", "list_params", data, "paramlist")
 
@@ -321,7 +321,7 @@ def list_group_features(client, group_name, type_=None, file_=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if type_:
+    if type_ is not None:
         data["type"] = type_
     return client._creoson_post("feature", "list_group_features", data, "featlist")
 
@@ -353,7 +353,7 @@ def list_pattern_features(client, patter_name, type_=None, file_=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if type_:
+    if type_ is not None:
         data["type"] = type_
     return client._creoson_post("feature", "list_group_features", data, "featlist")
 
@@ -414,9 +414,9 @@ def param_exists(client, file_=None, name=None, param=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         data["name"] = name
-    if param:
+    if param is not None:
         if isinstance(param, (str)):
             data["param"] = param
         elif isinstance(param, (list)):
@@ -502,7 +502,7 @@ def resume(client, file_=None, name=None, status=None, type_=None, with_children
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (int)):
             data["feat_id"] = name
         elif isinstance(name, (str)):
@@ -513,9 +513,9 @@ def resume(client, file_=None, name=None, status=None, type_=None, with_children
         data["status"] = status
     elif status is not None:
         raise ValueError(f"`{status}` is not a correct status.")
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if with_children:
+    if with_children is not None:
         data["with_children"] = with_children
     return client._creoson_post("feature", "resume", data)
 
@@ -573,21 +573,21 @@ def set_param(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         data["name"] = name
-    if param:
+    if param is not None:
         data["param"] = param
-    if type_:
+    if type_ is not None:
         data["type"] = type_
-    if value:
+    if value is not None:
         data["value"] = value
-    if encoded:
+    if encoded is not None:
         data["encoded"] = encoded
-    if designate:
+    if designate is not None:
         data["designate"] = designate
-    if description:
+    if description is not None:
         data["description"] = description
-    if no_create:
+    if no_create is not None:
         data["no_create"] = no_create
     return client._creoson_post("feature", "set_param", data)
 
@@ -645,7 +645,7 @@ def suppress(
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (int)):
             data["feat_id"] = name
         elif isinstance(name, (str)):
@@ -656,7 +656,7 @@ def suppress(
         data["status"] = status
     elif status is not None:
         raise ValueError(f"`{status}` is not a correct status.")
-    if type_:
+    if type_ is not None:
         data["type"] = type_
     if clip is False:
         data["clip"] = False
@@ -709,6 +709,6 @@ def user_select_csys(client, file_=None, max_=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if max_:
+    if max_ is not None:
         data["max"] = max_
     return client._creoson_post("feature", "user_select_csys", data)

@@ -24,7 +24,7 @@ def copy(client, name, to_name=None, file_=None, to_file=None):
 
     """
     data = {"name": name}
-    if to_name:
+    if to_name is not None:
         data["to_name"] = to_name
     if file_ is not None:
         data["file"] = file_
@@ -32,7 +32,7 @@ def copy(client, name, to_name=None, file_=None, to_file=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if to_file:
+    if to_file is not None:
         data["to_file"] = to_file
     return client._creoson_post("note", "copy", data)
 
@@ -86,7 +86,7 @@ def exists(client, file_=None, name=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
@@ -174,17 +174,17 @@ def list_(client, file_=None, name=None, value=None, get_expanded=None, select=F
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if name:
+    if name is not None:
         if isinstance(name, (str)):
             data["name"] = name
         elif isinstance(name, (list)):
             data["names"] = name
-    if get_expanded:
-        data["get_expanded"] = True
-    if value:
+    if get_expanded is not None:
+        data["get_expanded"] = get_expanded
+    if value is not None:
         data["value"] = value
-    if select:
-        data["select"] = True
+    if select is not None:
+        data["select"] = select
     return client._creoson_post("note", "list", data, "itemlist")
 
 
@@ -222,8 +222,8 @@ def set_(client, name, file_=None, encoded=None, value=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if encoded:
+    if encoded is not None:
         data["encoded"] = encoded
-    if value:
+    if value is not None:
         data["value"] = value
     return client._creoson_post("note", "set", data)

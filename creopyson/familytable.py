@@ -280,7 +280,7 @@ def list_(client, file_=None, instance=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if instance:
+    if instance is not None:
         data["instance"] = instance
     return client._creoson_post("familytable", "list", data, "instances")
 
@@ -319,7 +319,7 @@ def list_tree(client, file_=None, erase=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if erase:
+    if erase is not None:
         data["erase"] = erase
     return client._creoson_post("familytable", "list_tree", data, "children")
 
@@ -358,9 +358,9 @@ def replace(client, cur_model, new_inst, file_=None, cur_inst=None, path=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
-    if cur_inst:
+    if cur_inst is not None:
         data["cur_inst"] = cur_inst
-    if path:
+    if path is not None:
         data["path"] = path
     return client._creoson_post("familytable", "replace", data)
     # TODO: path/cur_inst
