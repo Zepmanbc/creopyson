@@ -1,0 +1,52 @@
+name: release
+
+on:
+  push:
+    branches: ['master']
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env: 
+      GITHUB_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install -r requirements_dev.txt
+      - name: Run Tox
+        run: tox -e py
+      - name: install coverages stuffs
+        run: |
+          pip install -U coveralls coverage pytest pytest-cov
+          coverage run --source=creopyson setup.py test
+          coveralls
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
+      TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install setuptools wheel twine
+      - name: Build and publish
+        run: |
+          python setup.py sdist
+          python setup.py bdist_wheel
+          twine upload dist/*
