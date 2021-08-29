@@ -2,6 +2,13 @@
 History
 =======
 
+0.7.3 (2021-08-29)
+------------------
+
+* Add *is not None* almost everywhere to prevent *False* and *None* confusion
+* Migrates to Github Workflow
+* Remove pipenv stuff
+
 0.7.2 (2021-04-01)
 ------------------
 
