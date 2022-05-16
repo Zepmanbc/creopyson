@@ -9,6 +9,7 @@ def get_paths(
     top_level=None,
     get_transforms=None,
     exclude_inactive=None,
+    get_simpreps=None,
 ):
     """Get a hierarchy of components within an assembly.
 
@@ -35,6 +36,9 @@ def get_paths(
         exclude_inactive (boolean, optional):
             Whether to exclude components which do not
             have an ACTIVE status. (default" : False)
+        get_simpreps (boolean, optionnal):
+            Whether to return the Simplified Rep data for each component.
+            (default" : False)
 
     Returns:
         Dict:
@@ -69,4 +73,6 @@ def get_paths(
         data["get_transforms"] = get_transforms
     if exclude_inactive is not None:
         data["exclude_inactive"] = exclude_inactive
+    if get_simpreps is not None:
+        data["get_simpreps"] = get_simpreps
     return client._creoson_post("bom", "get_paths", data)
