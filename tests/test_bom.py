@@ -12,7 +12,8 @@ def test_bom_get_paths_ok(mk_creoson_post_dict, mk_getactivefile):
         skeletons=True,
         top_level=True,
         get_transforms=True,
-        exclude_inactive=True
+        exclude_inactive=True,
+        get_simpreps=True,
     )
     assert isinstance(result, (dict))
     c = creopyson.Client()
