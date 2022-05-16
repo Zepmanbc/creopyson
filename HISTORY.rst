@@ -2,6 +2,18 @@
 History
 =======
 
+0.7.4 (2022-05-16)
+------------------
+
+Update for `Creoson 2.8.1 release`_.
+
+* Add parameters:
+    * bom_get_paths : get_simpreps
+* Documentation update:
+    * creo_set_creo_version : Creo 8 support.
+
+.. _`Creoson 2.8.1 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.8.1
+
 0.7.3 (2021-08-29)
 ------------------
 
