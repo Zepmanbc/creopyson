@@ -2,6 +2,14 @@
 History
 =======
 
+0.7.5 (2022-12-10)
+------------------
+
+* BugFix:
+    * Add missing `location` argument on note_set (`issue#62`_)
+
+.. _`issue#62`: https://github.com/Zepmanbc/creopyson/issues/62
+
 0.7.4 (2022-05-16)
 ------------------
 
