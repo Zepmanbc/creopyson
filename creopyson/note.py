@@ -188,7 +188,7 @@ def list_(client, file_=None, name=None, value=None, get_expanded=None, select=F
     return client._creoson_post("note", "list", data, "itemlist")
 
 
-def set_(client, name, file_=None, encoded=None, value=None):
+def set_(client, name, file_=None, location=None, encoded=None, value=None):
     r"""Set the text of a model or drawing note.
 
     The location parameter can used to position a new note, or to change the
@@ -205,6 +205,9 @@ def set_(client, name, file_=None, encoded=None, value=None):
             Note name (wildcards allowed: True).
         `file_` (str, optional):
             Model name. Defaults is current active model or drawing.
+        location (JLPoint):
+            Coordinates for the note placement in Drawing Units.
+            If missing and this is a new note, note will be placed at 0, 0.
         encoded (boolean, optional):
             Whether the value is Base64-encoded. Defaults is False.
         value (str, optional):
@@ -222,6 +225,8 @@ def set_(client, name, file_=None, encoded=None, value=None):
         active_file = client.file_get_active()
         if active_file:
             data["file"] = active_file["file"]
+    if location is not None:
+        data["location"] = location
     if encoded is not None:
         data["encoded"] = encoded
     if value is not None:

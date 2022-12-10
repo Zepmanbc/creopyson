@@ -7,10 +7,7 @@ def test_note_copy(mk_creoson_post_None, mk_getactivefile):
     """Test copy."""
     c = creopyson.Client()
     result = c.note_copy(
-        "name",
-        to_name="target name",
-        file_="file",
-        to_file="target file"
+        "name", to_name="target name", file_="file", to_file="target file"
     )
     assert result is None
     result = c.note_copy("name")
@@ -48,11 +45,7 @@ def test_note_list(mk_creoson_post_dict, mk_getactivefile):
     """Test list."""
     c = creopyson.Client()
     result = c.note_list(
-        file_="file",
-        name="name",
-        value="value",
-        get_expanded=True,
-        select=True
+        file_="file", name="name", value="value", get_expanded=True, select=True
     )
     assert isinstance(result, (list))
     result = c.note_list(name=["name", "other name"])
@@ -65,8 +58,9 @@ def test_note_set(mk_creoson_post_None, mk_getactivefile):
     result = c.note_set(
         "name",
         file_="file",
+        location={"x": 0, "y": 0, "z": 0},
         encoded=True,
-        value="value"
+        value="value",
     )
     assert result is None
     result = c.note_set("name")
