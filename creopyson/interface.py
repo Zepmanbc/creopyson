@@ -165,12 +165,12 @@ def export_image(
             Defaults is the model name with the appropriate file extension,
             in Creo's working directory.
         height (float, optional):
-            Image height. Defaults is `7.5`.
+            Image height. Defaults is `10.0`.
         width (float, optional):
-            Image width. Defaults is `10.0`.
+            Image width. Defaults is `7.5`.
         dpi (int, optional):
             Image DPI. Defaults is `100`.
-            Valid values: 100, 200, 300, 400.
+            Valid values: 100, 200, 300, 400, 500, 600.
         depth (int, optional):
             Image depth. Defaults is `24`.
             Valid values: 8, 24.

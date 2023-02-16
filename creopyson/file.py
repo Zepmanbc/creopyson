@@ -716,6 +716,8 @@ def massprops(client, file_=None):
                 Model's Inertia Matrix with respect to the coordinate frame.
             coord_sys_inertia_tensor (object:JLInertia):
                 Model's Inertia Tensor with respect to the coordinate frame.
+            ctr_grav (object:JLPoint):
+                Model's center of gravity.
 
     """
     data = {}
