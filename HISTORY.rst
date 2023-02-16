@@ -2,6 +2,15 @@
 History
 =======
 
+Documentation update (2023-02-16)
+---------------------------------
+
+Update for `Creoson 2.8.2 release`_.
+
+* No modification in creopyson, just documentation update, see Creoson's release note.
+
+.. _`Creoson 2.8.2 release`: https://github.com/SimplifiedLogic/creoson/releases/tag/v2.8.2
+
 0.7.5 (2022-12-10)
 ------------------
 
