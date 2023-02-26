@@ -2,6 +2,14 @@
 History
 =======
 
+0.7.6 (2023-02-26)
+---------------------------------
+
+* BugFix:
+    * Correction for `layer.delete` (`issue#68`_)
+
+.. _`issue#68`: https://github.com/Zepmanbc/creopyson/issues/68
+
 Documentation update (2023-02-16)
 ---------------------------------
 
