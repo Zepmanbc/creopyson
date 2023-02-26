@@ -18,7 +18,7 @@ def delete(client, name=None, file_=None):
         None
 
     """
-    data = {"name": name}
+    data = {}
     if file_ is not None:
         data["file"] = file_
     else:
