@@ -2,6 +2,14 @@
 History
 =======
 
+0.7.7 (2024-02-03)
+---------------------------------
+
+* BugFix:
+    * Correction for `drawing.set_view_loc` (`issue#84`_)
+
+.. _`issue#84`: https://github.com/Zepmanbc/creopyson/issues/84
+
 0.7.6 (2023-02-26)
 ---------------------------------
 

@@ -951,7 +951,7 @@ def set_view_loc(client, view, point, drawing=None):
     data = {"view": view, "point": point}
     if drawing is not None:
         data["drawing"] = drawing
-    return client._creoson_post("drawing", "set_cur_model", data)
+    return client._creoson_post("drawing", "set_view_loc", data)
 
 
 def view_bound_box(client, view, drawing=None):
