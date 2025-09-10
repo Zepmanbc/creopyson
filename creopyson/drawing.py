@@ -38,7 +38,7 @@ def add_sheet(client, position=None, drawing=None):
         None
 
     """
-    data = {}
+    data = {"position": 0}
     if position is not None:
         data["position"] = position
     if drawing is not None:
