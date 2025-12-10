@@ -272,7 +272,7 @@ def list_params(
     if name is not None:
         if isinstance(param, (str)):
             data["name"] = name
-        elif isinstance(param, (list)):
+        elif isinstance(param, (int)):
             data["feat_id"] = name
     if type_ is not None:
         data["type"] = type_
