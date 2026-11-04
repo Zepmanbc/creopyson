@@ -12,6 +12,7 @@ def mk_creoson_post_dict(monkeypatch):
                 "active": True,
                 "checked_out": True,
                 "children": [],
+                "colid": "colid",
                 "columns": [],
                 "contourlist": [],
                 "dirname": "dirname",

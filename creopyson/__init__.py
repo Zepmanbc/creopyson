@@ -141,6 +141,7 @@ Client.drawing_view_bound_box = drawing_view_bound_box
 
 
 # Familytable
+from creopyson.familytable import add_column as familytable_add_column
 from creopyson.familytable import add_inst as familytable_add_inst
 from creopyson.familytable import create_inst as familytable_create_inst
 from creopyson.familytable import delete_inst as familytable_delete_inst
@@ -152,9 +153,11 @@ from creopyson.familytable import get_parents as familytable_get_parents
 from creopyson.familytable import get_row as familytable_get_row
 from creopyson.familytable import list_ as familytable_list
 from creopyson.familytable import list_tree as familytable_list_tree
+from creopyson.familytable import remove_column as familytable_remove_column
 from creopyson.familytable import replace as familytable_replace
 from creopyson.familytable import set_cell as familytable_set_cell
 
+Client.familytable_add_column = familytable_add_column
 Client.familytable_add_inst = familytable_add_inst
 Client.familytable_create_inst = familytable_create_inst
 Client.familytable_delete_inst = familytable_delete_inst
@@ -166,6 +169,7 @@ Client.familytable_get_parents = familytable_get_parents
 Client.familytable_get_row = familytable_get_row
 Client.familytable_list = familytable_list
 Client.familytable_list_tree = familytable_list_tree
+Client.familytable_remove_column = familytable_remove_column
 Client.familytable_replace = familytable_replace
 Client.familytable_set_cell = familytable_set_cell
 

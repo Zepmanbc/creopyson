@@ -2,6 +2,14 @@
 History
 =======
 
+Unreleased
+----------
+
+* New functions (need CREOSON with `familytable.add_column` / `remove_column`):
+    * `familytable.add_column`
+    * `familytable.remove_column`
+
+
 0.7.8 (2025-09-10)
 ------------------
 

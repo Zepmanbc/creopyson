@@ -1,6 +1,42 @@
 """Familytable module."""
 
 
+def add_column(client, name, coltype=None, file_=None):
+    """Add a column to a family table.
+
+    The column is based on a dimension or a parameter of the model.
+    The cells of all instances accept the default value of the column;
+    use `familytable_set_cell` to change them.
+    Creo creates the family table if the model has none.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        name (str):
+            Name of a dimension, dimension ID (d#), or name of a parameter.
+        coltype (str, optional):
+            Column type: `dimension` or `param`.
+            Default is to try a dimension first, then a parameter.
+        `file_` (str, optional):
+            File name of the generic model.
+            Defaults is currently active model.
+
+    Returns:
+        (str): Column ID of the new column.
+
+    """
+    data = {"name": name}
+    if coltype is not None:
+        data["coltype"] = coltype
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file:
+            data["file"] = active_file["file"]
+    return client._creoson_post("familytable", "add_column", data, "colid")
+
+
 def add_inst(client, instance, file_=None):
     """Add a new instance to a family table.
 
@@ -322,6 +358,32 @@ def list_tree(client, file_=None, erase=None):
     if erase is not None:
         data["erase"] = erase
     return client._creoson_post("familytable", "list_tree", data, "children")
+
+
+def remove_column(client, colid, file_=None):
+    """Remove a column from a family table.
+
+    Args:
+        client (obj):
+            creopyson Client.
+        colid (str):
+            Column ID.
+        `file_` (str, optional):
+            File name of the generic model.
+            Defaults is currently active model.
+
+    Returns:
+        None
+
+    """
+    data = {"colid": colid}
+    if file_ is not None:
+        data["file"] = file_
+    else:
+        active_file = client.file_get_active()
+        if active_file:
+            data["file"] = active_file["file"]
+    return client._creoson_post("familytable", "remove_column", data)
 
 
 def replace(client, cur_model, new_inst, file_=None, cur_inst=None, path=None):
