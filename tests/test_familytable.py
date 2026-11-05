@@ -3,6 +3,16 @@ import creopyson
 from .fixtures import mk_creoson_post_dict, mk_creoson_post_None, mk_getactivefile
 
 
+def test_familytable_add_column(mk_creoson_post_dict, mk_getactivefile):
+    """Test add_column."""
+    c = creopyson.Client()
+    result = c.familytable_add_column(
+        "name", coltype="dimension", file_="file")
+    assert isinstance(result, (str))
+    result = c.familytable_add_column("name")
+    assert isinstance(result, (str))
+
+
 def test_familytable_add_inst(mk_creoson_post_None, mk_getactivefile):
     """Test add_inst."""
     c = creopyson.Client()
@@ -108,6 +118,15 @@ def test_familytable_list_tree(mk_creoson_post_dict, mk_getactivefile):
     assert isinstance(result, (list))
     result = c.familytable_list_tree()
     assert isinstance(result, (list))
+
+
+def test_familytable_remove_column(mk_creoson_post_None, mk_getactivefile):
+    """Test remove_column."""
+    c = creopyson.Client()
+    result = c.familytable_remove_column("d12", file_="file")
+    assert result is None
+    result = c.familytable_remove_column("d12")
+    assert result is None
 
 
 def test_familytable_replace(mk_creoson_post_None, mk_getactivefile):
